@@ -1,0 +1,22 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package com.elcom.db.common;
+
+import java.sql.SQLException;
+import com.elcom.db.DbConnection;
+import com.elcom.db.DbConnectionRefactory;
+
+/**
+ *
+ */
+public class OracleConnectionRefactory implements DbConnectionRefactory {
+
+	public DbConnection refactory(int index, DbConnection conn)
+			throws SQLException {
+		return new OracleConnection(index, conn);
+	}
+
+}
