@@ -3,7 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+//comment
+
 package com.activestudy.asmobile.mauthen;
+
 
 import com.activestudy.asmobile.mauthen.command.ActiveCmd;
 import javax.ws.rs.POST;
