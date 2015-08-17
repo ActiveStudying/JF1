@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">ActiveStudy</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_input_code">InputCodeActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <!--text hint-->
+    <string name="text_hint_email">Email</string>
+    <string name="text_hint_otp">Mã OTP</string>
+
+    <!--text button-->
+    <string name="text_button_continue">Continue</string>
+
+
+    <!--toast alert-->
+    <string name="toast_input_email">Yêu cầu nhập Email</string>
+    <string name="toast_wrong_email">Email không đúng</string>
+    <string name="text_button_resend">Gửi lại mã</string>
+
+
+</resources>
