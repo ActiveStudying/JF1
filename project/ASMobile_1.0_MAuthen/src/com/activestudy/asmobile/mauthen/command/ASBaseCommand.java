@@ -17,7 +17,7 @@ public abstract class ASBaseCommand extends AbsCommand {
     
     String email;
     String deviceId;
-    AccountInfoEntity account;
+    AccountInfoEntity accountInfo;
     
     protected IDBModule dbCtrl;
 
