@@ -2,6 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="vn.edu.activestudy.activestudy" >
 
+    <permission
+        android:name="vn.edu.activestudy.activestudy.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="vn.edu.activestudy.activestudy.permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -10,19 +23,36 @@
         <activity
             android:name=".view.activity.InputEmailActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/NoActionBarTheme">
-
+            android:theme="@style/NoActionBarTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".view.activity.InputCodeActivity"
-            android:label="@string/title_activity_input_code" >
-        </activity>
+            android:label="@string/title_activity_input_code" />
+
+        <receiver
+            android:name="com.google.android.gcm.GCMBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+
+                <!-- Receives the actual messages. -->
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <!-- Receives the registration id. -->
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+                <category android:name="vn.edu.activestudy.activestudy" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".GCMIntentService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
     </application>
 
 </manifest>

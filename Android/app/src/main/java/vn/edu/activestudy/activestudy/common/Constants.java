@@ -6,6 +6,7 @@ package vn.edu.activestudy.activestudy.common;
 public class Constants {
 
     public static String URL_SERVER = "";
+    public static String PROJECT_NUMBER = "117944520243";
 
 
 }

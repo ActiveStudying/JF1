@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import vn.edu.activestudy.activestudy.R;
 
@@ -31,4 +32,9 @@ public class InputCodeActivity extends AppCompatActivity {
     }
 
 
+    public void btnInputOTPResend_click(View view) {
+    }
+
+    public void btnInputOTPContinue_click(View view) {
+    }
 }
