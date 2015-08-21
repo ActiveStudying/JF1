@@ -9,7 +9,7 @@ package com.activestudy.asmobile.entity;
  *
  * @author tanhai
  */
-public class DeviceInfo {
+public class DeviceInfoEntity {
 
     private final String deviceId;
     private final String deviceName;
@@ -18,7 +18,7 @@ public class DeviceInfo {
     private final String cloudKey;
     private final String devOther;
 
-    public DeviceInfo(String deviceID, String deviceName, String osName,
+    public DeviceInfoEntity(String deviceID, String deviceName, String osName,
             String osVersion, String cloudKey, String devOther) {
         this.deviceId = deviceID;
 

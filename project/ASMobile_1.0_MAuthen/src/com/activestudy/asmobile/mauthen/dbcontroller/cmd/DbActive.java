@@ -20,7 +20,7 @@ import java.sql.Types;
  * @author tanhai
  */
 public class DbActive extends DbProcess {
-
+    String activationId;
     
     @Override
     public void execute(DbConnectionExtra conn)  {
@@ -75,5 +75,14 @@ public class DbActive extends DbProcess {
         }
 
     }
+
+    public String getActivationId() {
+        return activationId;
+    }
+
+    public void setActivationId(String activationId) {
+        this.activationId = activationId;
+    }
+    
 
 }

@@ -35,4 +35,8 @@ public class Processor {
             return;
         }
     }
+
+    public IDBModule getDbCtrl() {
+        return dbCtrl;
+    }
 }
