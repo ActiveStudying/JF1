@@ -2,6 +2,7 @@ package vn.edu.activestudy.activestudy.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -15,7 +16,11 @@ import android.widget.Toast;
 
 import vn.edu.activestudy.activestudy.ASController;
 import vn.edu.activestudy.activestudy.R;
+import vn.edu.activestudy.activestudy.common.Constants;
 import vn.edu.activestudy.activestudy.util.DeviceUtil;
+import vn.edu.activestudy.activestudy.util.PreferenceUtil;
+import vn.edu.activestudy.activestudy.util.TimeUtil;
+import vn.edu.activestudy.activestudy.util.ToastUtil;
 import vn.edu.activestudy.activestudy.util.Utils;
 
 public class InputEmailActivity extends AppCompatActivity {
@@ -64,32 +69,68 @@ public class InputEmailActivity extends AppCompatActivity {
 
             }
         });
-//        btnContinue.setOnClickListener(this);
-//        btnContinue.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
+
+        btnContinue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                executeTask();
+//                btnContinue_click();
+            }
+        });
     }
 
-    public void btnContinue_click(View view) {
+    public void btnContinue_click() {
         String email = edtEmail.getText().toString();
 
         if (email.length() == 0) {
-            Toast.makeText(this, getResources().getString(R.string.toast_input_email), Toast.LENGTH_SHORT).show();
+            ToastUtil.makeToast(getResources().getString(R.string.toast_input_email));
+        } else if (!Utils.checkEmailValidator(email)) {
+            ToastUtil.makeToast(getResources().getString(R.string.toast_wrong_email));
         } else {
-            if (!Utils.checkEmailValidator(email)) {
-                Toast.makeText(this, getResources().getString(R.string.toast_wrong_email), Toast.LENGTH_SHORT).show();
-            } else {
-                active();
-//                startActivity(new Intent(this, InputCodeActivity.class));
-            }
+            active();
         }
+
     }
 
     private void active() {
-        DeviceUtil.getDeviceInfo(this);
+        PreferenceUtil.setString(this, Constants.PREFERENCE_EMAIL, edtEmail.getText().toString());
+        ASController.getInstance().activate(this);
     }
 
+
+    private void executeTask() {
+        AsyncTask<Void, Integer, Integer> task = new AsyncTask<Void, Integer, Integer>() {
+            @Override
+            protected Integer doInBackground(Void... params) {
+                int sum=0;
+                for (int i = 1; i <= 9; i++) {
+                    sum+=i;
+                    publishProgress(i);
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                return sum;
+            }
+            @Override
+            protected void onProgressUpdate(Integer... i) {
+                super.onProgressUpdate(i);
+                if(i[0]!=9){
+                    edtEmail.setText(edtEmail.getText().toString()  + i[0]+"+");
+                }else{
+                    edtEmail.setText(edtEmail.getText().toString()  + i[0]+"=");
+                }
+            }
+
+            @Override
+            protected void onPostExecute(Integer sum) {
+                super.onPostExecute(sum);
+                edtEmail.setText(edtEmail.getText().toString() + sum);
+            }
+        };
+        task.execute();
+    }
 }

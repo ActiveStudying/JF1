@@ -7,6 +7,6 @@ public class Constants {
 
     public static String URL_SERVER = "";
     public static String PROJECT_NUMBER = "117944520243";
-
+    public static String PREFERENCE_EMAIL = "preference_email";
 
 }
