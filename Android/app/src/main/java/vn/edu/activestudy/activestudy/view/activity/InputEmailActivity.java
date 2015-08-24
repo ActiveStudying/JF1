@@ -1,5 +1,6 @@
 package vn.edu.activestudy.activestudy.view.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,7 +13,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import vn.edu.activestudy.activestudy.ASController;
 import vn.edu.activestudy.activestudy.R;
+import vn.edu.activestudy.activestudy.util.DeviceUtil;
+import vn.edu.activestudy.activestudy.util.Utils;
 
 public class InputEmailActivity extends AppCompatActivity {
 
@@ -36,6 +40,7 @@ public class InputEmailActivity extends AppCompatActivity {
 
     private void initData() {
         btnContinue.setEnabled(false);
+        ASController.getInstance().getRegistrationID(this);
     }
 
     private void initControl() {
@@ -74,12 +79,17 @@ public class InputEmailActivity extends AppCompatActivity {
         if (email.length() == 0) {
             Toast.makeText(this, getResources().getString(R.string.toast_input_email), Toast.LENGTH_SHORT).show();
         } else {
-            if (!email.contains("@")) {
+            if (!Utils.checkEmailValidator(email)) {
                 Toast.makeText(this, getResources().getString(R.string.toast_wrong_email), Toast.LENGTH_SHORT).show();
             } else {
-                startActivity(new Intent(this, InputCodeActivity.class));
+                active();
+//                startActivity(new Intent(this, InputCodeActivity.class));
             }
         }
+    }
+
+    private void active() {
+        DeviceUtil.getDeviceInfo(this);
     }
 
 }
