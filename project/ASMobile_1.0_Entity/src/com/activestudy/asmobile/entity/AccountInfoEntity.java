@@ -67,5 +67,13 @@ public class AccountInfoEntity {
     public void setGender(String gender) {
         this.gender = gender;
     }
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public String getEmail() {
+        return email;
+    }
     
 }

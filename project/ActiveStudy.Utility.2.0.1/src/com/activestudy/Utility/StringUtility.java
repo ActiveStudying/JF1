@@ -3,22 +3,38 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.activestudy.Utility;
 
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
  * @author tanhai
  */
 public class StringUtility {
+
+    private static final String EMAIL_PATTERN
+            = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+            + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
     public static String bytetoHexText(byte[] array) {
         String strResult = "";
         for (int k = 0; k < array.length; k++) {
             strResult += Integer.toHexString(array[k]) + "";
-            
+
         }
         return strResult;
     }
+
+    public static boolean is_Email(String email) {
+
+        Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+    
+    
+    
+
 }

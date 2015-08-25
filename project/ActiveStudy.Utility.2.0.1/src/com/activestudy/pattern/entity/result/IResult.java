@@ -12,4 +12,5 @@ package com.activestudy.pattern.entity.result;
  */
 public interface IResult {
     
+    
 }

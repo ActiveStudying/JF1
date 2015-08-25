@@ -16,7 +16,7 @@ public abstract class AbsCommand implements ICommand{
     private long commandID = 0;
     private String commandName = "";    
     
-    private IResult result;
+    protected IResult result;
     private IResult request;
     
         
