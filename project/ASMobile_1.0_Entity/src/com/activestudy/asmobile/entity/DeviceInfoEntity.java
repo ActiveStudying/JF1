@@ -52,6 +52,7 @@ public class DeviceInfoEntity {
             this.devOther = devOther;
         }
     }
+  
 
     public String getDeviceId() {
         return deviceId;
