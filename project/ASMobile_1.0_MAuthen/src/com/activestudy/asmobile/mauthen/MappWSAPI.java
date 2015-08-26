@@ -10,14 +10,16 @@ import com.activestudy.Utility.JSONUtility;
 import com.activestudy.asmobile.entity.AccountInfoEntity;
 import com.activestudy.asmobile.entity.DeviceInfoEntity;
 import com.activestudy.asmobile.mauthen.command.ActiveCmd;
+import com.activestudy.asmobile.mauthen.command.ActiveCodeCmd;
+import com.sun.jersey.spi.resource.Singleton;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
-import com.sun.jersey.spi.resource.Singleton;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.codehaus.jettison.json.JSONException;
@@ -60,7 +62,7 @@ public class MappWSAPI {
             email = inJsonObj.getString("accountId");
             accountInfo = new AccountInfoEntity(email, email, "");
             deviceInfo = new DeviceInfoEntity(deviceID, deviceName, osName, osVersion, cloudKey, devOther);
-            JSONUtility.GetJSONData(inJsonObj.getString("Device_Info"), deviceInfo);
+            JSONUtility.GetJSONData(inJsonObj.getString("deviceInfo"), deviceInfo);
         } catch (JSONException ex) {
             logger.error("Error Parse Json: " + ex.getMessage());
         }
@@ -72,6 +74,34 @@ public class MappWSAPI {
 
         return activeCmdObj.getResponse();
     }
-    
 
+    @POST
+    @Path("activateCode")
+    public String activateCode(String content) {
+
+        String accountId = "";
+        String otpCode = "";
+        String activationId = "";
+
+        JSONObject jsonOBj = new JSONObject();
+
+        try {
+            accountId = jsonOBj.getString("accountId");
+            otpCode = jsonOBj.getString("OTPCODE");
+            activationId = jsonOBj.getString("activationId");
+        } catch (JSONException ex) {
+            Logger.getLogger(MappWSAPI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        ActiveCodeCmd activeCodeCmdObj = new ActiveCodeCmd();
+        activeCodeCmdObj.setOtpCode(otpCode);
+        activeCodeCmdObj.setActivationId(activationId);
+        AccountInfoEntity accountInfo = new AccountInfoEntity(accountId, accountId, "");
+        activeCodeCmdObj.setAccountInfo(accountInfo);
+
+        activeCodeCmdObj.execute();
+
+        return activeCodeCmdObj.getResponse();
+    }
+    
+    
 }
