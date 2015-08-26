@@ -29,11 +29,15 @@ public abstract class ASBaseCommand extends AbsCommand {
     String sessionId;
     protected IDBModule dbCtrl;
     JSONObject inJsonObj;
+    JSONObject outJson;
+    JSONObject resultJson;
+    JSONObject resultDataJson;
+    
 
     public ASBaseCommand() {
         result = new Result();
     }
-    
+
     public void parse(String content) {
         try {
             inJsonObj = new JSONObject(content);
@@ -56,13 +60,17 @@ public abstract class ASBaseCommand extends AbsCommand {
 
     public String getResponse() {
 
-        JSONObject outJson = new JSONObject();
-        JSONObject resultJson = new JSONObject();
-        resultJson.put("code",result);
-        
-        outJson.put("result",result);
-        
-        
+        outJson = new JSONObject();
+        resultJson = new JSONObject();
+        try {
+            resultJson.put("code", result.getErrorCode());
+            resultJson.put("description", result.getErrorDesc());
+            outJson.put("result", resultJson);
+            return outJson.toString();
+        } catch (JSONException ex) {
+            Logger.getLogger(ASBaseCommand.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         return "";
     }
 
