@@ -74,8 +74,6 @@ public class ActiveCmd extends ASBaseCommand {
         this.deviceInfo = deviceInfo;
     }
 
-    public String getResponse() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
 
 }

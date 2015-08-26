@@ -73,5 +73,15 @@ public class MappWSAPI {
         return activeCmdObj.getResponse();
     }
     
+    @POST
+    @Path("activateCode")
+    public String activateCode(String content){
+        
+        
+        
+        return " ";
+    }
+    
+    
 
 }

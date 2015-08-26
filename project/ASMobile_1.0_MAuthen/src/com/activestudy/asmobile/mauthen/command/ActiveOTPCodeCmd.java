@@ -14,11 +14,17 @@ import com.activestudy.asmobile.entity.DeviceInfoEntity;
  * @author PC
  */
 public class ActiveOTPCodeCmd extends ActiveCmd {
+    
+    // khai bao dau vao
 
     public ActiveOTPCodeCmd(AccountInfoEntity accountInfo, DeviceInfoEntity deviceInfo) {
         super(accountInfo, deviceInfo);
         //setOtpCode(otpCode);
         new ActiveOTPCodeCmd(accountInfo, deviceInfo).getOtpCode();
+    }
+    
+    public void excuteOTP(){
+        
     }
     
 }
