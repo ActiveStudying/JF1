@@ -25,6 +25,8 @@ public abstract class ASBaseCommand extends AbsCommand {
     String deviceId;
     AccountInfoEntity accountInfo;
     DeviceInfoEntity deviceInfo;
+    
+    JSONObject jsonObj = new JSONObject();
     // String device ;
 
     protected IDBModule dbCtrl;
@@ -43,13 +45,15 @@ public abstract class ASBaseCommand extends AbsCommand {
         // dong du lieu de tra ra dung put(key, value)
         String contents = ""; // chuoi json
         try {
-            JSONObject jsonObj = new JSONObject();
-            jsonObj.putOpt(email, accountInfo);
-            jsonObj.putOpt(deviceId, deviceInfo);
+            
+          //  jsonObj.put("code",);
+            
+            
 
             StringWriter out = new StringWriter();
             jsonObj.write(out);
-            contents = out.toString();
+            contents = jsonObj.toString();
+            return contents;
 
         } catch (JSONException ex) {
             Logger.getLogger(ASBaseCommand.class.getName()).log(Level.SEVERE, null, ex);

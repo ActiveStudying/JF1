@@ -26,13 +26,16 @@ public class ActiveCmd extends ASBaseCommand {
 
     String otpCode;
     DeviceInfoEntity deviceInfo;
+    AccountInfoEntity accountId;
     String activationId;
+    
 
     public ActiveCmd(AccountInfoEntity accountInfo, DeviceInfoEntity deviceInfo) {
         this.deviceInfo = deviceInfo;
         this.accountInfo = accountInfo;
         result = new ResultNumber();
     }
+  
 
     @Override
     public void execute() {

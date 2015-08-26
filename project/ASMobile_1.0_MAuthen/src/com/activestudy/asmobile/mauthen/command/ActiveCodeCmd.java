@@ -29,15 +29,20 @@ public class ActiveCodeCmd extends ASBaseCommand {
     DeviceInfoEntity deviceInfo;
     String activationId;
     String authenId;
+    
 
     public ActiveCodeCmd(AccountInfoEntity accountInfo, DeviceInfoEntity deviceInfo) {
         this.deviceInfo = deviceInfo;
         this.accountInfo = accountInfo;
     }
+    
+    
 
     public ActiveCodeCmd() {
-        this.otpCode = otpCode;
+        
     }
+    
+    
 
     @Override
     public void execute() {
@@ -84,5 +89,38 @@ public class ActiveCodeCmd extends ASBaseCommand {
     public void setDeviceInfo(DeviceInfoEntity deviceInfo) {
         this.deviceInfo = deviceInfo;
     }
+
+    public String getActivationId() {
+        return activationId;
+    }
+
+    public void setActivationId(String activationId) {
+        this.activationId = activationId;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
+    }
+
+    public AccountInfoEntity getAccountInfo() {
+        return accountInfo;
+    }
+
+    public void setAccountInfo(AccountInfoEntity accountInfo) {
+        this.accountInfo = accountInfo;
+    }
+    
 
 }
