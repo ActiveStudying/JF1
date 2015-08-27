@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package com.activestudy.asmobile.mservice.command;
+
 import com.activestudy.Utitity.db.DBException;
 import com.activestudy.asmobile.entity.AccountInfoEntity;
 import com.activestudy.asmobile.entity.DeviceInfoEntity;
@@ -16,16 +17,18 @@ import java.util.logging.Logger;
 import org.apache.commons.lang.RandomStringUtils;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
+
 /**
  *
  * @author tanhai
  */
-public class CreateGroupCmd extends ASBaseCommand{
+public class CreateGroupCmd extends ASBaseCommand {
+
     String nameGroup;
     int groupId;
-    
+
     public CreateGroupCmd() {
-        
+
     }
 
     @Override
@@ -36,37 +39,32 @@ public class CreateGroupCmd extends ASBaseCommand{
         } catch (JSONException ex) {
             Logger.getLogger(CreateGroupCmd.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
-    
+
     @Override
     public void execute() {
         DbActive dbActiveCmd = new DbActive();
         try {
             activationId = RandomStringUtils.randomAlphanumeric(20);
             dbActiveCmd.setActivationId(activationId);
-            Processor.getInstance().getDbCtrl().execute(dbActiveCmd);  
-            
+            Processor.getInstance().getDbCtrl().execute(dbActiveCmd);
+
         } catch (DBException ex) {
             Logger.getLogger(CreateGroupCmd.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public String getOtpCode() {
-        return otpCode;
+    @Override
+    public String getResponse() {
+         super.getResponse(); //To change body of generated methods, choose Tools | Templates.
+        try {
+            resultDataJson.put("groupId", groupId);
+            resultJson.put("resultData", resultDataJson);
+        } catch (JSONException ex) {
+            Logger.getLogger(CreateGroupCmd.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return resultJson.toString();
     }
 
-    public void setOtpCode(String otpCode) {
-        this.otpCode = otpCode;
-    }
-
-    public DeviceInfoEntity getDeviceInfo() {
-        return deviceInfo;
-    }
-
-    public void setDeviceInfo(DeviceInfoEntity deviceInfo) {
-        this.deviceInfo = deviceInfo;
-    }
-    
-    
 }
