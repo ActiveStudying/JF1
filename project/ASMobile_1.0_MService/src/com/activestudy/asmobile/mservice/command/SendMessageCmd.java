@@ -22,12 +22,13 @@ import org.codehaus.jettison.json.JSONObject;
  *
  * @author tanhai
  */
-public class CreateGroupCmd extends ASBaseCommand {
+public class SendMessageCmd extends ASBaseCommand {
 
-    String nameGroup;
-    int groupId;
+    int messageId;
+    String messageData;
+    String messageTime;
 
-    public CreateGroupCmd() {
+    public SendMessageCmd() {
 
     }
 
@@ -35,34 +36,34 @@ public class CreateGroupCmd extends ASBaseCommand {
     public void parse(String content) {
         try {
             super.parse(content); //To change body of generated methods, choose Tools | Templates.
-            nameGroup = inJsonObj.getString("nameGroup");
+            messageData = inJsonObj.getString("messageData");
+            messageTime = inJsonObj.getString("messageTime");
         } catch (JSONException ex) {
-            Logger.getLogger(CreateGroupCmd.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SendMessageCmd.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     @Override
     public void execute() {
         DbActive dbActiveCmd = new DbActive();
         try {
-            activationId = RandomStringUtils.randomAlphanumeric(20);
-            dbActiveCmd.setActivationId(activationId);
+//            activationId = RandomStringUtils.randomAlphanumeric(20);
+//            dbActiveCmd.setActivationId(activationId);
             Processor.getInstance().getDbCtrl().execute(dbActiveCmd);
 
         } catch (DBException ex) {
-            Logger.getLogger(CreateGroupCmd.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SendMessageCmd.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @Override
     public String getResponse() {
-         super.getResponse(); //To change body of generated methods, choose Tools | Templates.
+        super.getResponse(); //To change body of generated methods, choose Tools | Templates.
         try {
-            resultDataJson.put("groupId", groupId);
+            resultDataJson.put("messageId", messageId);
             outJson.put("resultData", resultDataJson);
         } catch (JSONException ex) {
-            Logger.getLogger(CreateGroupCmd.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SendMessageCmd.class.getName()).log(Level.SEVERE, null, ex);
         }
         return outJson.toString();
     }

@@ -25,53 +25,39 @@ import org.codehaus.jettison.json.JSONObject;
  */
 public class GetListClassCmd extends ASBaseCommand {
 
-    String otpCode;
-    DeviceInfoEntity deviceInfo;
-    String activationId;
-    DbGetListClass dbGetListClassCmd = new DbGetListClass();
+    ArrayList<Class> lstClass = new ArrayList<>();
+//    DbGetListClass dbGetListClassCmd = new DbGetListClass();
 
-    public GetListClassCmd(AccountInfoEntity accountInfo, DeviceInfoEntity deviceInfo, String sessionId) {
-        this.deviceInfo = deviceInfo;
-        this.accountInfo = accountInfo;
+    @Override
+    public void parse(String content) {
+        super.parse(content); //To change body of generated methods, choose Tools | Templates.
 
     }
 
     @Override
     public void execute() {
-
-        try {
-            Processor.getInstance().getDbCtrl().execute(dbGetListClassCmd);
-
-          //lay dc lstClass roi sau gui di ntn? Đóng vào Json.
-            //dong response
-        } catch (DBException ex) {
-            Logger.getLogger(GetListClassCmd.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public DeviceInfoEntity getDeviceInfo() {
-        return deviceInfo;
-    }
-
-    public void setDeviceInfo(DeviceInfoEntity deviceInfo) {
-        this.deviceInfo = deviceInfo;
+//
+//        try {
+//            Processor.getInstance().getDbCtrl().execute(dbGetListClassCmd);
+//
+//            //lay dc lstClass roi sau gui di ntn? Đóng vào Json.
+//            //dong response
+//        } catch (DBException ex) {
+//            Logger.getLogger(GetListClassCmd.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
 
     @Override
     public String getResponse() {
-        String content = null;
         try {
-            ArrayList<ClassInfoEntity> lstClass = dbGetListClassCmd.getListClass();
-            JSONObject json = new JSONObject("listClass");
+            super.getResponse();
+            resultDataJson.put("listClass", lstClass);
 
-            for (int i = 0; i < lstClass.size(); i++) {
-                json.put("class_" + i, lstClass.get(i));
-            }
-             content = json.toString();
+            outJson.put("resultDataJson", resultDataJson);
         } catch (JSONException ex) {
             Logger.getLogger(GetListClassCmd.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return content;
+        return outJson.toString();
     }
-    
+
 }

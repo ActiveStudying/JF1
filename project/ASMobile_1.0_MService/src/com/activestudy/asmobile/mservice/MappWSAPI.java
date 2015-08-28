@@ -9,7 +9,7 @@ package com.activestudy.asmobile.mservice;
 import com.activestudy.Utility.JSONUtility;
 import com.activestudy.asmobile.entity.AccountInfoEntity;
 import com.activestudy.asmobile.entity.DeviceInfoEntity;
-import com.activestudy.asmobile.mservice.command.CreateGroupCmd;
+import com.activestudy.asmobile.mservice.command.*;
 import javax.ws.rs.*;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -74,6 +74,7 @@ public class MappWSAPI {
 
         return activeCmdObj.getResponse();
     }
+
     @POST
     @Path("create-event")
     public String createEvent(String content) {
@@ -154,42 +155,74 @@ public class MappWSAPI {
     @POST
     @Path("synch-login")
     public String synchLogin(String content) {
+        SynchLoginCmd synchLoginCmdObj = new SynchLoginCmd();
+        synchLoginCmdObj.parse(content);
+        synchLoginCmdObj.execute();
+        return synchLoginCmdObj.getResponse();
     }
 
     @DELETE
     @Path("synch-logout")
     public String synchLogout(String content) {
+        SynchLogoutCmd synchLogoutObj = new SynchLogoutCmd();
+        synchLogoutObj.parse(content);
+        synchLogoutObj.execute();
+        return synchLogoutObj.getResponse();
     }
 
     @GET
     @Path("get-list-class")
     public String getListClass(String content) {
+        GetListClassCmd requestJoinClassCmdObj = new GetListClassCmd();
+        requestJoinClassCmdObj.parse(content);
+        requestJoinClassCmdObj.execute();
+        return requestJoinClassCmdObj.getResponse();
 
     }
 
     @POST
     @Path("send-confestion-message")
     public String sendConfestionMessage(String content) {
+        SendConfestionMessageCmd sendConfestionMessageCmdObj = new SendConfestionMessageCmd();
+        sendConfestionMessageCmdObj.parse(content);
+        sendConfestionMessageCmdObj.execute();
+        return sendConfestionMessageCmdObj.getResponse();
     }
 
     @POST
     @Path("send-message")
     public String sendMessage(String content) {
+        SendMessageCmd sendMessageCmd = new SendMessageCmd();
+        sendMessageCmd.parse(content);
+        sendMessageCmd.execute();
+        return sendMessageCmd.getResponse();
     }
 
     @POST
     @Path("request-join-class")
     public String requestJoinClass(String content) {
+        RequestJoinClassCmd requestJoinClassCmdObj = new RequestJoinClassCmd();
+        requestJoinClassCmdObj.parse(content);
+        requestJoinClassCmdObj.execute();
+        return requestJoinClassCmdObj.getResponse();
     }
 
     @POST
     @Path("request-create-course")
     public String requestCreateCourse(String content) {
+        RequestCreateCourseCmd requestCreateCourseCmdObj = new RequestCreateCourseCmd();
+        requestCreateCourseCmdObj.parse(content);
+        requestCreateCourseCmdObj.execute();
+        return requestCreateCourseCmdObj.getResponse();
     }
 
     @POST
     @Path("register-course")
     public String registerCourse(String content) {
+        RegisterCourseCmd registerCourseCmdObj = new RegisterCourseCmd();
+        registerCourseCmdObj.parse(content);
+        registerCourseCmdObj.execute();
+        return registerCourseCmdObj.getResponse();
     }
 
 }

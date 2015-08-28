@@ -56,10 +56,10 @@ public abstract class ASBaseCommand extends AbsCommand {
 
     public void setDbCtrl(IDBModule dbCtrl) {
         this.dbCtrl = dbCtrl;
-    }
+    }   
 
     public String getResponse() {
-
+        resultDataJson = new JSONObject();
         outJson = new JSONObject();
         resultJson = new JSONObject();
         try {

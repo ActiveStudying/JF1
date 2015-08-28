@@ -22,12 +22,11 @@ import org.codehaus.jettison.json.JSONObject;
  *
  * @author tanhai
  */
-public class CreateGroupCmd extends ASBaseCommand {
+public class RequestJoinClassCmd extends ASBaseCommand {
 
-    String nameGroup;
-    int groupId;
+    int classId;
 
-    public CreateGroupCmd() {
+    public RequestJoinClassCmd() {
 
     }
 
@@ -35,9 +34,9 @@ public class CreateGroupCmd extends ASBaseCommand {
     public void parse(String content) {
         try {
             super.parse(content); //To change body of generated methods, choose Tools | Templates.
-            nameGroup = inJsonObj.getString("nameGroup");
+            classId = inJsonObj.getInt("classId");
         } catch (JSONException ex) {
-            Logger.getLogger(CreateGroupCmd.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RequestJoinClassCmd.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -46,25 +45,18 @@ public class CreateGroupCmd extends ASBaseCommand {
     public void execute() {
         DbActive dbActiveCmd = new DbActive();
         try {
-            activationId = RandomStringUtils.randomAlphanumeric(20);
-            dbActiveCmd.setActivationId(activationId);
+//            activationId = RandomStringUtils.randomAlphanumeric(20);
+//            dbActiveCmd.setActivationId(activationId);
             Processor.getInstance().getDbCtrl().execute(dbActiveCmd);
 
         } catch (DBException ex) {
-            Logger.getLogger(CreateGroupCmd.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RequestJoinClassCmd.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @Override
     public String getResponse() {
-         super.getResponse(); //To change body of generated methods, choose Tools | Templates.
-        try {
-            resultDataJson.put("groupId", groupId);
-            outJson.put("resultData", resultDataJson);
-        } catch (JSONException ex) {
-            Logger.getLogger(CreateGroupCmd.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return outJson.toString();
+     return    super.getResponse(); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
