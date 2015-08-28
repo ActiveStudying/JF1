@@ -22,12 +22,14 @@ import org.codehaus.jettison.json.JSONObject;
  *
  * @author tanhai
  */
-public class CreateGroupCmd extends ASBaseCommand {
+public class SendConfestionMessageCmd extends ASBaseCommand {
 
     String nameGroup;
-    int groupId;
-
-    public CreateGroupCmd() {
+    String accountNameMagic;
+    String messageData;
+    String messageTime;
+    int messageId;
+    public SendConfestionMessageCmd() {
 
     }
 
@@ -35,9 +37,11 @@ public class CreateGroupCmd extends ASBaseCommand {
     public void parse(String content) {
         try {
             super.parse(content); //To change body of generated methods, choose Tools | Templates.
-            nameGroup = inJsonObj.getString("nameGroup");
+            accountNameMagic = inJsonObj.getString("accountNameMagic");
+            messageData = inJsonObj.getString("messageData");
+            messageTime = inJsonObj.getString("messageTime");
         } catch (JSONException ex) {
-            Logger.getLogger(CreateGroupCmd.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SendConfestionMessageCmd.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -46,12 +50,12 @@ public class CreateGroupCmd extends ASBaseCommand {
     public void execute() {
         DbActive dbActiveCmd = new DbActive();
         try {
-            activationId = RandomStringUtils.randomAlphanumeric(20);
-            dbActiveCmd.setActivationId(activationId);
+//            activationId = RandomStringUtils.randomAlphanumeric(20);
+//            dbActiveCmd.setActivationId(activationId);
             Processor.getInstance().getDbCtrl().execute(dbActiveCmd);
 
         } catch (DBException ex) {
-            Logger.getLogger(CreateGroupCmd.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SendConfestionMessageCmd.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -59,10 +63,10 @@ public class CreateGroupCmd extends ASBaseCommand {
     public String getResponse() {
          super.getResponse(); //To change body of generated methods, choose Tools | Templates.
         try {
-            resultDataJson.put("groupId", groupId);
+            resultDataJson.put("messageId", messageId);
             outJson.put("resultData", resultDataJson);
         } catch (JSONException ex) {
-            Logger.getLogger(CreateGroupCmd.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SendConfestionMessageCmd.class.getName()).log(Level.SEVERE, null, ex);
         }
         return outJson.toString();
     }
