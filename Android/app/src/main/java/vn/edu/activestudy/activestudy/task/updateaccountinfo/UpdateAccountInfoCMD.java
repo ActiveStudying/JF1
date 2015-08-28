@@ -1,5 +1,6 @@
 package vn.edu.activestudy.activestudy.task.updateaccountinfo;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -14,17 +15,28 @@ import org.json.JSONObject;
 import vn.edu.activestudy.activestudy.ASController;
 import vn.edu.activestudy.activestudy.callback.TaskListener;
 import vn.edu.activestudy.activestudy.common.Constants;
-import vn.edu.activestudy.activestudy.model.ResponseData;
+import vn.edu.activestudy.activestudy.common.ResponseCode;
+import vn.edu.activestudy.activestudy.model.Result;
 import vn.edu.activestudy.activestudy.task.getaccountinfo.RequestGetAccountInfo;
+import vn.edu.activestudy.activestudy.util.PreferenceUtil;
 
 /**
  * Created by dell123 on 8/28/2015.
  */
 public class UpdateAccountInfoCMD {
     private static final String TAG = UpdateAccountInfoCMD.class.getSimpleName();
-    private static String url = Constants.URL_SERVER + "/updateAccountInfo";
+    private static String url = Constants.URL_SERVER + Constants.URL_UPDATE_ACCOUNT_INFO;
 
-    public static void execute(RequestUpdateAccInfo request, final TaskListener listener) throws JSONException {
+    public static void execute(Context context, final TaskListener listener) throws JSONException {
+
+        String sessionId = PreferenceUtil.getString(context, Constants.PREFERENCE_SESSION_ID, "");
+        String accountId = PreferenceUtil.getString(context, Constants.PREFERENCE_ACCOUNT_ID, "");
+        String deviceId = PreferenceUtil.getString(context, Constants.PREFERENCE_DEVICE_ID, "");
+
+        RequestUpdateAccInfo request = new RequestUpdateAccInfo();
+        request.setAccountId(accountId);
+        request.setDeviceId(deviceId);
+        request.setSessionId(sessionId);
 
         String json = new Gson().toJson(request);
         Log.d(TAG, json);
@@ -35,7 +47,7 @@ public class UpdateAccountInfoCMD {
             @Override
             public void onResponse(JSONObject response) {
                 Log.d(TAG, response.toString());
-                ResponseData resp = new Gson().fromJson(response.toString(), ResponseData.class);
+                ResponseUpdateAccInfo resp = new Gson().fromJson(response.toString(), ResponseUpdateAccInfo.class);
 
                 listener.onResult(resp);
             }
@@ -44,7 +56,13 @@ public class UpdateAccountInfoCMD {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                ResponseData resp = new ResponseData();
+
+                Result result = new Result();
+                result.setCode(ResponseCode.ERROR);
+
+                ResponseUpdateAccInfo resp = new ResponseUpdateAccInfo();
+                resp.setResult(result);
+
                 listener.onResult(resp);
             }
         });

@@ -6,13 +6,13 @@ import com.google.gson.annotations.SerializedName;
  * Created by dell123 on 8/28/2015.
  */
 public class RequestLogin {
-    @SerializedName("authen-id")
+    @SerializedName("authenId")
     private String authenId;
 
-    @SerializedName("account-id")
+    @SerializedName("accountId")
     private String accountId;
 
-    @SerializedName("device-id")
+    @SerializedName("deviceId")
     private String deviceId;
 
     public void setAuthenId(String authenId) {
@@ -25,5 +25,17 @@ public class RequestLogin {
 
     public void setDeviceId(String deviceId) {
         this.deviceId = deviceId;
+    }
+
+    public String getAuthenId() {
+        return authenId;
+    }
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public String getDeviceId() {
+        return deviceId;
     }
 }

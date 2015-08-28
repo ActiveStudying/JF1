@@ -9,18 +9,17 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gcm.GCMRegistrar;
-import com.google.gson.annotations.SerializedName;
 
 import org.json.JSONException;
 
 import vn.edu.activestudy.activestudy.callback.TaskListener;
 import vn.edu.activestudy.activestudy.common.Constants;
+import vn.edu.activestudy.activestudy.common.ResponseCode;
 import vn.edu.activestudy.activestudy.model.DeviceInfo;
-import vn.edu.activestudy.activestudy.model.ResponseData;
 import vn.edu.activestudy.activestudy.model.Result;
-import vn.edu.activestudy.activestudy.model.Resultdata;
 import vn.edu.activestudy.activestudy.task.activate.ActivateCMD;
 import vn.edu.activestudy.activestudy.task.activate.RequestActivate;
+import vn.edu.activestudy.activestudy.task.activate.ResponseActivate;
 import vn.edu.activestudy.activestudy.task.activate.ResultDataActivate;
 import vn.edu.activestudy.activestudy.util.network.LruBitmapCache;
 
@@ -94,17 +93,23 @@ public class ASController {
 
     public void activate(String accountId, DeviceInfo deviceInfo) {
         try {
-            RequestActivate request = new RequestActivate();
-            request.setAccountId(accountId);
-            request.setDeviceInfo(deviceInfo);
-
-            ActivateCMD.execute(request, new TaskListener() {
+            ActivateCMD.execute(accountId,deviceInfo, new TaskListener() {
                 @Override
                 public void onResult(Object resp) {
-                    ResponseData response = (ResponseData) resp;
+                    ResponseActivate response = (ResponseActivate) resp;
                     Result result = response.getResult();
-                    ResultDataActivate resultData = (ResultDataActivate) response.getResultData();
-                    //TODO: process continue response
+                    switch (result.getCode()) {
+                        case ResponseCode.SUCCESS:
+                            ResultDataActivate resultData = (ResultDataActivate) response.getResultData();
+                            //TODO: process continue response
+
+                            break;
+                        case ResponseCode.ERROR:
+                            break;
+                        case ResponseCode.SYSTEM_ERROR:
+                            break;
+
+                    }
                 }
             });
         } catch (JSONException e) {

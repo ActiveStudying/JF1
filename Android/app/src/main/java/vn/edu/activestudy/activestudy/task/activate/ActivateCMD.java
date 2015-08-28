@@ -15,7 +15,9 @@ import org.json.JSONObject;
 import vn.edu.activestudy.activestudy.ASController;
 import vn.edu.activestudy.activestudy.callback.TaskListener;
 import vn.edu.activestudy.activestudy.common.Constants;
-import vn.edu.activestudy.activestudy.model.ResponseData;
+import vn.edu.activestudy.activestudy.common.ResponseCode;
+import vn.edu.activestudy.activestudy.model.DeviceInfo;
+import vn.edu.activestudy.activestudy.model.Result;
 
 /**
  * Created by dell123 on 8/24/2015.
@@ -23,9 +25,12 @@ import vn.edu.activestudy.activestudy.model.ResponseData;
 public class ActivateCMD {
 
     private static final String TAG = ActivateCMD.class.getSimpleName();
-    private static String url = Constants.URL_SERVER + "/active";
+    private static String url = Constants.URL_SERVER + Constants.URL_ACTIVE;
 
-    public static void execute(RequestActivate request, final TaskListener listener) throws JSONException {
+    public static void execute(String accountId, DeviceInfo deviceInfo, final TaskListener listener) throws JSONException {
+        RequestActivate request = new RequestActivate();
+        request.setAccountId(accountId);
+        request.setDeviceInfo(deviceInfo);
 
         String json = new Gson().toJson(request);
         Log.d(TAG, json);
@@ -36,8 +41,7 @@ public class ActivateCMD {
             @Override
             public void onResponse(JSONObject response) {
                 Log.d(TAG, response.toString());
-                ResponseData resp = new Gson().fromJson(response.toString(), ResponseData.class);
-
+                ResponseActivate resp = new Gson().fromJson(response.toString(), ResponseActivate.class);
                 listener.onResult(resp);
             }
         }, new Response.ErrorListener() {
@@ -45,7 +49,10 @@ public class ActivateCMD {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                ResponseData resp = new ResponseData();
+                ResponseActivate resp = new ResponseActivate();
+                Result result = new Result();
+                result.setCode(ResponseCode.ERROR);
+                resp.setResult(result);
                 listener.onResult(resp);
             }
         });

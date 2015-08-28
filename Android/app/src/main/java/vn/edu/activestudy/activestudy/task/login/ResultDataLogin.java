@@ -2,16 +2,18 @@ package vn.edu.activestudy.activestudy.task.login;
 
 import com.google.gson.annotations.SerializedName;
 
-import vn.edu.activestudy.activestudy.model.Resultdata;
-
 /**
  * Created by dell123 on 8/28/2015.
  */
-public class ResultDataLogin extends Resultdata {
-    @SerializedName("session-id")
+public class ResultDataLogin {
+    @SerializedName("sessionId")
     private String sessionId;
 
     public String getSessionId() {
         return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
     }
 }

@@ -1,5 +1,6 @@
 package vn.edu.activestudy.activestudy.task.validateuser;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -14,17 +15,25 @@ import org.json.JSONObject;
 import vn.edu.activestudy.activestudy.ASController;
 import vn.edu.activestudy.activestudy.callback.TaskListener;
 import vn.edu.activestudy.activestudy.common.Constants;
-import vn.edu.activestudy.activestudy.model.ResponseData;
-import vn.edu.activestudy.activestudy.task.updateaccountinfo.RequestUpdateAccInfo;
+import vn.edu.activestudy.activestudy.common.ResponseCode;
+import vn.edu.activestudy.activestudy.model.Result;
+import vn.edu.activestudy.activestudy.util.PreferenceUtil;
 
 /**
  * Created by dell123 on 8/28/2015.
  */
 public class ValidateUserCMD {
     private static final String TAG = ValidateUserCMD.class.getSimpleName();
-    private static String url = Constants.URL_SERVER + "/validateUser";
+    private static String url = Constants.URL_SERVER + Constants.URL_VALIDATE_USER;
 
-    public static void execute(RequestValidateUser request, final TaskListener listener) throws JSONException {
+    public static void execute(Context context, final TaskListener listener) throws JSONException {
+
+        String sessionId = PreferenceUtil.getString(context, Constants.PREFERENCE_SESSION_ID, "");
+        String accountId = PreferenceUtil.getString(context, Constants.PREFERENCE_ACCOUNT_ID, "");
+
+        RequestValidateUser request = new RequestValidateUser();
+        request.setSessionId(sessionId);
+        request.setAccountId(accountId);
 
         String json = new Gson().toJson(request);
         Log.d(TAG, json);
@@ -35,7 +44,7 @@ public class ValidateUserCMD {
             @Override
             public void onResponse(JSONObject response) {
                 Log.d(TAG, response.toString());
-                ResponseData resp = new Gson().fromJson(response.toString(), ResponseData.class);
+                ResponseValidateUser resp = new Gson().fromJson(response.toString(), ResponseValidateUser.class);
 
                 listener.onResult(resp);
             }
@@ -44,7 +53,13 @@ public class ValidateUserCMD {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                ResponseData resp = new ResponseData();
+
+                Result result = new Result();
+                result.setCode(ResponseCode.ERROR);
+
+                ResponseValidateUser resp = new ResponseValidateUser();
+                resp.setResult(result);
+
                 listener.onResult(resp);
             }
         });

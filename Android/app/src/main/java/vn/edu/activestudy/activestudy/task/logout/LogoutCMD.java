@@ -1,5 +1,6 @@
 package vn.edu.activestudy.activestudy.task.logout;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -14,17 +15,25 @@ import org.json.JSONObject;
 import vn.edu.activestudy.activestudy.ASController;
 import vn.edu.activestudy.activestudy.callback.TaskListener;
 import vn.edu.activestudy.activestudy.common.Constants;
-import vn.edu.activestudy.activestudy.model.ResponseData;
-import vn.edu.activestudy.activestudy.task.login.RequestLogin;
+import vn.edu.activestudy.activestudy.common.ResponseCode;
+import vn.edu.activestudy.activestudy.model.Result;
+import vn.edu.activestudy.activestudy.util.PreferenceUtil;
 
 /**
  * Created by dell123 on 8/28/2015.
  */
 public class LogoutCMD {
     private static final String TAG = LogoutCMD.class.getSimpleName();
-    private static String url = Constants.URL_SERVER + "/LogOut";
+    private static String url = Constants.URL_SERVER + Constants.URL_LOGOUT;
 
-    public static void execute(RequestLogout request, final TaskListener listener) throws JSONException {
+    public static void execute(Context context, final TaskListener listener) throws JSONException {
+
+        String sessionId = PreferenceUtil.getString(context, Constants.PREFERENCE_SESSION_ID, "");
+        String accountId = PreferenceUtil.getString(context, Constants.PREFERENCE_ACCOUNT_ID, "");
+
+        RequestLogout request=new RequestLogout();
+        request.setAccountId(accountId);
+        request.setSessionId(sessionId);
 
         String json = new Gson().toJson(request);
         Log.d(TAG, json);
@@ -35,7 +44,7 @@ public class LogoutCMD {
             @Override
             public void onResponse(JSONObject response) {
                 Log.d(TAG, response.toString());
-                ResponseData resp = new Gson().fromJson(response.toString(), ResponseData.class);
+                ResponseLogout resp = new Gson().fromJson(response.toString(), ResponseLogout.class);
 
                 listener.onResult(resp);
             }
@@ -44,11 +53,17 @@ public class LogoutCMD {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                ResponseData resp = new ResponseData();
+
+                Result result = new Result();
+                result.setCode(ResponseCode.ERROR);
+
+                ResponseLogout resp = new ResponseLogout();
+                resp.setResult(result);
+
                 listener.onResult(resp);
             }
         });
 
-        ASController.getInstance().addToRequestQueue(jsonObjReq, "login_request");
+        ASController.getInstance().addToRequestQueue(jsonObjReq, "logout_request");
     }
 }

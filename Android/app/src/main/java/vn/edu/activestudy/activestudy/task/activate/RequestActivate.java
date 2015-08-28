@@ -9,10 +9,10 @@ import vn.edu.activestudy.activestudy.model.DeviceInfo;
  */
 public class RequestActivate {
 
-    @SerializedName("account-id")
+    @SerializedName("accountId")
     private String accountId;
 
-    @SerializedName("device-info")
+    @SerializedName("deviceInfo")
     private DeviceInfo deviceInfo;
 
     public void setAccountId(String accountId) {

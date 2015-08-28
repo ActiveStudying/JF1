@@ -1,12 +1,14 @@
 package vn.edu.activestudy.activestudy.task.logout;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by dell123 on 8/28/2015.
  */
 public class RequestLogout {
-    @SuppressWarnings("sessionId")
+    @SerializedName("sessionId")
     private String sessionId;
-    @SuppressWarnings("accountId")
+    @SerializedName("accountId")
     private String accountId;
 
     public void setSessionId(String sessionId) {
@@ -15,5 +17,13 @@ public class RequestLogout {
 
     public void setAccountId(String accountId) {
         this.accountId = accountId;
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public String getAccountId() {
+        return accountId;
     }
 }

@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
  */
 public class RequestActivateOTP {
 
-    @SerializedName("otpcode")
+    @SerializedName("OTPCode")
     private String otpCode;
 
     @SerializedName("activationid")

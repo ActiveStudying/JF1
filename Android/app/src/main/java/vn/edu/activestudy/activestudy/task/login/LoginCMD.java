@@ -1,5 +1,6 @@
 package vn.edu.activestudy.activestudy.task.login;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -14,8 +15,10 @@ import org.json.JSONObject;
 import vn.edu.activestudy.activestudy.ASController;
 import vn.edu.activestudy.activestudy.callback.TaskListener;
 import vn.edu.activestudy.activestudy.common.Constants;
-import vn.edu.activestudy.activestudy.model.ResponseData;
-import vn.edu.activestudy.activestudy.task.activateOTP.RequestActivateOTP;
+import vn.edu.activestudy.activestudy.common.ResponseCode;
+import vn.edu.activestudy.activestudy.model.Result;
+import vn.edu.activestudy.activestudy.task.getserviceaddress.ResponseGetServiceAddress;
+import vn.edu.activestudy.activestudy.util.PreferenceUtil;
 
 /**
  * Created by dell123 on 8/28/2015.
@@ -23,9 +26,18 @@ import vn.edu.activestudy.activestudy.task.activateOTP.RequestActivateOTP;
 public class LoginCMD {
 
     private static final String TAG = LoginCMD.class.getSimpleName();
-    private static String url = Constants.URL_SERVER + "/login";
+    private static String url = Constants.URL_SERVER + Constants.URL_LOGIN;
 
-    public static void execute(RequestLogin request, final TaskListener listener) throws JSONException {
+    public static void execute(Context context, final TaskListener listener) throws JSONException {
+
+        String deviceId = PreferenceUtil.getString(context, Constants.PREFERENCE_DEVICE_ID, "");
+        String accountId = PreferenceUtil.getString(context, Constants.PREFERENCE_ACCOUNT_ID, "");
+        String authenId = PreferenceUtil.getString(context, Constants.PREFERENCE_AUTHEN_ID, "");
+
+        RequestLogin request = new RequestLogin();
+        request.setAccountId(accountId);
+        request.setDeviceId(deviceId);
+        request.setAccountId(authenId);
 
         String json = new Gson().toJson(request);
         Log.d(TAG, json);
@@ -36,7 +48,7 @@ public class LoginCMD {
             @Override
             public void onResponse(JSONObject response) {
                 Log.d(TAG, response.toString());
-                ResponseData resp = new Gson().fromJson(response.toString(), ResponseData.class);
+                ResponseLogin resp = new Gson().fromJson(response.toString(), ResponseLogin.class);
 
                 listener.onResult(resp);
             }
@@ -45,7 +57,13 @@ public class LoginCMD {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                ResponseData resp = new ResponseData();
+
+                Result result = new Result();
+                result.setCode(ResponseCode.ERROR);
+
+                ResponseLogin resp = new ResponseLogin();
+                resp.setResult(result);
+
                 listener.onResult(resp);
             }
         });

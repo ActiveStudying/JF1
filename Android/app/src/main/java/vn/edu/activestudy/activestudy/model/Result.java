@@ -6,8 +6,10 @@ import com.google.gson.annotations.SerializedName;
  * Created by dell123 on 8/26/2015.
  */
 public class Result {
+
     @SerializedName("code")
     private int code;
+
     @SerializedName("description")
     private String description;
 

@@ -1,5 +1,6 @@
 package vn.edu.activestudy.activestudy.task.getserviceaddress;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -14,17 +15,28 @@ import org.json.JSONObject;
 import vn.edu.activestudy.activestudy.ASController;
 import vn.edu.activestudy.activestudy.callback.TaskListener;
 import vn.edu.activestudy.activestudy.common.Constants;
-import vn.edu.activestudy.activestudy.model.ResponseData;
-import vn.edu.activestudy.activestudy.task.updateaccountinfo.RequestUpdateAccInfo;
+import vn.edu.activestudy.activestudy.common.ResponseCode;
+import vn.edu.activestudy.activestudy.model.Result;
+import vn.edu.activestudy.activestudy.task.getaccountinfo.RequestGetAccountInfo;
+import vn.edu.activestudy.activestudy.util.PreferenceUtil;
 
 /**
  * Created by dell123 on 8/28/2015.
  */
 public class GetServiceAddressCMD {
     private static final String TAG = GetServiceAddressCMD.class.getSimpleName();
-    private static String url = Constants.URL_SERVER + "/getServiceAddress";
+    private static String url = Constants.URL_SERVER + Constants.URL_GET_SERVICE_ADDRESS;
 
-    public static void execute(RequestGetServiceAddress request, final TaskListener listener) throws JSONException {
+    public static void execute(Context context, final TaskListener listener) throws JSONException {
+
+        String sessionId = PreferenceUtil.getString(context, Constants.PREFERENCE_SESSION_ID, "");
+        String accountId = PreferenceUtil.getString(context, Constants.PREFERENCE_ACCOUNT_ID, "");
+        String deviceId = PreferenceUtil.getString(context, Constants.PREFERENCE_DEVICE_ID, "");
+
+        RequestGetServiceAddress request = new RequestGetServiceAddress();
+        request.setAccountId(accountId);
+        request.setDeviceId(deviceId);
+        request.setSessionId(sessionId);
 
         String json = new Gson().toJson(request);
         Log.d(TAG, json);
@@ -35,7 +47,7 @@ public class GetServiceAddressCMD {
             @Override
             public void onResponse(JSONObject response) {
                 Log.d(TAG, response.toString());
-                ResponseData resp = new Gson().fromJson(response.toString(), ResponseData.class);
+                ResponseGetServiceAddress resp = new Gson().fromJson(response.toString(), ResponseGetServiceAddress.class);
 
                 listener.onResult(resp);
             }
@@ -44,7 +56,10 @@ public class GetServiceAddressCMD {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                ResponseData resp = new ResponseData();
+                ResponseGetServiceAddress resp = new ResponseGetServiceAddress();
+                Result result = new Result();
+                result.setCode(ResponseCode.ERROR);
+                resp.setResult(result);
                 listener.onResult(resp);
             }
         });

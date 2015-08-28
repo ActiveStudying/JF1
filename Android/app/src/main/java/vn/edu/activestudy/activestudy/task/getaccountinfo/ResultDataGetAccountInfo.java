@@ -4,13 +4,12 @@ import com.google.gson.annotations.SerializedName;
 
 import vn.edu.activestudy.activestudy.model.AccountInfo;
 import vn.edu.activestudy.activestudy.model.Expect;
-import vn.edu.activestudy.activestudy.model.Resultdata;
 import vn.edu.activestudy.activestudy.model.Skill;
 
 /**
  * Created by dell123 on 8/28/2015.
  */
-public class ResultDataGetAccountInfo extends Resultdata {
+public class ResultDataGetAccountInfo {
 
     @SerializedName("AccountInfo")
     private AccountInfo accountInfo;
