@@ -1,9 +1,8 @@
-package vn.edu.activestudy.activestudy.task.activate;
+package vn.edu.activestudy.activestudy.task.login;
 
 import android.util.Log;
 
 import com.android.volley.Request;
-
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -16,22 +15,23 @@ import vn.edu.activestudy.activestudy.ASController;
 import vn.edu.activestudy.activestudy.callback.TaskListener;
 import vn.edu.activestudy.activestudy.common.Constants;
 import vn.edu.activestudy.activestudy.model.ResponseData;
+import vn.edu.activestudy.activestudy.task.activateOTP.RequestActivateOTP;
 
 /**
- * Created by dell123 on 8/24/2015.
+ * Created by dell123 on 8/28/2015.
  */
-public class ActivateCMD {
+public class LoginCMD {
 
-    private static final String TAG = ActivateCMD.class.getSimpleName();
-    private static String url = Constants.URL_SERVER + "/active";
+    private static final String TAG = LoginCMD.class.getSimpleName();
+    private static String url = Constants.URL_SERVER + "/login";
 
-    public static void execute(RequestActivate request, final TaskListener listener) throws JSONException {
+    public static void execute(RequestLogin request, final TaskListener listener) throws JSONException {
 
         String json = new Gson().toJson(request);
         Log.d(TAG, json);
         JSONObject obj = new JSONObject(json);
 
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST, url, obj, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.PUT, url, obj, new Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject response) {
@@ -50,7 +50,6 @@ public class ActivateCMD {
             }
         });
 
-        ASController.getInstance().addToRequestQueue(jsonObjReq, "activate_request");
+        ASController.getInstance().addToRequestQueue(jsonObjReq, "login_request");
     }
-
 }
