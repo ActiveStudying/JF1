@@ -1,7 +1,6 @@
 package vn.edu.activestudy.activestudy;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -15,9 +14,13 @@ import org.json.JSONException;
 
 import vn.edu.activestudy.activestudy.callback.TaskListener;
 import vn.edu.activestudy.activestudy.common.Constants;
+import vn.edu.activestudy.activestudy.common.ResponseCode;
+import vn.edu.activestudy.activestudy.model.DeviceInfo;
+import vn.edu.activestudy.activestudy.model.Result;
 import vn.edu.activestudy.activestudy.task.activate.ActivateCMD;
+import vn.edu.activestudy.activestudy.task.activate.RequestActivate;
 import vn.edu.activestudy.activestudy.task.activate.ResponseActivate;
-import vn.edu.activestudy.activestudy.util.AsyncTaskTools;
+import vn.edu.activestudy.activestudy.task.activate.ResultDataActivate;
 import vn.edu.activestudy.activestudy.util.network.LruBitmapCache;
 
 /**
@@ -54,22 +57,6 @@ public class ASController {
         return regID;
     }
 
-    public void activate(Context context) {
-        try {
-            ActivateCMD.execute(context, new TaskListener() {
-                @Override
-                public void onResult(Object resp) {
-                    ResponseActivate response = (ResponseActivate) resp;
-                    switch (response.getResponse()) {
-
-                    }
-                }
-            });
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
     public RequestQueue getRequestQueue() {
         if (mRequestQueue == null) {
             mRequestQueue = Volley.newRequestQueue(mContext);
@@ -100,8 +87,33 @@ public class ASController {
 
     public void cancelPendingRequests(Object tag) {
         if (mRequestQueue != null) {
-                mRequestQueue.cancelAll(tag);
+            mRequestQueue.cancelAll(tag);
         }
     }
 
+    public void activate(String accountId, DeviceInfo deviceInfo) {
+        try {
+            ActivateCMD.execute(accountId,deviceInfo, new TaskListener() {
+                @Override
+                public void onResult(Object resp) {
+                    ResponseActivate response = (ResponseActivate) resp;
+                    Result result = response.getResult();
+                    switch (result.getCode()) {
+                        case ResponseCode.SUCCESS:
+                            ResultDataActivate resultData = (ResultDataActivate) response.getResultData();
+                            //TODO: process continue response
+
+                            break;
+                        case ResponseCode.ERROR:
+                            break;
+                        case ResponseCode.SYSTEM_ERROR:
+                            break;
+
+                    }
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 }

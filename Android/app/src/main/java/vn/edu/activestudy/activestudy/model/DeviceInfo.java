@@ -4,6 +4,7 @@ package vn.edu.activestudy.activestudy.model;
  * Created by dell123 on 8/21/2015.
  */
 public class DeviceInfo {
+
     private String deviceID;
     private String deviceName;
     private String osName;

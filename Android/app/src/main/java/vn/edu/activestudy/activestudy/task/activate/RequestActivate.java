@@ -2,30 +2,24 @@ package vn.edu.activestudy.activestudy.task.activate;
 
 import com.google.gson.annotations.SerializedName;
 
+import vn.edu.activestudy.activestudy.model.DeviceInfo;
+
 /**
  * Created by dell123 on 8/24/2015.
  */
 public class RequestActivate {
 
-    @SerializedName("email")
-    private String email;
+    @SerializedName("accountId")
+    private String accountId;
 
-    @SerializedName("passord")
-    private String passord;
+    @SerializedName("deviceInfo")
+    private DeviceInfo deviceInfo;
 
-    public String getEmail() {
-        return email;
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassord() {
-        return passord;
-    }
-
-    public void setPassord(String passord) {
-        this.passord = passord;
+    public void setDeviceInfo(DeviceInfo deviceInfo) {
+        this.deviceInfo = deviceInfo;
     }
 }
