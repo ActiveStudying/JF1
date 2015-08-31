@@ -12,6 +12,7 @@ import com.activestudy.asmobile.entity.AccountInfoEntity;
 import com.activestudy.asmobile.entity.DeviceInfoEntity;
 import com.activestudy.asmobile.mauthen.command.ActiveCmd;
 import com.activestudy.asmobile.mauthen.command.ActiveCodeCmd;
+import com.activestudy.asmobile.mauthen.command.GetAccountInfo;
 import com.activestudy.asmobile.mauthen.command.LogIn;
 import com.sun.jersey.spi.resource.Singleton;
 import java.util.logging.Level;
@@ -118,26 +119,26 @@ public class MappWSAPI {
         String osVersion = "";
         String cloudKey = "";
         String devOther = "";
-        
+
         AccountInfoEntity accountInfo = null;
         DeviceInfoEntity deviceInfo = null;
 
         JSONObject jsonObj = new JSONObject();
 
         try {
-            authenId = jsonObj.getString("sessionId");
+            authenId = jsonObj.getString("authenId");
             accountId = jsonObj.getString("accountId");
-            deviceId = jsonObj.getString("accountId");
+            deviceId = jsonObj.getString("deviceId");
         } catch (JSONException ex) {
             Logger.getLogger(MappWSAPI.class.getName()).log(Level.SEVERE, null, ex);
         }
         LogIn loginOBj = new LogIn();
-        loginOBj.setSessionId(authenId);
-       accountInfo = new AccountInfoEntity(accountId, accountId, "");
+        loginOBj.setAuthenId(authenId);
+        accountInfo = new AccountInfoEntity(accountId, accountId, "");
         loginOBj.setAccountInfo(accountInfo);
         deviceInfo = new DeviceInfoEntity(deviceId, deviceName, osName, osVersion, cloudKey, devOther);
         loginOBj.setDeviceInfo(deviceInfo);
-       
+        // loginOBj.setDeviceId(deviceId);
         loginOBj.execute();
         logger.debug("[" + accountId + "," + authenId + ","
                 + "] - Activate response = " + loginOBj.getResponse());
@@ -145,4 +146,44 @@ public class MappWSAPI {
         return loginOBj.getResponse();
 
     }
+
+    @GET
+    @Path("GetAccountInfo")
+    public String getAccountInfo() {
+        String accountId = "";
+        String deviceId = "";
+        String sessionId = "";
+        String deviceName = "";
+        String osName = "";
+        String osVersion = "";
+        String cloudKey = "";
+        String devOther = "";
+        AccountInfoEntity accountInfo  = null;
+        DeviceInfoEntity deviceInfo = null;
+        
+        JSONObject jsonObj = new JSONObject();
+
+        try {
+            sessionId = jsonObj.getString("sessionId");
+            accountId = jsonObj.getString("accountId");
+            deviceId = jsonObj.getString("accountId");
+        } catch (JSONException ex) {
+            Logger.getLogger(MappWSAPI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        GetAccountInfo getAccountObj = new GetAccountInfo();
+        getAccountObj.setSessionId(sessionId);
+        accountInfo = new AccountInfoEntity(accountId, accountId, "");
+        getAccountObj.setAccountInfo(accountInfo);
+        deviceInfo = new DeviceInfoEntity(deviceId, deviceName, osName, osVersion, cloudKey, devOther);
+        getAccountObj.setDeviceInfo(deviceInfo);
+        // getAccountObj.setDeviceId(deviceId);
+
+        getAccountObj.execute();
+        logger.debug("[" + accountId + "," + sessionId + ","
+                + "] - Activate response = " + getAccountObj.getResponse());
+
+        return getAccountObj.getResponse();
+
+    }
+
 }

@@ -12,26 +12,27 @@ import com.activestudy.asmobile.entity.DeviceInfoEntity;
  *
  * @author PC
  */
-public class LogIn extends ASBaseCommand{
+public class GetAccountInfo extends ASBaseCommand {
 
-    String authenId;
+    String sessionId;
     AccountInfoEntity accountInfo;
     DeviceInfoEntity deviceInfo;
 
-    public LogIn(String authenId, AccountInfoEntity accountInfo) {
-        this.authenId = authenId;
+    public GetAccountInfo(String sessionId, AccountInfoEntity accountInfo) {
+        this.sessionId = sessionId;
         this.accountInfo = accountInfo;
     }
-    public LogIn() {
+
+    public GetAccountInfo() {
 
     }
 
-    public String getAuthenId() {
-        return authenId;
+    public String getSessionId() {
+        return sessionId;
     }
 
-    public void setAuthenId(String authenId) {
-        this.authenId = authenId;
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
     }
 
     public AccountInfoEntity getAccountInfo() {
@@ -50,8 +51,9 @@ public class LogIn extends ASBaseCommand{
         this.deviceInfo = deviceInfo;
     }
 
+    
+    
     @Override
     public void execute() {
     }
-
 }
