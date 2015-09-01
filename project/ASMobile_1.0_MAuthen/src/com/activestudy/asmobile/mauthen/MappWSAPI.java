@@ -14,9 +14,11 @@ import com.activestudy.asmobile.mauthen.command.ActiveCmd;
 import com.activestudy.asmobile.mauthen.command.ActiveCodeCmd;
 import com.activestudy.asmobile.mauthen.command.GetAccountInfo;
 import com.activestudy.asmobile.mauthen.command.LogIn;
+import com.activestudy.asmobile.mauthen.command.LogOut;
 import com.sun.jersey.spi.resource.Singleton;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -80,14 +82,14 @@ public class MappWSAPI {
     }
 
     @POST
-    @Path("activateCode")
+    @Path("activeCode")
     public String activateCode(String content) {
 
         String accountId = "";
         String otpCode = "";
         String activationId = "";
         try {
-            JSONObject jsonOBj = new JSONObject();
+            JSONObject jsonOBj = new JSONObject(content);
             accountId = jsonOBj.getString("accountId");
             otpCode = jsonOBj.getString("OTPCODE");
             activationId = jsonOBj.getString("activationId");
@@ -108,7 +110,7 @@ public class MappWSAPI {
         return activeCodeCmdObj.getResponse();
     }
 
-    @GET
+    @PUT
     @Path("Login")
     public String login(String contents) {
         String authenId = "";
@@ -123,9 +125,9 @@ public class MappWSAPI {
         AccountInfoEntity accountInfo = null;
         DeviceInfoEntity deviceInfo = null;
 
-        JSONObject jsonObj = new JSONObject();
-
         try {
+            JSONObject jsonObj = new JSONObject(contents);
+
             authenId = jsonObj.getString("authenId");
             accountId = jsonObj.getString("accountId");
             deviceId = jsonObj.getString("deviceId");
@@ -147,9 +149,36 @@ public class MappWSAPI {
 
     }
 
+    @DELETE
+    @Path("logout")
+    public String logOut(String Contents) {
+        String sessionId = "";
+        String accountId = "";
+        AccountInfoEntity accountInfo = null;
+
+        try {
+            JSONObject jsonObj = new JSONObject(Contents);
+            sessionId = jsonObj.getString("sessionId");
+            accountId = jsonObj.getString("accountId");
+
+        } catch (JSONException ex) {
+            Logger.getLogger(MappWSAPI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        LogOut logoutOBj = new LogOut();
+        logoutOBj.setSessionId(sessionId);
+        accountInfo = new AccountInfoEntity(accountId, accountId, "");
+        logoutOBj.setAccountInfo(accountInfo);
+
+        logoutOBj.execute();
+        logger.debug("[" + sessionId + "," + accountId + ","
+                + "] - Activate response = " + logoutOBj.getResponse());
+        return logoutOBj.getResponse();
+    }
+
     @GET
     @Path("GetAccountInfo")
-    public String getAccountInfo() {
+    public String getAccountInfo(String Contents) {
         String accountId = "";
         String deviceId = "";
         String sessionId = "";
@@ -158,12 +187,11 @@ public class MappWSAPI {
         String osVersion = "";
         String cloudKey = "";
         String devOther = "";
-        AccountInfoEntity accountInfo  = null;
+        AccountInfoEntity accountInfo = null;
         DeviceInfoEntity deviceInfo = null;
-        
-        JSONObject jsonObj = new JSONObject();
 
         try {
+            JSONObject jsonObj = new JSONObject(Contents);
             sessionId = jsonObj.getString("sessionId");
             accountId = jsonObj.getString("accountId");
             deviceId = jsonObj.getString("accountId");

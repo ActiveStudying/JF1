@@ -53,9 +53,6 @@ public class DeviceInfoEntity {
         }
     }
 
-   
-  
-
     public String getDeviceId() {
         return deviceId;
     }

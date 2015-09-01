@@ -22,6 +22,7 @@ public class ClassInfoEntity {
     private String timeStudy;
     private ArrayList<String> lstNameTeach;
     private String description;
+    private CourseEntity Course;
 
     public ClassInfoEntity() {
     }

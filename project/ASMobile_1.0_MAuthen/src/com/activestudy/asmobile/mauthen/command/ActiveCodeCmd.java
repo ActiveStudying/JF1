@@ -26,7 +26,6 @@ import org.apache.commons.lang.RandomStringUtils;
 public class ActiveCodeCmd extends ASBaseCommand {
 
     String otpCode;
-    DeviceInfoEntity deviceInfo;
     String activationId;
     String authenId;
 
@@ -62,13 +61,10 @@ public class ActiveCodeCmd extends ASBaseCommand {
         }
     }
 
-    // Nhap otp code
-//    public static String scanOTP(String otpCode){
-//        Scanner sc = new Scanner(System.in);
-//         otpCode = sc.nextLine();
-//        return otpCode;
-//    }
-//    
+    public String getResponse() {
+        return "";
+    }
+
     public String getOtpCode() {
         return otpCode;
     }

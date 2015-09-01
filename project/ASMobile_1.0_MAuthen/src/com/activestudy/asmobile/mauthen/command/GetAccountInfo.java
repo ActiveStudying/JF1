@@ -1,12 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.activestudy.asmobile.mauthen.command;
 
 import com.activestudy.asmobile.entity.AccountInfoEntity;
 import com.activestudy.asmobile.entity.DeviceInfoEntity;
+import org.codehaus.jettison.json.JSONObject;
 
 /**
  *
@@ -15,16 +11,24 @@ import com.activestudy.asmobile.entity.DeviceInfoEntity;
 public class GetAccountInfo extends ASBaseCommand {
 
     String sessionId;
-    AccountInfoEntity accountInfo;
-    DeviceInfoEntity deviceInfo;
 
-    public GetAccountInfo(String sessionId, AccountInfoEntity accountInfo) {
+    public GetAccountInfo(String sessionId, AccountInfoEntity accountInfo, DeviceInfoEntity deviceInfo) {
         this.sessionId = sessionId;
         this.accountInfo = accountInfo;
+        this.deviceInfo = deviceInfo;
     }
 
     public GetAccountInfo() {
 
+    }
+
+    @Override
+    public void execute() {
+    }
+
+    @Override
+    public String getResponse() {
+        return "";
     }
 
     public String getSessionId() {
@@ -51,9 +55,13 @@ public class GetAccountInfo extends ASBaseCommand {
         this.deviceInfo = deviceInfo;
     }
 
-    
-    
-    @Override
-    public void execute() {
+    public String getDeviceId() {
+        return deviceId;
     }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
+    }
+
+   
 }

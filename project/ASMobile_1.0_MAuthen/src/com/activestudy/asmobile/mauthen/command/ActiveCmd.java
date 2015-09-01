@@ -28,14 +28,12 @@ public class ActiveCmd extends ASBaseCommand {
     DeviceInfoEntity deviceInfo;
     AccountInfoEntity accountId;
     String activationId;
-    
 
     public ActiveCmd(AccountInfoEntity accountInfo, DeviceInfoEntity deviceInfo) {
         this.deviceInfo = deviceInfo;
         this.accountInfo = accountInfo;
         result = new ResultNumber();
     }
-  
 
     @Override
     public void execute() {
@@ -47,9 +45,8 @@ public class ActiveCmd extends ASBaseCommand {
         // kiem tra deviceID
         if (deviceInfo.getDeviceId().isEmpty()) {
             ((ResultNumber) result).setErrorCode(ResultNumber.MAUTHEN_DEVICEID_EMPTY);
-            return ;
+            return;
         }
-        
 
         DbActive dbActiveCmd = new DbActive();
         try {
@@ -77,6 +74,8 @@ public class ActiveCmd extends ASBaseCommand {
         this.deviceInfo = deviceInfo;
     }
 
-    
+    public String getResponse() {
+        return "";
+    }
 
 }
