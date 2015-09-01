@@ -8,6 +8,8 @@ package com.activestudy.asmobile.mauthen.dbcontroller.cmd;
 import com.activestudy.Utility.Define.AbsDefine;
 import com.activestudy.Utitity.db.DbConnectionExtra;
 import com.activestudy.Utitity.db.oracle.DbProcess;
+import com.activestudy.asmobile.entity.AccountInfoEntity;
+import com.activestudy.asmobile.entity.DeviceInfoEntity;
 import com.activestudy.asmobile.mauthen.dbcontroller.OracleConnection;
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
@@ -21,6 +23,9 @@ import java.sql.Types;
  */
 public class DbActive extends DbProcess {
     String activationId;
+    AccountInfoEntity accountInfo;
+    DeviceInfoEntity deviceInfo;
+    String otpCode ;
     
     @Override
     public void execute(DbConnectionExtra conn)  {
@@ -74,6 +79,30 @@ public class DbActive extends DbProcess {
 //            }
         }
 
+    }
+
+    public AccountInfoEntity getAccountInfo() {
+        return accountInfo;
+    }
+
+    public void setAccountInfo(AccountInfoEntity accountInfo) {
+        this.accountInfo = accountInfo;
+    }
+
+    public DeviceInfoEntity getDeviceInfo() {
+        return deviceInfo;
+    }
+
+    public void setDeviceInfo(DeviceInfoEntity deviceInfo) {
+        this.deviceInfo = deviceInfo;
+    }
+
+    public String getOtpCode() {
+        return otpCode;
+    }
+
+    public void setOtpCode(String otpCode) {
+        this.otpCode = otpCode;
     }
 
     public String getActivationId() {

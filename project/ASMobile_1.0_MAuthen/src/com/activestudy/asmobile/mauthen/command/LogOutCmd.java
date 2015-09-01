@@ -12,7 +12,7 @@ import com.activestudy.asmobile.entity.DeviceInfoEntity;
  *
  * @author PC
  */
-public class LogOut extends ASBaseCommand {
+public class LogOutCmd extends ASBaseCommand {
 
     String sessionId;
 
@@ -40,5 +40,15 @@ public class LogOut extends ASBaseCommand {
     public void setSessionId(String sessionId) {
         this.sessionId = sessionId;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+  
 
 }

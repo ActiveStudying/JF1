@@ -12,9 +12,9 @@ import com.activestudy.asmobile.entity.AccountInfoEntity;
 import com.activestudy.asmobile.entity.DeviceInfoEntity;
 import com.activestudy.asmobile.mauthen.command.ActiveCmd;
 import com.activestudy.asmobile.mauthen.command.ActiveCodeCmd;
-import com.activestudy.asmobile.mauthen.command.GetAccountInfo;
-import com.activestudy.asmobile.mauthen.command.LogIn;
-import com.activestudy.asmobile.mauthen.command.LogOut;
+import com.activestudy.asmobile.mauthen.command.GetAccountInfoCmd;
+import com.activestudy.asmobile.mauthen.command.LogInCmd;
+import com.activestudy.asmobile.mauthen.command.LogOutCmd;
 import com.sun.jersey.spi.resource.Singleton;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -91,7 +91,7 @@ public class MappWSAPI {
         try {
             JSONObject jsonOBj = new JSONObject(content);
             accountId = jsonOBj.getString("accountId");
-            otpCode = jsonOBj.getString("OTPCODE");
+            otpCode = jsonOBj.getString("otpCode");
             activationId = jsonOBj.getString("activationId");
         } catch (JSONException ex) {
             Logger.getLogger(MappWSAPI.class.getName()).log(Level.SEVERE, null, ex);
@@ -131,18 +131,20 @@ public class MappWSAPI {
             authenId = jsonObj.getString("authenId");
             accountId = jsonObj.getString("accountId");
             deviceId = jsonObj.getString("deviceId");
+            cloudKey = jsonObj.getString("cloudKey"); // bo sung trong tai lieu giao tiep 
         } catch (JSONException ex) {
             Logger.getLogger(MappWSAPI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        LogIn loginOBj = new LogIn();
+        LogInCmd loginOBj = new LogInCmd();
         loginOBj.setAuthenId(authenId);
         accountInfo = new AccountInfoEntity(accountId, accountId, "");
         loginOBj.setAccountInfo(accountInfo);
-        deviceInfo = new DeviceInfoEntity(deviceId, deviceName, osName, osVersion, cloudKey, devOther);
-        loginOBj.setDeviceInfo(deviceInfo);
-        // loginOBj.setDeviceId(deviceId);
+        loginOBj.setDeviceId(deviceId);
+        loginOBj.setCloudKey(cloudKey);
+
         loginOBj.execute();
-        logger.debug("[" + accountId + "," + authenId + ","
+        logger.debug("[" + accountId + "," + authenId + "," + deviceId
+                + "," + cloudKey
                 + "] - Activate response = " + loginOBj.getResponse());
 
         return loginOBj.getResponse();
@@ -150,6 +152,7 @@ public class MappWSAPI {
     }
 
     @DELETE
+
     @Path("logout")
     public String logOut(String Contents) {
         String sessionId = "";
@@ -165,10 +168,9 @@ public class MappWSAPI {
             Logger.getLogger(MappWSAPI.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        LogOut logoutOBj = new LogOut();
+        LogOutCmd logoutOBj = new LogOutCmd();
         logoutOBj.setSessionId(sessionId);
-        accountInfo = new AccountInfoEntity(accountId, accountId, "");
-        logoutOBj.setAccountInfo(accountInfo);
+        logoutOBj.setEmail(accountId);
 
         logoutOBj.execute();
         logger.debug("[" + sessionId + "," + accountId + ","
@@ -194,17 +196,14 @@ public class MappWSAPI {
             JSONObject jsonObj = new JSONObject(Contents);
             sessionId = jsonObj.getString("sessionId");
             accountId = jsonObj.getString("accountId");
-            deviceId = jsonObj.getString("accountId");
+            deviceId = jsonObj.getString("deviceId");
         } catch (JSONException ex) {
             Logger.getLogger(MappWSAPI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        GetAccountInfo getAccountObj = new GetAccountInfo();
+        GetAccountInfoCmd getAccountObj = new GetAccountInfoCmd();
         getAccountObj.setSessionId(sessionId);
-        accountInfo = new AccountInfoEntity(accountId, accountId, "");
-        getAccountObj.setAccountInfo(accountInfo);
-        deviceInfo = new DeviceInfoEntity(deviceId, deviceName, osName, osVersion, cloudKey, devOther);
-        getAccountObj.setDeviceInfo(deviceInfo);
-        // getAccountObj.setDeviceId(deviceId);
+        getAccountObj.setEmail(accountId);
+        getAccountObj.setDeviceId(deviceId);
 
         getAccountObj.execute();
         logger.debug("[" + accountId + "," + sessionId + ","
@@ -213,5 +212,6 @@ public class MappWSAPI {
         return getAccountObj.getResponse();
 
     }
+    
 
 }

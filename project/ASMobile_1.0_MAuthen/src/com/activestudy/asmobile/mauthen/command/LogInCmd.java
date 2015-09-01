@@ -1,24 +1,28 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.activestudy.asmobile.mauthen.command;
 
 import com.activestudy.asmobile.entity.AccountInfoEntity;
 import com.activestudy.asmobile.entity.DeviceInfoEntity;
-import org.codehaus.jettison.json.JSONObject;
 
 /**
  *
  * @author PC
  */
-public class GetAccountInfo extends ASBaseCommand {
+public class LogInCmd extends ASBaseCommand {
 
-    String sessionId;
+    String authenId;
+    String cloudKey ;
 
-    public GetAccountInfo(String sessionId, AccountInfoEntity accountInfo, DeviceInfoEntity deviceInfo) {
-        this.sessionId = sessionId;
+    public LogInCmd(String authenId, AccountInfoEntity accountInfo) {
+        this.authenId = authenId;
         this.accountInfo = accountInfo;
-        this.deviceInfo = deviceInfo;
     }
 
-    public GetAccountInfo() {
+    public LogInCmd() {
 
     }
 
@@ -31,12 +35,12 @@ public class GetAccountInfo extends ASBaseCommand {
         return "";
     }
 
-    public String getSessionId() {
-        return sessionId;
+    public String getAuthenId() {
+        return authenId;
     }
 
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
+    public void setAuthenId(String authenId) {
+        this.authenId = authenId;
     }
 
     public AccountInfoEntity getAccountInfo() {
@@ -63,5 +67,14 @@ public class GetAccountInfo extends ASBaseCommand {
         this.deviceId = deviceId;
     }
 
+    public String getCloudKey() {
+        return cloudKey;
+    }
+
+    public void setCloudKey(String cloudKey) {
+        this.cloudKey = cloudKey;
+    }
+
    
+
 }

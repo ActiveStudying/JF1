@@ -41,14 +41,6 @@ public class ActiveCodeCmd extends ASBaseCommand {
     @Override
     public void execute() {
 
-        // kiem tra otpcode
-        if (false == StringUtility.is_OTPCODE(new ActiveCodeCmd().getOtpCode())) {
-            ((ResultNumber) result).setErrorCode(ResultNumber.MAUTHEN_OTPCODE_INVALIDFORMAT);
-
-        } else {
-            ((ResultNumber) result).setErrorCode(ResultNumber.OVER_NUMBERRETRY_OTPCODE);
-            return;
-        }
 
         DbActive dbActiveCmd = new DbActive();
         try {
@@ -70,6 +62,7 @@ public class ActiveCodeCmd extends ASBaseCommand {
     }
 
     public void setOtpCode(String otpCode) {
+        
         this.otpCode = otpCode;
     }
 

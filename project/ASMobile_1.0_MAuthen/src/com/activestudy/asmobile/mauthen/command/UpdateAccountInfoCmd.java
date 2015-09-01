@@ -10,6 +10,6 @@ package com.activestudy.asmobile.mauthen.command;
  *
  * @author PC
  */
-public class UpdateAccountInfo {
+public class UpdateAccountInfoCmd {
     
 }

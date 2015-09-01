@@ -4,7 +4,7 @@ package com.activestudy.asmobile.mauthen.command;
  *
  * @author PC
  */
-public class GetServiceAddress {
+public class GetServiceAddressCmd {
     
     
 }

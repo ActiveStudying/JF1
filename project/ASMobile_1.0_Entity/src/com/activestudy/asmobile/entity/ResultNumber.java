@@ -25,4 +25,7 @@ public class ResultNumber extends AbsResult {
 
     public final static int SERVICEID_INVALIDFORMAT = 6;
     public final static int OVER_NUMBERRETRY_OTPCODE = 7;
+    
+    
+    
 }

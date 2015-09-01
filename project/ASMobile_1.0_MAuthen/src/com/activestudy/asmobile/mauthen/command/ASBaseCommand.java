@@ -8,7 +8,9 @@ package com.activestudy.asmobile.mauthen.command;
 import com.activestudy.Utitity.db.IDBModule;
 import com.activestudy.asmobile.entity.AccountInfoEntity;
 import com.activestudy.asmobile.entity.DeviceInfoEntity;
+import com.activestudy.asmobile.entity.ResultNumber;
 import com.activestudy.pattern.behavioral.command.AbsCommand;
+import com.activestudy.pattern.entity.result.Result;
 import java.io.StringWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,12 +27,18 @@ public abstract class ASBaseCommand extends AbsCommand {
     String deviceId;
     AccountInfoEntity accountInfo;
     DeviceInfoEntity deviceInfo;
-    
-    JSONObject jsonObj = new JSONObject();
+
+    JSONObject jsonResponse;
+    JSONObject jsonResultData;
     // String device ;
 
     protected IDBModule dbCtrl;
+
     // private Object AccountInfoEntity;
+    public ASBaseCommand() {
+        result = new Result();
+
+    }
 
     public IDBModule getDbCtrl() {
         return dbCtrl;
@@ -40,28 +48,51 @@ public abstract class ASBaseCommand extends AbsCommand {
         this.dbCtrl = dbCtrl;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
+    }
+
+    public AccountInfoEntity getAccountInfo() {
+        return accountInfo;
+    }
+
+    public void setAccountInfo(AccountInfoEntity accountInfo) {
+        this.accountInfo = accountInfo;
+    }
+
+    public DeviceInfoEntity getDeviceInfo() {
+        return deviceInfo;
+    }
+
+    public void setDeviceInfo(DeviceInfoEntity deviceInfo) {
+        this.deviceInfo = deviceInfo;
+    }
+
     public String getResponse() {
         // khai bao doi tuong json
         // dong du lieu de tra ra dung put(key, value)
-        String contents = ""; // chuoi json
+        jsonResponse = new JSONObject();
         try {
-            
-          //  jsonObj.put("code",);
-            
-            
-
-            StringWriter out = new StringWriter();
-            jsonObj.write(out);
-            contents = jsonObj.toString();
-            return contents;
-
+            JSONObject jsonResultObj = new JSONObject();
+            jsonResultObj.put("code", result.getErrorCode());
+            jsonResultObj.put("description", result.getErrorDesc());
+            jsonResponse.put("result", jsonResultObj);
+            jsonResultData = new JSONObject();
         } catch (JSONException ex) {
             Logger.getLogger(ASBaseCommand.class.getName()).log(Level.SEVERE, null, ex);
         }
-        ActiveCmd activeCmdObj = new ActiveCmd(accountInfo, deviceInfo);
-        activeCmdObj.execute();
-        return contents;
-
+        return jsonResponse.toString();
     }
-
 }

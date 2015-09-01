@@ -1,27 +1,24 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.activestudy.asmobile.mauthen.command;
 
 import com.activestudy.asmobile.entity.AccountInfoEntity;
 import com.activestudy.asmobile.entity.DeviceInfoEntity;
+import org.codehaus.jettison.json.JSONObject;
 
 /**
  *
  * @author PC
  */
-public class LogIn extends ASBaseCommand {
+public class GetAccountInfoCmd extends ASBaseCommand {
 
-    String authenId;
+    String sessionId;
 
-    public LogIn(String authenId, AccountInfoEntity accountInfo) {
-        this.authenId = authenId;
+    public GetAccountInfoCmd(String sessionId, AccountInfoEntity accountInfo, DeviceInfoEntity deviceInfo) {
+        this.sessionId = sessionId;
         this.accountInfo = accountInfo;
+        this.deviceInfo = deviceInfo;
     }
 
-    public LogIn() {
+    public GetAccountInfoCmd() {
 
     }
 
@@ -34,12 +31,12 @@ public class LogIn extends ASBaseCommand {
         return "";
     }
 
-    public String getAuthenId() {
-        return authenId;
+    public String getSessionId() {
+        return sessionId;
     }
 
-    public void setAuthenId(String authenId) {
-        this.authenId = authenId;
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
     }
 
     public AccountInfoEntity getAccountInfo() {
@@ -66,4 +63,14 @@ public class LogIn extends ASBaseCommand {
         this.deviceId = deviceId;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+   
+   
 }
