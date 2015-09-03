@@ -12,6 +12,7 @@ import com.activestudy.asmobile.entity.AccountInfoEntity;
 import com.activestudy.asmobile.entity.DeviceInfoEntity;
 import com.activestudy.asmobile.mauthen.command.ActiveCmd;
 import com.activestudy.asmobile.mauthen.command.ActiveCodeCmd;
+import com.activestudy.asmobile.mauthen.command.CheckUserCmd;
 import com.activestudy.asmobile.mauthen.command.GetAccountInfoCmd;
 import com.activestudy.asmobile.mauthen.command.GetServiceAddressCmd;
 import com.activestudy.asmobile.mauthen.command.LogInCmd;
@@ -126,7 +127,7 @@ public class MappWSAPI {
             authenId = jsonObj.getString("authenId");
             accountId = jsonObj.getString("accountId");
             deviceId = jsonObj.getString("deviceId");
-            cloudKey = jsonObj.getString("cloudKey"); // bo sung trong tai lieu giao tiep 
+            cloudKey = jsonObj.getString("cloudKey");
         } catch (JSONException ex) {
             Logger.getLogger(MappWSAPI.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -225,9 +226,29 @@ public class MappWSAPI {
 
     }
 
-    @PUT
-    @Path("chec-validate-user")
-    public void checkValideUser() {
+    @DELETE
+    @Path("check-validate-user")
+    public String checkValideUser(String contents) {
+        String sessionId = "";
+        String accountId = "";
+
+        try {
+            JSONObject jsonObj = new JSONObject(contents);
+
+            sessionId = jsonObj.getString("sessionId");
+            accountId = jsonObj.getString("accountId");
+        } catch (JSONException ex) {
+            Logger.getLogger(MappWSAPI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        CheckUserCmd checkUserObj = new CheckUserCmd();
+        checkUserObj.setEmail("accountId");
+        checkUserObj.setSessionId("sessionId");
+
+        checkUserObj.execute();
+        logger.debug("[" + accountId + "," + sessionId + ","
+                + "] - Activate response = " + checkUserObj.getResponse());
+
+        return checkUserObj.getResponse();
 
     }
 

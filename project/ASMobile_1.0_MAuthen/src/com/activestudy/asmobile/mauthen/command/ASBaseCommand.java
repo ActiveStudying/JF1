@@ -40,6 +40,12 @@ public abstract class ASBaseCommand extends AbsCommand {
 
     }
 
+    // constructor email and device id
+    public ASBaseCommand(String email, String deviceId) {
+        this.email = email;
+        this.deviceId = deviceId;
+    }
+
     public IDBModule getDbCtrl() {
         return dbCtrl;
     }
