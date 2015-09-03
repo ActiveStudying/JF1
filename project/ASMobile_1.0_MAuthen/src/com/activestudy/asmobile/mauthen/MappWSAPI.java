@@ -116,14 +116,8 @@ public class MappWSAPI {
         String authenId = "";
         String accountId = "";
         String deviceId = "";
-        String deviceName = "";
-        String osName = "";
-        String osVersion = "";
         String cloudKey = "";
-        String devOther = "";
-
         AccountInfoEntity accountInfo = null;
-        DeviceInfoEntity deviceInfo = null;
 
         try {
             JSONObject jsonObj = new JSONObject(contents);
@@ -152,7 +146,6 @@ public class MappWSAPI {
     }
 
     @DELETE
-
     @Path("logout")
     public String logOut(String Contents) {
         String sessionId = "";
@@ -184,14 +177,6 @@ public class MappWSAPI {
         String accountId = "";
         String deviceId = "";
         String sessionId = "";
-        String deviceName = "";
-        String osName = "";
-        String osVersion = "";
-        String cloudKey = "";
-        String devOther = "";
-        AccountInfoEntity accountInfo = null;
-        DeviceInfoEntity deviceInfo = null;
-
         try {
             JSONObject jsonObj = new JSONObject(Contents);
             sessionId = jsonObj.getString("sessionId");
@@ -212,15 +197,30 @@ public class MappWSAPI {
         return getAccountObj.getResponse();
 
     }
-    @PUT
-    @Path("chec-validate-user")
-    public void checkValideUser(){
-        
-    }
+
     @GET
     @Path("get-service-address")
-    public void getServiceAddress(){
+    public void getServiceAddress(String contents) {
+        String sessionId = "";
+        String accountId = "";
+        String deviceId = "";
+
+        try {
+            JSONObject jsonObj = new JSONObject(contents);
+            sessionId = jsonObj.getString("sessionId");
+            accountId = jsonObj.getString("accountId");
+            deviceId = jsonObj.getString(deviceId);
+        } catch (JSONException ex) {
+            Logger.getLogger(MappWSAPI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
         
+    }
+
+    @PUT
+    @Path("chec-validate-user")
+    public void checkValideUser() {
+
     }
 
 }
