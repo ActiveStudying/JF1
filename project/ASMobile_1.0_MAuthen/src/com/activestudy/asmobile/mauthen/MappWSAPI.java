@@ -217,6 +217,10 @@ public class MappWSAPI {
     public void checkValideUser(){
         
     }
-    
+    @GET
+    @Path("get-service-address")
+    public void getServiceAddress(){
+        
+    }
 
 }
