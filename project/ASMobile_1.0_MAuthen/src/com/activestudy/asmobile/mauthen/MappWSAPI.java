@@ -212,6 +212,11 @@ public class MappWSAPI {
         return getAccountObj.getResponse();
 
     }
+    @PUT
+    @Path("chec-validate-user")
+    public void checkValideUser(){
+        
+    }
     
 
 }
