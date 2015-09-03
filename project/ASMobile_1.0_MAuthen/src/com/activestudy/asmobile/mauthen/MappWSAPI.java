@@ -13,6 +13,7 @@ import com.activestudy.asmobile.entity.DeviceInfoEntity;
 import com.activestudy.asmobile.mauthen.command.ActiveCmd;
 import com.activestudy.asmobile.mauthen.command.ActiveCodeCmd;
 import com.activestudy.asmobile.mauthen.command.GetAccountInfoCmd;
+import com.activestudy.asmobile.mauthen.command.GetServiceAddressCmd;
 import com.activestudy.asmobile.mauthen.command.LogInCmd;
 import com.activestudy.asmobile.mauthen.command.LogOutCmd;
 import com.sun.jersey.spi.resource.Singleton;
@@ -185,7 +186,9 @@ public class MappWSAPI {
         } catch (JSONException ex) {
             Logger.getLogger(MappWSAPI.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         GetAccountInfoCmd getAccountObj = new GetAccountInfoCmd();
+        GetAccountInfoCmd getAccountObj2 = new GetAccountInfoCmd();
         getAccountObj.setSessionId(sessionId);
         getAccountObj.setEmail(accountId);
         getAccountObj.setDeviceId(deviceId);
@@ -200,7 +203,7 @@ public class MappWSAPI {
 
     @GET
     @Path("get-service-address")
-    public void getServiceAddress(String contents) {
+    public String getServiceAddress(String contents) {
         String sessionId = "";
         String accountId = "";
         String deviceId = "";
@@ -209,12 +212,17 @@ public class MappWSAPI {
             JSONObject jsonObj = new JSONObject(contents);
             sessionId = jsonObj.getString("sessionId");
             accountId = jsonObj.getString("accountId");
-            deviceId = jsonObj.getString(deviceId);
+            deviceId = jsonObj.getString("deviceId");
         } catch (JSONException ex) {
             Logger.getLogger(MappWSAPI.class.getName()).log(Level.SEVERE, null, ex);
         }
-            
-        
+        GetServiceAddressCmd getServiceAddressCmdObj = new GetServiceAddressCmd("accountId", "deviceId", "sessionId");
+        getServiceAddressCmdObj.execute();
+        logger.debug("[" + accountId + "," + sessionId + "," + "," + deviceId
+                + "] - Activate response = " + getServiceAddressCmdObj.getResponse());
+
+        return getServiceAddressCmdObj.getResponse();
+
     }
 
     @PUT
