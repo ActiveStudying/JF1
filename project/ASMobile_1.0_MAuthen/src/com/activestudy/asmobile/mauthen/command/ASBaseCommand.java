@@ -39,7 +39,10 @@ public abstract class ASBaseCommand extends AbsCommand {
         result = new Result();
 
     }
-
+    public ASBaseCommand(String deviceId, AccountInfoEntity accountInfo) {
+        this.deviceId = deviceId;
+        this.accountInfo = accountInfo;
+    }
     // constructor email and device id
     public ASBaseCommand(String email, String deviceId) {
         this.email = email;

@@ -14,7 +14,7 @@ public class OracleConnection extends DbConnectionExtra {
 
    
 
-    private final PreparedStatement stmActiveSubs;
+    private final CallableStatement stmActiveSubs;
 
     private final CallableStatement stmCheckAcountDevice;
     private final CallableStatement stmDisableAcountDevice;
@@ -44,9 +44,10 @@ public class OracleConnection extends DbConnectionExtra {
     public OracleConnection(int index, DbConnection conn) throws SQLException {
         super(index, conn);
         
-
-        String sqlActiveSub = "UPDATE SUBSCRIBER SET SERVICE_STATUS = ? WHERE MSISDN = ?";
-        stmActiveSubs = conn.connection().prepareStatement(sqlActiveSub);
+        //   goi cai ham aactivateaccountdevice da dinh nghia duoi db trong goi PKB_ACCOUNT
+        String sqlActiveSub = "{? = call PKG_ACCOUNT.activateaccountdevice(?,?,?,?)}";
+        // tao ket noi, va lay preparestatement 
+        stmActiveSubs = conn.connection().prepareCall(sqlActiveSub);
 
         String sqlCheckAccountDevice = "{? = call pkg_account.checkAccountDevice(?,?)}";
         stmCheckAcountDevice = conn.connection().prepareCall(
@@ -109,7 +110,7 @@ public class OracleConnection extends DbConnectionExtra {
         stmGetDevicesInfo = conn.connection().prepareCall(sqlGetDevsInfo);
     }
 
-    public PreparedStatement getStmActiveSubs() {
+    public CallableStatement getStmActiveSubs() {
         return stmActiveSubs;
     }
 

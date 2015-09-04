@@ -7,13 +7,12 @@ package com.activestudy.asmobile.mauthen.command;
 public class GetServiceAddressCmd extends ASBaseCommand {
 
     String sessionId;
+    int serviceId ;
 
-    public String getSessionId() {
-        return sessionId;
-    }
-
-    public void setSessionId(String sessionId) {
+    public GetServiceAddressCmd(String sessionId, String email, String deviceId,int serviceId ) {
+        super(email, deviceId);
         this.sessionId = sessionId;
+        this.serviceId = serviceId;
     }
 
     @Override
@@ -25,8 +24,11 @@ public class GetServiceAddressCmd extends ASBaseCommand {
 
     }
 
-    public GetServiceAddressCmd(String sessionId, String email, String deviceId) {
-        super(email, deviceId);
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
         this.sessionId = sessionId;
     }
 

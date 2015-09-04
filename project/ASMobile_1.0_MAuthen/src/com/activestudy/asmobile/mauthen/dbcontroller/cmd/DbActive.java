@@ -27,13 +27,24 @@ public class DbActive extends DbProcess {
     DeviceInfoEntity deviceInfo;
     String otpCode ;
     
+    
     @Override
     public void execute(DbConnectionExtra conn)  {
-        PreparedStatement pStmt = null;
+        CallableStatement cStmt = null;
         try {
-            pStmt = ((OracleConnection) conn).getStmActiveSubs();
-            ResultSet rs = pStmt.executeQuery();
+            cStmt = ((OracleConnection) conn).getStmActiveSubs();
+            //set parametter dau vao 
+            cStmt.setString(2, accountInfo.getAccountId());
+            cStmt.setString(3, deviceInfo.getDeviceId());
+            cStmt.setString(4, activationId);
+            cStmt.setString(5, otpCode);
+           // lay dau ra
+            cStmt.registerOutParameter(1, Types.INTEGER);
+            ResultSet rs = cStmt.executeQuery();
+            
+             result = cStmt.getInt(1);
             if (rs != null) {
+                
 //                int categoryIndex, classIndex, unitIndex, categoryId, classId, unitId;
 //                String categoryName, className, unitName;
 //                while (rs.next()) {

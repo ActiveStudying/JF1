@@ -7,6 +7,9 @@ package com.activestudy.asmobile.mauthen.command;
 
 import com.activestudy.asmobile.entity.AccountInfoEntity;
 import com.activestudy.asmobile.entity.DeviceInfoEntity;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.codehaus.jettison.json.JSONException;
 
 /**
  *
@@ -15,7 +18,8 @@ import com.activestudy.asmobile.entity.DeviceInfoEntity;
 public class LogInCmd extends ASBaseCommand {
 
     String authenId;
-    String cloudKey ;
+    String cloudKey;
+    String sessionId;
 
     public LogInCmd(String authenId, AccountInfoEntity accountInfo) {
         this.authenId = authenId;
@@ -32,7 +36,14 @@ public class LogInCmd extends ASBaseCommand {
 
     @Override
     public String getResponse() {
-        return "";
+        super.getRequest();
+        try {
+            jsonResultData.put("sessionID", sessionId);
+            jsonResponse.put("resultData", jsonResultData);
+        } catch (JSONException ex) {
+            Logger.getLogger(LogInCmd.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return jsonResponse.toString();
     }
 
     public String getAuthenId() {
@@ -74,7 +85,5 @@ public class LogInCmd extends ASBaseCommand {
     public void setCloudKey(String cloudKey) {
         this.cloudKey = cloudKey;
     }
-
-   
 
 }

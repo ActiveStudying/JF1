@@ -17,7 +17,9 @@ import com.activestudy.asmobile.mauthen.command.GetAccountInfoCmd;
 import com.activestudy.asmobile.mauthen.command.GetServiceAddressCmd;
 import com.activestudy.asmobile.mauthen.command.LogInCmd;
 import com.activestudy.asmobile.mauthen.command.LogOutCmd;
+import com.activestudy.asmobile.mauthen.command.UpdateAccountInfoCmd;
 import com.sun.jersey.spi.resource.Singleton;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.DELETE;
@@ -187,12 +189,7 @@ public class MappWSAPI {
         } catch (JSONException ex) {
             Logger.getLogger(MappWSAPI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        GetAccountInfoCmd getAccountObj = new GetAccountInfoCmd();
-        GetAccountInfoCmd getAccountObj2 = new GetAccountInfoCmd();
-        getAccountObj.setSessionId(sessionId);
-        getAccountObj.setEmail(accountId);
-        getAccountObj.setDeviceId(deviceId);
-
+        GetAccountInfoCmd getAccountObj = new GetAccountInfoCmd(sessionId, accountId, deviceId);
         getAccountObj.execute();
         logger.debug("[" + accountId + "," + sessionId + ","
                 + "] - Activate response = " + getAccountObj.getResponse());
@@ -201,30 +198,69 @@ public class MappWSAPI {
 
     }
 
+    @PUT
+    @Path("update-account-info")
+    public String updateaccountinfo(String content) {
+        String sessionId = "";
+        String deviceId = "";
+        String accountId = "";
+        String email = "";
+        String password = "";
+        String msisdn = "";
+        String fullname = "";
+        Date birthday = null ;
+        String job = "";
+        String gender = "";
+
+        AccountInfoEntity accountInfo = null;
+
+        try {
+            JSONObject jsonObj = new JSONObject(content);
+            sessionId = jsonObj.getString("sessionId");
+            deviceId = jsonObj.getString("deviceId");
+            accountInfo = new AccountInfoEntity(accountId, email, password, msisdn, fullname, birthday, job, gender);
+            JSONUtility.GetJSONData(jsonObj.getString("accountInfo"), accountInfo);
+        } catch (JSONException ex) {
+            Logger.getLogger(MappWSAPI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        UpdateAccountInfoCmd updateaccountinfoObj = new UpdateAccountInfoCmd(sessionId, accountInfo, deviceId);
+        updateaccountinfoObj.execute();
+
+        logger.debug(
+                "[" + sessionId + "," + accountInfo + "," + deviceId
+                + "] - Activate response = " + updateaccountinfoObj.getResponse());
+
+        return updateaccountinfoObj.getResponse();
+    }
+
     @GET
     @Path("get-service-address")
     public String getServiceAddress(String contents) {
         String sessionId = "";
         String accountId = "";
         String deviceId = "";
-        String serviceId = "";
+        int serviceId = 0;
 
         try {
             JSONObject jsonObj = new JSONObject(contents);
             sessionId = jsonObj.getString("sessionId");
             accountId = jsonObj.getString("accountId");
             deviceId = jsonObj.getString("deviceId");
+            serviceId = jsonObj.getInt("serviceId");
+
         } catch (JSONException ex) {
-            Logger.getLogger(MappWSAPI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MappWSAPI.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
-        GetServiceAddressCmd getServiceAddressCmdObj = new GetServiceAddressCmd("accountId", "deviceId", "sessionId");
+        GetServiceAddressCmd getServiceAddressCmdObj = new GetServiceAddressCmd(sessionId, accountId, deviceId, serviceId);
         getServiceAddressCmdObj.execute();
-        logger.debug("[" + accountId + "," + sessionId + "," + "," + deviceId
+        logger.debug("[" + accountId + "," + sessionId + "," + "," + deviceId + "," + serviceId
                 + "] - Activate response = " + getServiceAddressCmdObj.getResponse());
 
         return getServiceAddressCmdObj.getResponse();
 
     }
+
     @DELETE
     @Path("check-validate-user")
     public String checkValideUser(String contents) {
@@ -236,8 +272,10 @@ public class MappWSAPI {
 
             sessionId = jsonObj.getString("sessionId");
             accountId = jsonObj.getString("accountId");
+
         } catch (JSONException ex) {
-            Logger.getLogger(MappWSAPI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MappWSAPI.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
         CheckUserCmd checkUserObj = new CheckUserCmd();
         checkUserObj.setEmail("accountId");

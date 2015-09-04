@@ -17,6 +17,11 @@ public class GetAccountInfoCmd extends ASBaseCommand {
         this.accountInfo = accountInfo;
         this.deviceInfo = deviceInfo;
     }
+
+    public GetAccountInfoCmd(String sessionId , String accountId, String deviceId) {
+        super(deviceId, accountId);
+        this.sessionId = sessionId;
+    }
     
 
     public GetAccountInfoCmd() {
@@ -39,23 +44,6 @@ public class GetAccountInfoCmd extends ASBaseCommand {
     public void setSessionId(String sessionId) {
         this.sessionId = sessionId;
     }
-//
-//    public AccountInfoEntity getAccountInfo() {
-//        return accountInfo;
-//    }
-//
-//    public void setAccountInfo(AccountInfoEntity accountInfo) {
-//        this.accountInfo = accountInfo;
-//    }
-
-//    public DeviceInfoEntity getDeviceInfo() {
-//        return deviceInfo;
-//    }
-//
-//    public void setDeviceInfo(DeviceInfoEntity deviceInfo) {
-//        this.deviceInfo = deviceInfo;
-//    }
-
     public String getDeviceId() {
         return deviceId;
     }
