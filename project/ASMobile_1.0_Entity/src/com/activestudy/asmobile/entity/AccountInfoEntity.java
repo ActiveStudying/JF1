@@ -28,6 +28,30 @@ public class AccountInfoEntity {
         this.accountId = accountId;
     }
 
+    public AccountInfoEntity(String accountId, String email, String password, String msisdn, String fullname, Date birthday, String job, String gender) {
+        this.accountId = accountId;
+        this.email = email;
+        this.password = password;
+        this.msisdn = msisdn;
+        this.fullname = fullname;
+        this.birthday = birthday;
+        this.job = job;
+        this.gender = gender;
+    }
+
+    public AccountInfoEntity(String accountId, String email, String password, String msisdn, String fullname, Date birthday, String job, String gender, ArrayList<Skill> skills, ArrayList<Expects> expects) {
+        this.accountId = accountId;
+        this.email = email;
+        this.password = password;
+        this.msisdn = msisdn;
+        this.fullname = fullname;
+        this.birthday = birthday;
+        this.job = job;
+        this.gender = gender;
+        this.skills = skills;
+        this.expects = expects;
+    }
+    
     public String getMsisdn() {
         return msisdn;
     }
