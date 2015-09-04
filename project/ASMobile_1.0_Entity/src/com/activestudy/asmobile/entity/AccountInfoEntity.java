@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.activestudy.asmobile.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -12,6 +8,7 @@ import java.util.Date;
  * @author tanhai
  */
 public class AccountInfoEntity {
+
     private final String accountId;
     private final String email;
     private final String password;
@@ -22,7 +19,10 @@ public class AccountInfoEntity {
     private String job;
     private String gender;
 
-    public AccountInfoEntity(String accountId,String email, String password) {
+    private ArrayList<Skill> skills;
+    private ArrayList<Expects> expects;
+
+    public AccountInfoEntity(String accountId, String email, String password) {
         this.email = email;
         this.password = password;
         this.accountId = accountId;
@@ -74,6 +74,22 @@ public class AccountInfoEntity {
 
     public String getEmail() {
         return email;
+    }
+
+    public ArrayList<Skill> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(ArrayList<Skill> skills) {
+        this.skills = skills;
+    }
+
+    public ArrayList<Expects> getExpects() {
+        return expects;
+    }
+
+    public void setExpects(ArrayList<Expects> expects) {
+        this.expects = expects;
     }
     
 }
