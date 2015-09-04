@@ -174,7 +174,7 @@ public class MappWSAPI {
     }
 
     @GET
-    @Path("GetAccountInfo")
+    @Path("get-account-info")
     public String getAccountInfo(String Contents) {
         String accountId = "";
         String deviceId = "";
@@ -187,7 +187,6 @@ public class MappWSAPI {
         } catch (JSONException ex) {
             Logger.getLogger(MappWSAPI.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         GetAccountInfoCmd getAccountObj = new GetAccountInfoCmd();
         GetAccountInfoCmd getAccountObj2 = new GetAccountInfoCmd();
         getAccountObj.setSessionId(sessionId);
@@ -208,6 +207,7 @@ public class MappWSAPI {
         String sessionId = "";
         String accountId = "";
         String deviceId = "";
+        String serviceId = "";
 
         try {
             JSONObject jsonObj = new JSONObject(contents);
@@ -225,7 +225,6 @@ public class MappWSAPI {
         return getServiceAddressCmdObj.getResponse();
 
     }
-
     @DELETE
     @Path("check-validate-user")
     public String checkValideUser(String contents) {
