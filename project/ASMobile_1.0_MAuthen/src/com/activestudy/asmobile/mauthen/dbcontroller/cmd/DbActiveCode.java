@@ -5,6 +5,7 @@
  */
 package com.activestudy.asmobile.mauthen.dbcontroller.cmd;
 
+import com.activestudy.Utility.Define.AbsDefine;
 import com.activestudy.Utitity.db.DbConnectionExtra;
 import com.activestudy.Utitity.db.oracle.DbProcess;
 import com.activestudy.asmobile.entity.AccountInfoEntity;
@@ -61,10 +62,12 @@ public class DbActiveCode extends DbProcess {
             ResultSet re = cSmtActiveCode.executeQuery();
             result   = cSmtActiveCode.getInt(1);
             if (re!= null) {
-                
+               result  = AbsDefine.KEY_SUCCESS; 
+            }else{
+                 logger.error("LoadCategory UnSuccess, ResultSet is Null");
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DbActiveCode.class.getName()).log(Level.SEVERE, null, ex);
+            logger.error("LoadCategory ErrorCode: "+ ex.getErrorCode() + "Error" + ex.getMessage() + " STACK" + ex);
         }
 
     }
