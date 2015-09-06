@@ -7,7 +7,6 @@
 package com.activestudy.asmobile.mauthen;
 
 import com.activestudy.Utility.JSONUtility;
-import com.activestudy.Utility.StringUtility;
 import com.activestudy.asmobile.entity.AccountInfoEntity;
 import com.activestudy.asmobile.entity.DeviceInfoEntity;
 import com.activestudy.asmobile.mauthen.command.ActiveCmd;
@@ -28,7 +27,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Response;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
