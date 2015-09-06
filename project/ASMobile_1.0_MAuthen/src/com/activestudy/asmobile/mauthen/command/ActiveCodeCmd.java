@@ -6,17 +6,12 @@
 package com.activestudy.asmobile.mauthen.command;
 
 import com.activestudy.Utility.MCommonUtils;
-import com.activestudy.Utility.StringUtility;
 import com.activestudy.Utitity.db.DBException;
 import com.activestudy.asmobile.entity.AccountInfoEntity;
 import com.activestudy.asmobile.entity.DeviceInfoEntity;
 import com.activestudy.asmobile.entity.ResultNumber;
 import com.activestudy.asmobile.mauthen.Processor;
-import com.activestudy.asmobile.mauthen.dbcontroller.cmd.DbActive;
 import com.activestudy.asmobile.mauthen.dbcontroller.cmd.DbActiveCode;
-import com.activestudy.pattern.behavioral.command.*;
-import com.sun.jersey.core.spi.scanning.FilesScanner;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.lang.RandomStringUtils;
@@ -86,6 +81,7 @@ public class ActiveCodeCmd extends ASBaseCommand {
         this.otpCode = otpCode;
     }
 
+    @Override
     public DeviceInfoEntity getDeviceInfo() {
         return deviceInfo;
     }

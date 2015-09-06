@@ -5,10 +5,16 @@
  */
 package com.activestudy.asmobile.mauthen.command;
 
+import com.activestudy.Utility.MCommonUtils;
+import com.activestudy.Utitity.db.DBException;
 import com.activestudy.asmobile.entity.AccountInfoEntity;
 import com.activestudy.asmobile.entity.DeviceInfoEntity;
+import com.activestudy.asmobile.entity.ResultNumber;
+import com.activestudy.asmobile.mauthen.Processor;
+import com.activestudy.asmobile.mauthen.dbcontroller.cmd.dbLogin;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.commons.lang.RandomStringUtils;
 import org.codehaus.jettison.json.JSONException;
 
 /**
@@ -20,6 +26,8 @@ public class LogInCmd extends ASBaseCommand {
     String authenId;
     String cloudKey;
     String sessionId;
+    AccountInfoEntity accountId;
+    DeviceInfoEntity deviceId;
 
     public LogInCmd(String authenId, AccountInfoEntity accountInfo) {
         this.authenId = authenId;
@@ -27,11 +35,48 @@ public class LogInCmd extends ASBaseCommand {
     }
 
     public LogInCmd() {
-
     }
 
     @Override
     public void execute() {
+        // kiem tra mail 
+        if (false == MCommonUtils.is_Email(accountInfo.getEmail())) {
+            ((ResultNumber) result).setErrorCode(ResultNumber.MAUTHEN_ACCOUNTID_INVALIDFORMAT);
+            return;
+        }
+        // kiem tra deviceID
+        if (deviceInfo.getDeviceId().isEmpty()) {
+            ((ResultNumber) result).setErrorCode(ResultNumber.MAUTHEN_DEVICEID_EMPTY);
+            return;
+        }
+        // kiem tra authen // viet ham kiem tra authen
+//        if (false == MCommonUtils.) {
+//            
+//        }
+
+        dbLogin dbLoginCmd = new dbLogin();
+        try {
+            sessionId = RandomStringUtils.randomAlphanumeric(10);
+            dbLoginCmd.setAccountId(accountId);
+            dbLoginCmd.setDeviceId(deviceId);
+            dbLoginCmd.setAuthenId(authenId);
+            dbLoginCmd.setCloudKey(cloudKey);
+            dbLoginCmd.setSessionId(sessionId);
+
+            Processor.getInstance().getDbCtrl().execute(dbLoginCmd);
+            // set result 
+            if (dbLoginCmd.getResult() == ResultNumber.SUCCESS) {
+                result.setErrorCode(ResultNumber.SUCCESS);
+            } else if (dbLoginCmd.getResult() == ResultNumber.MAUTHEN_AUTHENID_INVALIDFORMAT) {
+                result.setErrorCode(ResultNumber.MAUTHEN_AUTHENID_INVALIDFORMAT);
+            } else {
+                result.setErrorCode(ResultNumber.SYSTEM_ERROR);
+            }
+
+        } catch (DBException ex) {
+            Logger.getLogger(LogInCmd.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     @Override
@@ -54,30 +99,6 @@ public class LogInCmd extends ASBaseCommand {
         this.authenId = authenId;
     }
 
-    public AccountInfoEntity getAccountInfo() {
-        return accountInfo;
-    }
-
-    public void setAccountInfo(AccountInfoEntity accountInfo) {
-        this.accountInfo = accountInfo;
-    }
-
-    public DeviceInfoEntity getDeviceInfo() {
-        return deviceInfo;
-    }
-
-    public void setDeviceInfo(DeviceInfoEntity deviceInfo) {
-        this.deviceInfo = deviceInfo;
-    }
-
-    public String getDeviceId() {
-        return deviceId;
-    }
-
-    public void setDeviceId(String deviceId) {
-        this.deviceId = deviceId;
-    }
-
     public String getCloudKey() {
         return cloudKey;
     }
@@ -86,4 +107,26 @@ public class LogInCmd extends ASBaseCommand {
         this.cloudKey = cloudKey;
     }
 
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
+
+    public AccountInfoEntity getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(AccountInfoEntity accountId) {
+        this.accountId = accountId;
+    }
+
+
+    public void setDeviceId(DeviceInfoEntity deviceId) {
+        this.deviceId = deviceId;
+    }
+
+ 
 }
