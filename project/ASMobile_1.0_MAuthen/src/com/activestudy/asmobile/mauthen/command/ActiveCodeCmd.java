@@ -15,6 +15,7 @@ import com.activestudy.asmobile.mauthen.dbcontroller.cmd.DbActiveCode;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.logging.Log;
 import org.codehaus.jettison.json.JSONException;
 
 /**
@@ -27,9 +28,12 @@ public class ActiveCodeCmd extends ASBaseCommand {
     String activationId;
     String authenId;
 
-    public ActiveCodeCmd(AccountInfoEntity accountInfo, DeviceInfoEntity deviceInfo) {
+    private Log logger = null;
+
+    public ActiveCodeCmd(AccountInfoEntity accountInfo, DeviceInfoEntity deviceInfo, Log loger) {
         this.deviceInfo = deviceInfo;
         this.accountInfo = accountInfo;
+        this.logger = loger;
     }
 
     public ActiveCodeCmd() {

@@ -43,35 +43,6 @@ public class DbActive extends DbProcess {
             
              result = cStmt.getInt(1);
             if (rs != null) {
-                
-//                int categoryIndex, classIndex, unitIndex, categoryId, classId, unitId;
-//                String categoryName, className, unitName;
-//                while (rs.next()) {
-//                    
-//                    categoryIndex = rs.getInt("category_key_press");
-//                    classIndex = rs.getInt("Class_key_press");
-//                    unitIndex = rs.getInt("Unit_key_press");
-//                    categoryId = rs.getInt("category_id");
-//                    classId = rs.getInt("ClassID");
-//                    unitId = rs.getInt("UnitID");
-//                    categoryName = rs.getNString("category_name");
-//                    className = rs.getNString("class_name");
-//                    unitName = rs.getNString("Unit_name");
-//                    
-//                    logger.info("DbActive ID: " + categoryId + " category_key_press: " + categoryIndex + " category_name: " + categoryName + " ClassID: " + classId + " Class_key_press: " + classIndex + " class_name: " +className + " UnitID: " + unitId + " unitIndex: " + unitIndex + " unitName: " + unitName);                    
-//                    if( true == categorys.addCategory(Categorys.getNextIndexCategory(),categoryIndex, categoryId,categoryName, classIndex, classId, className, unitIndex, unitId, unitName)){                    
-//                        logger.error("Success to addCategory ID: " + categoryId + " category_key_press: " + categoryIndex + " category_name: " + categoryName + " ClassID: " + classId + " Class_key_press: " + classIndex + " class_name: " +className + " UnitID: " + unitId + " unitIndex: " + unitIndex + " unitName: " + unitName);                    
-//                        
-////                        if(categorys.isExit(Categorys.getCurrentCategory(), categoryIndex)){
-////                            logger.error("Exits Category ID: " + categoryId + " category_key_press: " + categoryIndex + " category_name: " + categoryName + " ClassID: " + classId + " Class_key_press: " + classIndex + " class_name: " +className + " UnitID: " + unitId + " unitIndex: " + unitIndex + " unitName: " + unitName);                    
-////                        }else{
-////                            logger.error("Not exits Category ID: " + categoryId + " category_key_press: " + categoryIndex + " category_name: " + categoryName + " ClassID: " + classId + " Class_key_press: " + classIndex + " class_name: " +className + " UnitID: " + unitId + " unitIndex: " + unitIndex + " unitName: " + unitName);                    
-////                        }
-//                    }else{
-//                        logger.error("Error to addCategory ID: " + categoryId + " category_key_press: " + categoryIndex + " category_name: " + categoryName + " ClassID: " + classId + " Class_key_press: " + classIndex + " class_name: " +className + " UnitID: " + unitId + " unitIndex: " + unitIndex + " unitName: " + unitName);                    
-//                    }
-//                }
-//                Categorys.changeCurrentCategory();
                 result = AbsDefine.KEY_SUCCESS;            
                 rs.close();
             }else{
@@ -79,16 +50,7 @@ public class DbActive extends DbProcess {
             }
         } catch (SQLException se) {
             logger.error("LoadCategory ErrorCode: " +se.getErrorCode() + " Error: " + se.getMessage() + " STACK: " + se);
-        } finally {
-//            try {
-//                if (pStmt != null) {
-//                    pStmt.close();
-//                }
-//            } catch (SQLException ex) {
-//                logger.error("DbActive ErrorCode: " +ex.getErrorCode() + " Error: " + ex.getMessage() + " STACK: " + ex);
-//            }
-        }
-
+        } 
     }
 
     public AccountInfoEntity getAccountInfo() {

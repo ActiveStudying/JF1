@@ -15,6 +15,7 @@ import com.activestudy.asmobile.mauthen.dbcontroller.cmd.dbLogin;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.logging.Log;
 import org.codehaus.jettison.json.JSONException;
 
 /**
@@ -22,16 +23,21 @@ import org.codehaus.jettison.json.JSONException;
  * @author PC
  */
 public class LogInCmd extends ASBaseCommand {
-
+    
+    
+    
     String authenId;
     String cloudKey;
     String sessionId;
-    AccountInfoEntity accountId;
-    DeviceInfoEntity deviceId;
-
-    public LogInCmd(String authenId, AccountInfoEntity accountInfo) {
+    AccountInfoEntity accountInfo;
+    DeviceInfoEntity deviceInfo;
+    int expireTime ;
+    
+    private Log logger = null;
+    public LogInCmd(String authenId, AccountInfoEntity accountInfo, Log logger) {
         this.authenId = authenId;
         this.accountInfo = accountInfo;
+        this.logger = logger;
     }
 
     public LogInCmd() {
@@ -49,32 +55,34 @@ public class LogInCmd extends ASBaseCommand {
             ((ResultNumber) result).setErrorCode(ResultNumber.MAUTHEN_DEVICEID_EMPTY);
             return;
         }
-        // kiem tra authen // viet ham kiem tra authen
-//        if (false == MCommonUtils.) {
-//            
-//        }
-
-        dbLogin dbLoginCmd = new dbLogin();
+         dbLogin dbLoginCmd = new dbLogin();
         try {
-            sessionId = RandomStringUtils.randomAlphanumeric(10);
-            dbLoginCmd.setAccountId(accountId);
-            dbLoginCmd.setDeviceId(deviceId);
+            sessionId = RandomStringUtils.randomAlphanumeric(20);
+            dbLoginCmd.setAccountId(accountInfo.getAccountId());
+            dbLoginCmd.setDeviceId(deviceInfo.getDeviceId());
             dbLoginCmd.setAuthenId(authenId);
             dbLoginCmd.setCloudKey(cloudKey);
             dbLoginCmd.setSessionId(sessionId);
 
             Processor.getInstance().getDbCtrl().execute(dbLoginCmd);
             // set result 
-            if (dbLoginCmd.getResult() == ResultNumber.SUCCESS) {
-                result.setErrorCode(ResultNumber.SUCCESS);
-            } else if (dbLoginCmd.getResult() == ResultNumber.MAUTHEN_AUTHENID_INVALIDFORMAT) {
-                result.setErrorCode(ResultNumber.MAUTHEN_AUTHENID_INVALIDFORMAT);
-            } else {
-                result.setErrorCode(ResultNumber.SYSTEM_ERROR);
+             switch (dbLoginCmd.getResult()){
+                case -1:
+                    result.setErrorCode(ResultNumber.SYSTEM_ERROR);
+                    break;
+                case 0:
+                    result.setErrorCode(ResultNumber.SUCCESS);
+                     break;
+                case 2:
+                    result.setErrorCode(ResultNumber.MAUTHEN_AUTHENID_INVALIDFORMAT);
+                     break;
+                case 3:
+                    result.setErrorCode(ResultNumber.MAUTHEN_ACCOUNTID_NOTEXIST);
+                     break;
             }
 
         } catch (DBException ex) {
-            Logger.getLogger(LogInCmd.class.getName()).log(Level.SEVERE, null, ex);
+         logger.error("DBException: " + ex.getMessage());
         }
 
     }
@@ -84,6 +92,7 @@ public class LogInCmd extends ASBaseCommand {
         super.getRequest();
         try {
             jsonResultData.put("sessionID", sessionId);
+            jsonResultData.put("expireTime",expireTime);
             jsonResponse.put("resultData", jsonResultData);
         } catch (JSONException ex) {
             Logger.getLogger(LogInCmd.class.getName()).log(Level.SEVERE, null, ex);
@@ -115,18 +124,7 @@ public class LogInCmd extends ASBaseCommand {
         this.sessionId = sessionId;
     }
 
-    public AccountInfoEntity getAccountId() {
-        return accountId;
-    }
-
-    public void setAccountId(AccountInfoEntity accountId) {
-        this.accountId = accountId;
-    }
-
-
-    public void setDeviceId(DeviceInfoEntity deviceId) {
-        this.deviceId = deviceId;
-    }
+    
 
  
 }
