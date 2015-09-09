@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/imgCourse"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerVertical="true"
+        android:layout_margin="7dp" />
+
+    <RelativeLayout
+        android:id="@+id/layoutContent"
+        android:layout_width="200dp"
+        android:layout_height="90dp"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/imgCourse">
+
+        <TextView
+            android:id="@+id/tvNameCourse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:text="Java"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tvDescription"
+            android:layout_width="180dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:text="Description"
+            android:layout_below="@id/tvNameCourse"/>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/layoutContent"
+        android:layout_centerVertical="true"
+        android:src="@drawable/next"/>
+
+
+</RelativeLayout>

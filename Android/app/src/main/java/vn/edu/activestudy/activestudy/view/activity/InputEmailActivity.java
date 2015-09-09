@@ -1,25 +1,19 @@
 package vn.edu.activestudy.activestudy.view.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import vn.edu.activestudy.activestudy.ASController;
 import vn.edu.activestudy.activestudy.R;
 import vn.edu.activestudy.activestudy.common.Constants;
-import vn.edu.activestudy.activestudy.util.DeviceUtil;
 import vn.edu.activestudy.activestudy.util.PreferenceUtil;
-import vn.edu.activestudy.activestudy.util.TimeUtil;
 import vn.edu.activestudy.activestudy.util.ToastUtil;
 import vn.edu.activestudy.activestudy.util.Utils;
 
@@ -74,8 +68,10 @@ public class InputEmailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                executeTask();
-//                btnContinue_click();
+                //executeTask();
+                //btnContinue_click();
+                Intent myIntent = new Intent(InputEmailActivity.this, HomeActivity.class);
+                InputEmailActivity.this.startActivity(myIntent);
             }
         });
     }
@@ -95,7 +91,7 @@ public class InputEmailActivity extends AppCompatActivity {
 
     private void active() {
         PreferenceUtil.setString(this, Constants.PREFERENCE_EMAIL, edtEmail.getText().toString());
-        ASController.getInstance().activate(this);
+//        ASController.getInstance().activate(this);
     }
 
 

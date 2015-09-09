@@ -1,9 +1,7 @@
 package vn.edu.activestudy.activestudy.view.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import vn.edu.activestudy.activestudy.R;

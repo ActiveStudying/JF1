@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#000000</color>
+    <color name="background_app">#03A9F4</color>
+    <color name="text_tab">#FFFFFF</color>
+    <color name="primary_dark">#0288D1</color>
+</resources>
