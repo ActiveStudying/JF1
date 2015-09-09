@@ -18,7 +18,7 @@ public class ResultNumber extends AbsResult {
     
     public final static int MAUTHEN_SESSIONID_INVALIDFORMAT = 1;
     public final static int MAUTHEN_ACCOUNTID_INVALIDFORMAT = 2;
-    public final static int MAUTHEN_ACCOUNTID_UNEXIST = 3;
+    public final static int MAUTHEN_ACCOUNTID_NOTEXIST = 3;
     public final static int MAUTHEN_OTPCODE_INVALIDFORMAT = 4;
     public final static int MAUTHEN_AUTHENID_INVALIDFORMAT = 5;
     public final static int MAUTHEN_DEVICEID_EMPTY = 8;

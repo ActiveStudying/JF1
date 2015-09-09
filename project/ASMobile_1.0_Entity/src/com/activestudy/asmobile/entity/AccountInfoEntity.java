@@ -51,6 +51,10 @@ public class AccountInfoEntity {
         this.skills = skills;
         this.expects = expects;
     }
+
+    public String getPassword() {
+        return password;
+    }
     
     public String getMsisdn() {
         return msisdn;
