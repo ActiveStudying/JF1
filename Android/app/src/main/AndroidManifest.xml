@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="vn.edu.activestudy.activestudy">
 
+    <meta-data android:name="DATABASE" android:value="activestudy.db" />
+    <meta-data android:name="VERSION" android:value="1" />
+    <meta-data android:name="QUERY_LOG" android:value="true" />
+    <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="activestudy.activestudy.edu.vn" />
+
     <permission
         android:name="vn.edu.activestudy.activestudy.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />

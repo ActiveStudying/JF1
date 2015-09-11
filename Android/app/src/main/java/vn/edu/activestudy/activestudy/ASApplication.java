@@ -3,10 +3,12 @@ package vn.edu.activestudy.activestudy;
 import android.app.Application;
 import android.content.Context;
 
+import com.orm.SugarApp;
+
 /**
  * Created by dell123 on 8/24/2015.
  */
-public class ASApplication extends Application {
+public class ASApplication extends SugarApp {
 
     private static Context mContext;
 

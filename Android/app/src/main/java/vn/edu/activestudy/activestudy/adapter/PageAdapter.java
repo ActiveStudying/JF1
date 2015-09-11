@@ -38,16 +38,16 @@ public class PageAdapter extends FragmentPagerAdapter implements PagerSlidingTab
                 return new CourseFragment();
             case 1:
                 // Games fragment activity
-                return new CourseFragment();
+                return new ClassFragment();
             case 2:
                 // Movies fragment activity
-                return new CourseFragment();
+                return new ChatFragment();
             case 3:
                 // Movies fragment activity
-                return new CourseFragment();
+                return new ContactFragment();
             case 4:
                 // Movies fragment activity
-                return new CourseFragment();
+                return new MoreFragment();
         }
 
         return null;
