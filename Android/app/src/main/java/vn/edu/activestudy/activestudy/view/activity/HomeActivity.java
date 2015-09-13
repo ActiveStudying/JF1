@@ -34,18 +34,22 @@ public class HomeActivity extends FragmentActivity implements android.app.Action
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
 //        getActionBar().setHomeButtonEnabled(true);
-        // Get the ViewPager and set it's PagerAdapter so that it can display items
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+
+        //Get the ViewPager and set it's PagerAdapter so that it can display items
         //set adapter for view pager
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+
         viewPager.setAdapter(new PageAdapter(getSupportFragmentManager(), getApplicationContext()));
 
-        // Give the PagerSlidingTabStrip the ViewPager
+        //Give the PagerSlidingTabStrip the ViewPager
         PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         tabsStrip.setBackgroundColor(getResources().getColor(R.color.background_app));
         tabsStrip.setTextColor(getResources().getColor(R.color.text_tab));
 //        tabsStrip.setScrollBarStyle(PagerSlidingTabStrip.);
 //         Attach the view pager to the tab strip
+
         tabsStrip.setViewPager(viewPager);
 
 

@@ -10,8 +10,8 @@ import vn.edu.activestudy.activestudy.R;
 import vn.edu.activestudy.activestudy.util.ToastUtil;
 
 public class InputCodeActivity extends AppCompatActivity implements View.OnClickListener {
-    Button btnInputOTPResend;
-    Button btnInputOTPContinue;
+    private Button btnInputOTPResend;
+    private Button btnInputOTPContinue;
 
 
     @Override

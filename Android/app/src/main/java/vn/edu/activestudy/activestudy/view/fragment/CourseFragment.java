@@ -38,7 +38,9 @@ public class CourseFragment extends Fragment implements OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tab_course, container, false);
+
         lvCourse = (ListView) view.findViewById(R.id.lvCourse);
+
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.attachToListView(lvCourse);
         fab.setType(FloatingActionButton.TYPE_NORMAL);

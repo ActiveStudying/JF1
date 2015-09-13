@@ -1,8 +1,6 @@
-package vn.edu.activestudy.activestudy.model;
+package vn.edu.activestudy.activestudy.model.entity;
 
 import com.orm.SugarRecord;
-
-import java.util.Date;
 
 /**
  * Created by dell123 on 8/31/2015.

@@ -1,8 +1,6 @@
 package vn.edu.activestudy.activestudy.adapter;
 
 import android.app.Activity;
-import android.content.Context;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +16,7 @@ import vn.edu.activestudy.activestudy.model.Course;
 /**
  * Created by Administrator on 03/09/2015.
  */
-public class CourseAdapter extends ArrayAdapter<Course>{
+public class CourseAdapter extends ArrayAdapter<Course> {
 
     Activity context;
     ArrayList<Course> arrayList = null;
@@ -35,11 +33,12 @@ public class CourseAdapter extends ArrayAdapter<Course>{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
-        convertView = inflater.inflate(layoutId,null);
+        convertView = inflater.inflate(layoutId, null);
 
         ImageView img = (ImageView) convertView.findViewById(R.id.imgCourse);
         TextView tvName = (TextView) convertView.findViewById(R.id.tvNameCourse);
         TextView tvDes = (TextView) convertView.findViewById(R.id.tvDescription);
+
         Course c = arrayList.get(position);
         img.setImageResource(c.getPicture());
         tvName.setText(c.getNameCourse());

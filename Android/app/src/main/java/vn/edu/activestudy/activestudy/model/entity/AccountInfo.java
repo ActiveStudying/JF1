@@ -1,4 +1,4 @@
-package vn.edu.activestudy.activestudy.model;
+package vn.edu.activestudy.activestudy.model.entity;
 
 import java.util.Date;
 

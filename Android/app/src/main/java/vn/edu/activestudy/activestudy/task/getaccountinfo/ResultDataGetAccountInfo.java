@@ -2,7 +2,7 @@ package vn.edu.activestudy.activestudy.task.getaccountinfo;
 
 import com.google.gson.annotations.SerializedName;
 
-import vn.edu.activestudy.activestudy.model.AccountInfo;
+import vn.edu.activestudy.activestudy.model.entity.AccountInfo;
 import vn.edu.activestudy.activestudy.model.Expect;
 import vn.edu.activestudy.activestudy.model.Skill;
 

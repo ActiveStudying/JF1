@@ -2,7 +2,7 @@ package vn.edu.activestudy.activestudy.task.activate;
 
 import com.google.gson.annotations.SerializedName;
 
-import vn.edu.activestudy.activestudy.model.DeviceInfo;
+import vn.edu.activestudy.activestudy.model.entity.DeviceInfo;
 
 /**
  * Created by dell123 on 8/24/2015.

@@ -1,4 +1,4 @@
-package vn.edu.activestudy.activestudy.model;
+package vn.edu.activestudy.activestudy.model.entity;
 
 /**
  * Created by dell123 on 8/21/2015.

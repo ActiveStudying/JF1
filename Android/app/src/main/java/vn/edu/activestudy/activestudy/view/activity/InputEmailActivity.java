@@ -1,29 +1,17 @@
 package vn.edu.activestudy.activestudy.view.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
-
-import java.util.List;
 
 import vn.edu.activestudy.activestudy.ASController;
 import vn.edu.activestudy.activestudy.R;
-import vn.edu.activestudy.activestudy.common.Constants;
-import vn.edu.activestudy.activestudy.model.ClassInfo;
-import vn.edu.activestudy.activestudy.util.DeviceUtil;
-import vn.edu.activestudy.activestudy.util.PreferenceUtil;
-import vn.edu.activestudy.activestudy.util.TimeUtil;
 import vn.edu.activestudy.activestudy.util.ToastUtil;
 import vn.edu.activestudy.activestudy.util.Utils;
 

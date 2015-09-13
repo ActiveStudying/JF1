@@ -16,7 +16,7 @@ import vn.edu.activestudy.activestudy.ASController;
 import vn.edu.activestudy.activestudy.callback.TaskListener;
 import vn.edu.activestudy.activestudy.common.Constants;
 import vn.edu.activestudy.activestudy.common.ResponseCode;
-import vn.edu.activestudy.activestudy.model.DeviceInfo;
+import vn.edu.activestudy.activestudy.model.entity.DeviceInfo;
 import vn.edu.activestudy.activestudy.model.Result;
 
 /**

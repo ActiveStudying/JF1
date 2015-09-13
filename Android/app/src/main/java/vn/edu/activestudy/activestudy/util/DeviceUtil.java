@@ -3,10 +3,9 @@ package vn.edu.activestudy.activestudy.util;
 import android.content.Context;
 import android.os.Build;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 
 import vn.edu.activestudy.activestudy.ASController;
-import vn.edu.activestudy.activestudy.model.DeviceInfo;
+import vn.edu.activestudy.activestudy.model.entity.DeviceInfo;
 
 /**
  * Created by dell123 on 8/21/2015.
