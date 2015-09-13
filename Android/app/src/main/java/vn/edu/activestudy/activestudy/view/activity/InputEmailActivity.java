@@ -28,7 +28,7 @@ import vn.edu.activestudy.activestudy.util.ToastUtil;
 import vn.edu.activestudy.activestudy.util.Utils;
 
 
-public class InputEmailActivity extends AppCompatActivity {
+public class InputEmailActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText edtEmail;
     private Button btnContinue;
@@ -46,6 +46,9 @@ public class InputEmailActivity extends AppCompatActivity {
     private void initUI() {
         edtEmail = (EditText) findViewById(R.id.edtInputEmail);
         btnContinue = (Button) findViewById(R.id.btnInputEmailContinue);
+
+        //for test
+        edtEmail.setText("test@test.test");
     }
 
     private void initData() {
@@ -54,6 +57,7 @@ public class InputEmailActivity extends AppCompatActivity {
     }
 
     private void initControl() {
+        //handler text change of EditText
         edtEmail.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -61,56 +65,18 @@ public class InputEmailActivity extends AppCompatActivity {
                     btnContinue.setEnabled(false);
                 } else
                     btnContinue.setEnabled(true);
-
             }
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         });
 
-        btnContinue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                //executeTask();
-                //btnContinue_click();
-                Intent myIntent = new Intent(InputEmailActivity.this, HomeActivity.class);
-                InputEmailActivity.this.startActivity(myIntent);
-            }
-        });
-    }
-
-    public void btnContinue_click() {
-        String email = edtEmail.getText().toString();
-
-        if (email.length() == 0) {
-            ToastUtil.makeToast(getResources().getString(R.string.toast_input_email));
-        } else if (!Utils.checkEmailValidator(email)) {
-            ToastUtil.makeToast(getResources().getString(R.string.toast_wrong_email));
-        } else {
-            active();
-        }
-
-    }
-
-    private void active() {
-//        PreferenceUtil.setString(this, Constants.PREFERENCE_EMAIL, edtEmail.getText().toString());
-//        ASController.getInstance().activate(this);
-
-        List<ClassInfo> result = ClassInfo.find(ClassInfo.class, "Name=? and teacher=?", new String[]{"C#", "VIET NAM"});
-        if (result == null) {
-            Log.d("TEST", "NULL");
-        } else {
-            Log.d("TEST", "NOT NULL: "+result.size());
-        }
-
+        btnContinue.setOnClickListener(this);
     }
 
 
@@ -118,9 +84,9 @@ public class InputEmailActivity extends AppCompatActivity {
         AsyncTask<Void, Integer, Integer> task = new AsyncTask<Void, Integer, Integer>() {
             @Override
             protected Integer doInBackground(Void... params) {
-                int sum=0;
+                int sum = 0;
                 for (int i = 1; i <= 9; i++) {
-                    sum+=i;
+                    sum += i;
                     publishProgress(i);
                     try {
                         Thread.sleep(1000);
@@ -130,13 +96,14 @@ public class InputEmailActivity extends AppCompatActivity {
                 }
                 return sum;
             }
+
             @Override
             protected void onProgressUpdate(Integer... i) {
                 super.onProgressUpdate(i);
-                if(i[0]!=9){
-                    edtEmail.setText(edtEmail.getText().toString()  + i[0]+"+");
-                }else{
-                    edtEmail.setText(edtEmail.getText().toString()  + i[0]+"=");
+                if (i[0] != 9) {
+                    edtEmail.setText(edtEmail.getText().toString() + i[0] + "+");
+                } else {
+                    edtEmail.setText(edtEmail.getText().toString() + i[0] + "=");
                 }
             }
 
@@ -147,5 +114,42 @@ public class InputEmailActivity extends AppCompatActivity {
             }
         };
         task.execute();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnInputEmailContinue:
+                btnInputEmailContinue_click(v);
+                break;
+        }
+    }
+
+    private void btnInputEmailContinue_click(View v) {
+        String email = edtEmail.getText().toString();
+
+        if (email.length() == 0) {
+            ToastUtil.makeToast(getResources().getString(R.string.toast_input_email));
+        } else if (!Utils.checkEmailValidator(email)) {
+            ToastUtil.makeToast(getResources().getString(R.string.toast_wrong_email));
+        } else {
+            active();
+        }
+    }
+
+    private void active() {
+//        PreferenceUtil.setString(this, Constants.PREFERENCE_EMAIL, edtEmail.getText().toString());
+//        ASController.getInstance().activate(this);
+
+//        List<ClassInfo> result = ClassInfo.find(ClassInfo.class, "Name=? and teacher=?", new String[]{"C#", "VIET NAM"});
+//        if (result == null) {
+//            Log.d("TEST", "NULL");
+//        } else {
+//            Log.d("TEST", "NOT NULL: " + result.size());
+//        }
+        //executeTask();
+
+        Intent myIntent = new Intent(this, InputCodeActivity.class);
+        startActivity(myIntent);
     }
 }

@@ -13,6 +13,19 @@ public class DetailCourseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_course);
+
+        initUI();
+        initData();
+    }
+
+    private void initUI() {
+
+    }
+
+    private void initData() {
+        Bundle bundle = getIntent().getExtras();
+        int position = bundle.getInt("KEY");
+
     }
 
     @Override

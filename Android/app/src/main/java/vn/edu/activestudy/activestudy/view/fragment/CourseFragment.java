@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.melnykov.fab.FloatingActionButton;
@@ -19,6 +20,7 @@ import vn.edu.activestudy.activestudy.R;
 import vn.edu.activestudy.activestudy.adapter.CourseAdapter;
 import vn.edu.activestudy.activestudy.model.Course;
 import vn.edu.activestudy.activestudy.view.activity.CreateCourseActivity;
+import vn.edu.activestudy.activestudy.view.activity.DetailCourseActivity;
 
 
 /**
@@ -72,9 +74,19 @@ public class CourseFragment extends Fragment implements OnClickListener {
     }
 
     private void setAdapter() {
-
         courseAdapter = new CourseAdapter(getActivity(), R.layout.item_course, arrayListCourse);
         lvCourse.setAdapter(courseAdapter);
+
+        lvCourse.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), DetailCourseActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("KEY", position);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

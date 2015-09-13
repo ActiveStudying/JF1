@@ -36,6 +36,7 @@ public class CourseAdapter extends ArrayAdapter<Course>{
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
         convertView = inflater.inflate(layoutId,null);
+
         ImageView img = (ImageView) convertView.findViewById(R.id.imgCourse);
         TextView tvName = (TextView) convertView.findViewById(R.id.tvNameCourse);
         TextView tvDes = (TextView) convertView.findViewById(R.id.tvDescription);
