@@ -2,8 +2,10 @@ package vn.edu.activestudy.activestudy.view.activity;
 
 import java.util.Locale;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Build;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
@@ -30,6 +32,7 @@ public class HomeActivity extends FragmentActivity implements android.app.Action
     Context context;
     // Tab titles
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +47,7 @@ public class HomeActivity extends FragmentActivity implements android.app.Action
         tabsStrip.setBackgroundColor(getResources().getColor(R.color.background_app));
         tabsStrip.setTextColor(getResources().getColor(R.color.text_tab));
 //        tabsStrip.setScrollBarStyle(PagerSlidingTabStrip.);
+        tabsStrip.setScrollBarSize(0);
         // Attach the view pager to the tab strip
         tabsStrip.setViewPager(viewPager);
 

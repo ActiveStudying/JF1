@@ -2,10 +2,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="vn.edu.activestudy.activestudy">
 
-    <meta-data android:name="DATABASE" android:value="activestudy.db" />
-    <meta-data android:name="VERSION" android:value="1" />
-    <meta-data android:name="QUERY_LOG" android:value="true" />
-    <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="activestudy.activestudy.edu.vn" />
+    <meta-data
+        android:name="DATABASE"
+        android:value="activestudy.db" />
+    <meta-data
+        android:name="VERSION"
+        android:value="1" />
+    <meta-data
+        android:name="QUERY_LOG"
+        android:value="true" />
+    <meta-data
+        android:name="DOMAIN_PACKAGE_NAME"
+        android:value="activestudy.activestudy.edu.vn" />
 
     <permission
         android:name="vn.edu.activestudy.activestudy.permission.C2D_MESSAGE"
@@ -45,7 +53,11 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".view.activity.CreateCourseActivity"
-            android:label="Create Course" />
+            android:label="Create Course">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.activity.HomeActivity" />
+        </activity>
 
         <receiver
             android:name="com.google.android.gcm.GCMBroadcastReceiver"
@@ -64,7 +76,34 @@
         <service
             android:name=".GCMIntentService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+
+        <activity
+            android:name=".view.activity.ProfileActivity"
+            android:label="@string/title_activity_profile" />
+        <activity
+            android:name=".view.activity.IntroductionActivity"
+            android:label="@string/title_activity_introduction" />
+        <activity android:name=".view.activity.DetailCourseActivity" />
+        <activity
+            android:name=".view.activity.TeacherActivity"
+            android:label="@string/title_activity_teacher" />
+
+        <intent-filter>
+            <action android:name="android.intent.action.SEARCH" />
+        </intent-filter>
+        <activity
+            android:name=".view.activity.SearchResultsActivity"
+            android:label="@string/title_activity_search_results">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
     </application>
 
 </manifest>

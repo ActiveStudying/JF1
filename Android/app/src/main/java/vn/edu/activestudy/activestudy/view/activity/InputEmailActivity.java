@@ -49,7 +49,7 @@ public class InputEmailActivity extends AppCompatActivity {
     }
 
     private void initData() {
-        btnContinue.setEnabled(false);
+        btnContinue.setEnabled(true);
         ASController.getInstance().getRegistrationID(this);
     }
 
@@ -58,7 +58,7 @@ public class InputEmailActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.length() == 0) {
-                    btnContinue.setEnabled(false);
+                    btnContinue.setEnabled(true);
                 } else
                     btnContinue.setEnabled(true);
 

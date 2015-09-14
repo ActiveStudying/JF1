@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.melnykov.fab.FloatingActionButton;
@@ -19,6 +20,7 @@ import vn.edu.activestudy.activestudy.R;
 import vn.edu.activestudy.activestudy.adapter.CourseAdapter;
 import vn.edu.activestudy.activestudy.model.Course;
 import vn.edu.activestudy.activestudy.view.activity.CreateCourseActivity;
+import vn.edu.activestudy.activestudy.view.activity.DetailCourseActivity;
 
 
 /**
@@ -31,21 +33,15 @@ public class CourseFragment extends Fragment implements OnClickListener {
     ListView lvCourse;
     ArrayList<Course> arrayListCourse;
     CourseAdapter courseAdapter;
+    FloatingActionButton fab;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tab_course, container, false);
-        lvCourse = (ListView) view.findViewById(R.id.lvCourse);
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
-        fab.attachToListView(lvCourse);
-        fab.setType(FloatingActionButton.TYPE_NORMAL);
-        fab.setColorNormal(getResources().getColor(R.color.material_blue_500));
-        fab.setColorPressed(getResources().getColor(R.color.abc_primary_text_material_dark));
-        fab.show(true);
-        fab.setOnClickListener(this);
-        // init view
 
+        // init view
+        initUI(view);
         //set datasource
         setDatasource();
 
@@ -55,6 +51,23 @@ public class CourseFragment extends Fragment implements OnClickListener {
 
         // set event
         return view;
+    }
+
+    private void initUI(View view) {
+        lvCourse = (ListView) view.findViewById(R.id.lvCourse);
+        fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        fab.attachToListView(lvCourse);
+        fab.setType(FloatingActionButton.TYPE_NORMAL);
+        fab.setColorNormal(getResources().getColor(R.color.material_blue_500));
+        fab.setColorPressed(getResources().getColor(R.color.abc_primary_text_material_dark));
+        fab.show(true);
+        fab.setOnClickListener(this);
+        lvCourse.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                startActivity(new Intent(getActivity(), DetailCourseActivity.class));
+            }
+        });
     }
 
     private void setDatasource() {
@@ -87,7 +100,7 @@ public class CourseFragment extends Fragment implements OnClickListener {
 
     private void onFabClick() {
 //        Intent intent = new Intent(getActivity(),CreateCourseActivity.class);
-        startActivity(new Intent(getActivity(),CreateCourseActivity.class));
+        startActivity(new Intent(getActivity(), CreateCourseActivity.class));
     }
 }
 

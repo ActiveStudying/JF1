@@ -1,33 +1,32 @@
 package vn.edu.activestudy.activestudy.view.activity;
 
-import android.graphics.drawable.ColorDrawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.WebView;
 
 import vn.edu.activestudy.activestudy.R;
 
-public class DetailCourseActivity extends AppCompatActivity {
+/**
+ * Created by Administrator on 12/09/2015.
+ */
+public class IntroductionActivity extends AppCompatActivity {
+    String url = "https://android-arsenal.com";
+    WebView webView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail_course);
-
-        initUI();
-    }
-
-    private void initUI() {
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.background_app)));
+        setContentView(R.layout.activity_introduction);
+        webView = (WebView) findViewById(R.id.webview);
+        webView.loadUrl(url);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_detail_course, menu);
+        getMenuInflater().inflate(R.menu.menu_introduction, menu);
         return true;
     }
 
@@ -40,12 +39,10 @@ public class DetailCourseActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
-        }
-        if (id == android.R.id.home) {
+//            return true;
             finish();
-
         }
+
 
         return super.onOptionsItemSelected(item);
     }

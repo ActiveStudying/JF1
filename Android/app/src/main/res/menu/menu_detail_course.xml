@@ -2,11 +2,4 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="vn.edu.activestudy.activestudy.view.activity.DetailCourseActivity">
-    <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="Save"
-        android:visible="true"
-        app:actionViewClass="android.widget.Button"
-        app:showAsAction="always"></item>
 </menu>

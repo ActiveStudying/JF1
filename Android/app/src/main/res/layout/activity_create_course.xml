@@ -5,27 +5,77 @@
     android:background="#FFFFFF"
     android:orientation="vertical">
 
-    <TableLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:stretchColumns="1">
+        android:layout_weight="1">
 
-        <TableRow android:layout_height="wrap_content">
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="1">
 
-            <TextView
+            <TableRow android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:padding="3dip"
+                    android:text="Tên Khóa Học:"
+                    android:textColor="#000000"
+                    android:textSize="20dp" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Tên Khóa Học"
+                    android:textColor="#000000"
+                    android:textColorHint="#BDBDBD" />
+            </TableRow>
+
+            <TableRow
                 android:layout_height="wrap_content"
-                android:padding="3dip"
-                android:text="Ten Khoa Hoc"
-                android:textColor="#000000"
-                android:textSize="20dp" />
+                android:layout_marginTop="20dp">
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Ten Khoa Hoc"
-                android:textColor="#000000"
-                android:textColorHint="#BDBDBD" />
-        </TableRow>
-    </TableLayout>
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:padding="3dip"
+                    android:text="Số buổi học:"
+                    android:textColor="#000000"
+                    android:textSize="20dp" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Số buổi học"
+                    android:inputType="numberDecimal"
+                    android:textColor="#000000"
+                    android:textColorHint="#BDBDBD" />
+            </TableRow>
+        </TableLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_weight="4"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvNoidung"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nội dung:"
+            android:textColor="#000000"
+            android:textSize="20dp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Nội dung"
+            android:inputType="textImeMultiLine" />
+    </LinearLayout>
+
+
 </LinearLayout>

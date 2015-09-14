@@ -19,6 +19,10 @@
     <string name="toast_input_email">Yêu cầu nhập Email</string>
     <string name="toast_wrong_email">Email không đúng</string>
     <string name="text_button_resend">Gửi lại mã</string>
+    <string name="title_activity_profile">ProfileActivity</string>
+    <string name="title_activity_introduction">Introduction</string>
+    <string name="title_activity_teacher">TeacherActivity</string>
+    <string name="title_activity_search_results">SearchResultsActivity</string>
 
 
 </resources>
