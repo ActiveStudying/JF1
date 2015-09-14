@@ -22,6 +22,17 @@ public class DetailCourseActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.background_app)));
+        initData();
+    }
+
+    private void initUI() {
+
+    }
+
+    private void initData() {
+        Bundle bundle = getIntent().getExtras();
+        int position = bundle.getInt("KEY");
+
     }
 
     @Override

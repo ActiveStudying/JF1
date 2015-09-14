@@ -88,6 +88,17 @@ public class CourseFragment extends Fragment implements OnClickListener {
 
         courseAdapter = new CourseAdapter(getActivity(), R.layout.item_course, arrayListCourse);
         lvCourse.setAdapter(courseAdapter);
+
+        lvCourse.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), DetailCourseActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("KEY", position);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
