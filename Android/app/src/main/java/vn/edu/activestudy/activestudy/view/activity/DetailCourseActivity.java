@@ -24,10 +24,7 @@ public class DetailCourseActivity extends AppCompatActivity {
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.background_app)));
         initData();
     }
-
-    private void initUI() {
-
-    }
+    
 
     private void initData() {
         Bundle bundle = getIntent().getExtras();
