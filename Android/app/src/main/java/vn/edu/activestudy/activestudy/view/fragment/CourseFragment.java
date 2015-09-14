@@ -87,6 +87,7 @@ public class CourseFragment extends Fragment implements OnClickListener {
     private void setAdapter() {
 
         courseAdapter = new CourseAdapter(getActivity(), R.layout.item_course, arrayListCourse);
+        courseAdapter.setKeyword("hehe");
         lvCourse.setAdapter(courseAdapter);
 
         lvCourse.setOnItemClickListener(new AdapterView.OnItemClickListener() {

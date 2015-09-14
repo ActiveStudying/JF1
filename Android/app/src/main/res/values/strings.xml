@@ -13,7 +13,7 @@
 
     <!--text button-->
     <string name="text_button_continue">Continue</string>
-
+    <string name="register">Đăng Ký Khóa Học</string>
 
     <!--toast alert-->
     <string name="toast_input_email">Yêu cầu nhập Email</string>

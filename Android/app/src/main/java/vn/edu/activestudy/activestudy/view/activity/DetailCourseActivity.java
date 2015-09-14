@@ -1,14 +1,19 @@
 package vn.edu.activestudy.activestudy.view.activity;
 
+import android.content.DialogInterface;
 import android.graphics.drawable.ColorDrawable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import vn.edu.activestudy.activestudy.R;
 
 public class DetailCourseActivity extends AppCompatActivity {
+    CardView cvRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,20 +21,65 @@ public class DetailCourseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail_course);
 
         initUI();
+        initData();
+        initControl();
     }
 
+
     private void initUI() {
+
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.background_app)));
-        initData();
+        cvRegister = (CardView) findViewById(R.id.cvRegister);
+
     }
-    
+
 
     private void initData() {
         Bundle bundle = getIntent().getExtras();
         int position = bundle.getInt("KEY");
 
+    }
+
+    private void initControl() {
+        cvRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRegister();
+            }
+        });
+    }
+
+    private void onRegister() {
+        new AlertDialog.Builder(this)
+                .setTitle("Đăng ký khóa học")
+                .setMessage(" Bạn đang đăng ký vào khóa học...\" Bạn có muốn tiếp tục vào khóa học không?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        showDialogOk();
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
+    private void showDialogOk() {
+        new AlertDialog.Builder(this)
+                .setTitle("Thong bao:")
+                .setMessage("Bạn sẽ được sắp xếp vào lớp học trong thời gian gần nhất. Thông tin sẽ đc gửi vào Email")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 
     @Override

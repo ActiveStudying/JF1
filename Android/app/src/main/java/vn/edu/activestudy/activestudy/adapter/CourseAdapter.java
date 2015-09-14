@@ -20,6 +20,7 @@ public class CourseAdapter extends ArrayAdapter<Course> {
 
     Activity context;
     ArrayList<Course> arrayList = null;
+    String keyword = "";
     int layoutId;
 
     public CourseAdapter(Activity context, int layoutId, ArrayList<Course> objects) {
@@ -40,10 +41,20 @@ public class CourseAdapter extends ArrayAdapter<Course> {
         TextView tvDes = (TextView) convertView.findViewById(R.id.tvDescription);
 
         Course c = arrayList.get(position);
+        String name = c.getNameCourse();
+        if (name.contains(keyword)) {
+            tvName.setText("");
+        }
+
         img.setImageResource(c.getPicture());
+
         tvName.setText(c.getNameCourse());
         tvDes.setText(c.getDescription());
 
         return convertView;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
     }
 }

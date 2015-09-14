@@ -23,20 +23,38 @@ public class TeacherActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.menu_teacher, menu);
+//        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+//
+//        SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+//
+//        if (null != searchManager) {
+//            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+//        }
+//        searchView.setSubmitButtonEnabled(true);
+//
+//
+//        searchView.setIconifiedByDefault(false);
+//        //searchView.setOnQueryTextListener(this);
+
         getMenuInflater().inflate(R.menu.menu_teacher, menu);
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        MenuItem searchItem = menu.findItem(R.id.menu_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchItem.setActionView(searchView);
 
-        SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
 
-        if (null != searchManager) {
-            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        }
-        searchView.setSubmitButtonEnabled(true);
+            @Override
+            public boolean onQueryTextChange(String newText) {
 
-
-        searchView.setIconifiedByDefault(false);
-        //searchView.setOnQueryTextListener(this);
+                return false;
+            }
+        });
         return true;
     }
 
