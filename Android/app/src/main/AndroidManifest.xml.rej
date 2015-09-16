@@ -1,0 +1,9 @@
+diff a/Android/app/src/main/AndroidManifest.xml b/Android/app/src/main/AndroidManifest.xml	(rejected hunks)
+@@ -113,6 +113,7 @@
+                  android:name="android.app.searchable"
+                  android:resource="@xml/searchable" />
+          </activity>
+++<<<<<<< HEAD
+ +        <activity
+ +            android:name=".view.activity.EditCourseActivity"
+ +            android:label="@string/title_activity_edit_course" >

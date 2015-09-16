@@ -1,11 +1,13 @@
 package vn.edu.activestudy.activestudy.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.melnykov.fab.FloatingActionButton;
@@ -14,17 +16,21 @@ import java.util.ArrayList;
 
 import vn.edu.activestudy.activestudy.R;
 import vn.edu.activestudy.activestudy.adapter.ClassAdapter;
-import vn.edu.activestudy.activestudy.model.Class;
+import vn.edu.activestudy.activestudy.common.Constants;
+import vn.edu.activestudy.activestudy.manager.ClassManager;
+import vn.edu.activestudy.activestudy.model.ClassItem;
 import vn.edu.activestudy.activestudy.util.ToastUtil;
+import vn.edu.activestudy.activestudy.view.activity.DetailClassActivity;
 
 /**
  * Created by Administrator on 30/08/2015.
  */
 public class ClassFragment extends Fragment implements View.OnClickListener {
 
+    private static final String KEY = "CLASSFRAGMENT";
     private View view;
     private ListView lvClass;
-    ArrayList<Class> arrayListClass;
+    ArrayList<ClassItem> arrayListClass;
     ClassAdapter classAdapter;
 
     @Nullable
@@ -52,22 +58,28 @@ public class ClassFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initData() {
-        arrayListClass = new ArrayList<>();
-        arrayListClass.add(new Class(R.drawable.img_java, "Class 1", "Noi Dung of Class 1"));
-        arrayListClass.add(new Class(R.drawable.img_java, "Class 2", "Noi Dung of Class 2"));
-        arrayListClass.add(new Class(R.drawable.img_java, "Class 3", "Noi Dung of Class 3"));
-        arrayListClass.add(new Class(R.drawable.img_java, "Class 4", "Noi Dung of Class 4"));
-        arrayListClass.add(new Class(R.drawable.img_java, "Class 5", "Noi Dung of Class 5"));
-        arrayListClass.add(new Class(R.drawable.img_java, "Class 6", "Noi Dung of Class 6"));
-        arrayListClass.add(new Class(R.drawable.img_java, "Class 7", "Noi Dung of Class 7"));
-        arrayListClass.add(new Class(R.drawable.img_java, "Class 8", "Noi Dung of Class 8"));
-        arrayListClass.add(new Class(R.drawable.img_java, "Class 9", "Noi Dung of Class 9"));
-        arrayListClass.add(new Class(R.drawable.img_java, "Class 10", "Noi Dung of Class 10"));
+        arrayListClass = ClassManager.getInstance().getListClass();
     }
 
     private void initControl() {
         classAdapter = new ClassAdapter(getActivity(), R.layout.item_class, arrayListClass);
         lvClass.setAdapter(classAdapter);
+
+        lvClass.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //Open detail class
+                ToastUtil.makeToast("click Item: " + position);
+
+                Bundle bundle = new Bundle();
+                bundle.putInt(Constants.INTENT_KEY, position);
+
+                Intent intent = new Intent(getActivity(), DetailClassActivity.class);
+                intent.putExtras(bundle);
+
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

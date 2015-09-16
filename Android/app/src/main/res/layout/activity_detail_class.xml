@@ -1,0 +1,133 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <!--Tên lớp-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="@dimen/detail_class_column_1_width"
+            android:layout_height="@dimen/detail_class_column_1_height"
+            android:gravity="center"
+            android:text="@string/label_class_name" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Java core" />
+    </LinearLayout>
+
+    <!--Khóa Học-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="@dimen/detail_class_column_1_width"
+            android:layout_height="@dimen/detail_class_column_1_height"
+            android:gravity="center"
+            android:text="@string/label_course_name" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cơ bản" />
+    </LinearLayout>
+
+    <!--Ngày khai giảng-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="@dimen/detail_class_column_1_width"
+            android:layout_height="@dimen/detail_class_column_1_height"
+            android:gravity="center"
+            android:text="@string/label_start_date" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2/9/2015" />
+    </LinearLayout>
+
+    <!--Lịch trong tuần-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="@dimen/detail_class_column_1_width"
+            android:layout_height="@dimen/detail_class_column_1_height"
+            android:gravity="center"
+            android:text="Lịch trong tuần" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2 - 4 - 6" />
+    </LinearLayout>
+
+    <!--Giờ học-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="@dimen/detail_class_column_1_width"
+            android:layout_height="@dimen/detail_class_column_1_height"
+            android:gravity="center"
+            android:text="Giờ học" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="6h30 - 8h30" />
+    </LinearLayout>
+
+    <!--Giáo viên-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="@dimen/detail_class_column_1_width"
+            android:layout_height="@dimen/detail_class_column_1_height"
+            android:gravity="center"
+            android:text="Giáo viên" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Giáo sư Xoay" />
+    </LinearLayout>
+
+    <!--Thời lượng-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="@dimen/detail_class_column_1_width"
+            android:layout_height="@dimen/detail_class_column_1_height"
+            android:gravity="center"
+            android:text="Thời lượng" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="24 buổi" />
+    </LinearLayout>
+
+</LinearLayout>

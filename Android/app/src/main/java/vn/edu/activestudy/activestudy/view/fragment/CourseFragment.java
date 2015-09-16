@@ -20,8 +20,8 @@ import java.util.ArrayList;
 
 import vn.edu.activestudy.activestudy.R;
 import vn.edu.activestudy.activestudy.adapter.CourseAdapter;
-import vn.edu.activestudy.activestudy.model.Course;
 import vn.edu.activestudy.activestudy.util.ToastUtil;
+import vn.edu.activestudy.activestudy.model.CourseItem;
 import vn.edu.activestudy.activestudy.view.activity.CreateCourseActivity;
 import vn.edu.activestudy.activestudy.view.activity.DetailCourseActivity;
 import vn.edu.activestudy.activestudy.view.activity.EditCourseActivity;
@@ -36,7 +36,7 @@ public class CourseFragment extends Fragment implements OnClickListener {
 
     // Set the associated text for the title`
     ListView lvCourse;
-    ArrayList<Course> arrayListCourse;
+    ArrayList<CourseItem> arrayListCourse;
     CourseAdapter courseAdapter;
     FloatingActionButton fab;
 
@@ -76,16 +76,19 @@ public class CourseFragment extends Fragment implements OnClickListener {
     }
 
     private void setDatasource() {
-        arrayListCourse = new ArrayList<Course>();
-        arrayListCourse.add(new Course(R.drawable.img_java, "Java", "3", "Noi Dung of Java"));
-        arrayListCourse.add(new Course(R.drawable.img_java, "Java", "5", "Noi Dung of Java"));
-        arrayListCourse.add(new Course(R.drawable.img_java, "Java", "9", "Noi Dung of Java"));
-        arrayListCourse.add(new Course(R.drawable.img_java, "Java", "Noi Dung of Java"));
-        arrayListCourse.add(new Course(R.drawable.img_java, "Java", "Noi Dung of Java"));
-        arrayListCourse.add(new Course(R.drawable.img_java, "Java", "Noi Dung of Java"));
-        arrayListCourse.add(new Course(R.drawable.img_java, "Java", "Noi Dung of Java"));
-        arrayListCourse.add(new Course(R.drawable.img_java, "Java", "Noi Dung of Java"));
-        arrayListCourse.add(new Course(R.drawable.img_java, "Java", "Noi Dung of Java"));
+
+        arrayListCourse = new ArrayList<CourseItem>();
+
+        arrayListCourse.add(new CourseItem(R.drawable.img_java, "Java", "Noi Dung of Java"));
+        arrayListCourse.add(new CourseItem(R.drawable.img_java, "Java", "Noi Dung of Java"));
+        arrayListCourse.add(new CourseItem(R.drawable.img_java, "Java", "Noi Dung of Java"));
+        arrayListCourse.add(new CourseItem(R.drawable.img_java, "Java", "Noi Dung of Java"));
+        arrayListCourse.add(new CourseItem(R.drawable.img_java, "Java", "Noi Dung of Java"));
+        arrayListCourse.add(new CourseItem(R.drawable.img_java, "Java", "Noi Dung of Java"));
+        arrayListCourse.add(new CourseItem(R.drawable.img_java, "Java", "Noi Dung of Java"));
+        arrayListCourse.add(new CourseItem(R.drawable.img_java, "Java", "Noi Dung of Java"));
+        arrayListCourse.add(new CourseItem(R.drawable.img_java, "Java", "Noi Dung of Java"));
+
 //        courseAdapter.notifyDataSetChanged();
     }
 
@@ -106,7 +109,7 @@ public class CourseFragment extends Fragment implements OnClickListener {
                 }
                 Bundle bundle = new Bundle();
 
-                Course course = arrayListCourse.get(position);
+                CourseItem course = arrayListCourse.get(position);
                 bundle.putString("des", course.getDescription());
                 bundle.putString("name", course.getNameCourse());
                 bundle.putString("number", course.getNumberLessons());

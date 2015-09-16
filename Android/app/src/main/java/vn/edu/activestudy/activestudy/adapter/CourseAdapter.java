@@ -11,19 +11,19 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import vn.edu.activestudy.activestudy.R;
-import vn.edu.activestudy.activestudy.model.Course;
+import vn.edu.activestudy.activestudy.model.CourseItem;
 
 /**
  * Created by Administrator on 03/09/2015.
  */
-public class CourseAdapter extends ArrayAdapter<Course> {
+public class CourseAdapter extends ArrayAdapter<CourseItem> {
 
     Activity context;
-    ArrayList<Course> arrayList = null;
+    ArrayList<CourseItem> arrayList = null;
     String keyword = "";
     int layoutId;
 
-    public CourseAdapter(Activity context, int layoutId, ArrayList<Course> objects) {
+    public CourseAdapter(Activity context, int layoutId, ArrayList<CourseItem> objects) {
         super(context, layoutId, objects);
         this.context = context;
         this.layoutId = layoutId;
@@ -40,7 +40,7 @@ public class CourseAdapter extends ArrayAdapter<Course> {
         TextView tvName = (TextView) convertView.findViewById(R.id.tvNameCourse);
         TextView tvDes = (TextView) convertView.findViewById(R.id.tvDescription);
 
-        Course c = arrayList.get(position);
+        CourseItem c = arrayList.get(position);
         String name = c.getNameCourse();
         if (name.contains(keyword)) {
             tvName.setText("");

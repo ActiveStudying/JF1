@@ -1,32 +1,15 @@
 package vn.edu.activestudy.activestudy.model;
 
 /**
- * Created by Administrator on 31/08/2015.
+ * Created by dell123 on 8/31/2015.
  */
-public class Course {
+public class ClassItem {
 
     private int picture;
     private String nameCourse;
-
-    public String getNumberLessons() {
-        return numberLessons;
-    }
-
-    public Course(int picture, String nameCourse, String numberLessons, String description) {
-        this.picture = picture;
-        this.nameCourse = nameCourse;
-        this.numberLessons = numberLessons;
-        this.description = description;
-    }
-
-    public void setNumberLessons(String numberLessons) {
-        this.numberLessons = numberLessons;
-    }
-
-    private String numberLessons;
     private String description;
 
-    public Course(int picture, String nameCourse, String description) {
+    public ClassItem(int picture, String nameCourse, String description) {
         this.picture = picture;
         this.nameCourse = nameCourse;
         this.description = description;
