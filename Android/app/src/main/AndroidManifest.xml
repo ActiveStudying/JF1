@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="vn.edu.activestudy.activestudy">
+    package="vn.edu.activestudy.activestudy" >
 
     <meta-data
         android:name="DATABASE"
@@ -33,11 +33,11 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".view.activity.InputEmailActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/NoActionBarTheme">
+            android:theme="@style/NoActionBarTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -53,15 +53,21 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".view.activity.CreateCourseActivity"
-            android:label="Create Course">
+            android:label="Create Course" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.activity.HomeActivity" />
+
+            <intent-filter>
+                <action android:name="vn.edu.activestudy.activestudy.view.activity.ANOTHER_ACTIVITY" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
 
         <receiver
             android:name="com.google.android.gcm.GCMBroadcastReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND">
+            android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
 
                 <!-- Receives the actual messages. -->
@@ -92,17 +98,23 @@
         <intent-filter>
             <action android:name="android.intent.action.SEARCH" />
         </intent-filter>
+
         <activity
             android:name=".view.activity.SearchResultsActivity"
-            android:label="@string/title_activity_search_results">
+            android:label="@string/title_activity_search_results" >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
+        </activity>
+        <activity
+            android:name=".view.activity.EditCourseActivity"
+            android:label="@string/title_activity_edit_course" >
         </activity>
     </application>
 

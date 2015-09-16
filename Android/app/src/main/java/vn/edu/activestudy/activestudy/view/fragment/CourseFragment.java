@@ -1,6 +1,7 @@
 package vn.edu.activestudy.activestudy.view.fragment;
 
 import android.annotation.TargetApi;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.melnykov.fab.FloatingActionButton;
@@ -19,8 +21,11 @@ import java.util.ArrayList;
 import vn.edu.activestudy.activestudy.R;
 import vn.edu.activestudy.activestudy.adapter.CourseAdapter;
 import vn.edu.activestudy.activestudy.model.Course;
+import vn.edu.activestudy.activestudy.util.ToastUtil;
 import vn.edu.activestudy.activestudy.view.activity.CreateCourseActivity;
 import vn.edu.activestudy.activestudy.view.activity.DetailCourseActivity;
+import vn.edu.activestudy.activestudy.view.activity.EditCourseActivity;
+import vn.edu.activestudy.activestudy.view.activity.HomeActivity;
 
 
 /**
@@ -39,7 +44,7 @@ public class CourseFragment extends Fragment implements OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tab_course, container, false);
-
+        HomeActivity.checkIsTeacher = true;
         // init view
         initUI(view);
         //set datasource
@@ -72,9 +77,9 @@ public class CourseFragment extends Fragment implements OnClickListener {
 
     private void setDatasource() {
         arrayListCourse = new ArrayList<Course>();
-        arrayListCourse.add(new Course(R.drawable.img_java, "Java", "Noi Dung of Java"));
-        arrayListCourse.add(new Course(R.drawable.img_java, "Java", "Noi Dung of Java"));
-        arrayListCourse.add(new Course(R.drawable.img_java, "Java", "Noi Dung of Java"));
+        arrayListCourse.add(new Course(R.drawable.img_java, "Java", "3", "Noi Dung of Java"));
+        arrayListCourse.add(new Course(R.drawable.img_java, "Java", "5", "Noi Dung of Java"));
+        arrayListCourse.add(new Course(R.drawable.img_java, "Java", "9", "Noi Dung of Java"));
         arrayListCourse.add(new Course(R.drawable.img_java, "Java", "Noi Dung of Java"));
         arrayListCourse.add(new Course(R.drawable.img_java, "Java", "Noi Dung of Java"));
         arrayListCourse.add(new Course(R.drawable.img_java, "Java", "Noi Dung of Java"));
@@ -93,9 +98,19 @@ public class CourseFragment extends Fragment implements OnClickListener {
         lvCourse.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), DetailCourseActivity.class);
+                Intent intent;
+                if (!HomeActivity.checkIsTeacher) {
+                    intent = new Intent(getActivity(), DetailCourseActivity.class);
+                } else {
+                    intent = new Intent(getActivity(), EditCourseActivity.class);
+                }
                 Bundle bundle = new Bundle();
-                bundle.putInt("KEY", position);
+
+                Course course = arrayListCourse.get(position);
+                bundle.putString("des", course.getDescription());
+                bundle.putString("name", course.getNameCourse());
+                bundle.putString("number", course.getNumberLessons());
+//                bundle.putInt("KEY", position);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -112,7 +127,35 @@ public class CourseFragment extends Fragment implements OnClickListener {
 
     private void onFabClick() {
 //        Intent intent = new Intent(getActivity(),CreateCourseActivity.class);
-        startActivity(new Intent(getActivity(), CreateCourseActivity.class));
+        if (HomeActivity.checkIsTeacher == true) {
+            startActivity(new Intent(getActivity(), CreateCourseActivity.class));
+        } else {
+            onRequestCreateCourse();
+        }
+
+    }
+
+    private void onRequestCreateCourse() {
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.setContentView(R.layout.custom_dialog_request_create_course);
+        dialog.setTitle("Yêu cầu mở khóa học");
+
+        // set the custom dialog components - text, image and button
+        Button btnCancel = (Button) dialog.findViewById(R.id.btnCancelRequestCreateCourse);
+        Button btnOk = (Button) dialog.findViewById(R.id.btnOkRequestCreateCourse);
+        btnOk.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtil.makeToast("OK");
+            }
+        });
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+        dialog.show();
     }
 }
 

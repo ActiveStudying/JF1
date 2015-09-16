@@ -73,8 +73,12 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:autoText="true"
             android:hint="Nội dung"
-            android:inputType="textImeMultiLine" />
+            android:inputType="textImeMultiLine"
+            android:maxLength="20"
+            android:scrollbars="vertical"
+            android:textAlignment="textStart" />
     </LinearLayout>
 
 

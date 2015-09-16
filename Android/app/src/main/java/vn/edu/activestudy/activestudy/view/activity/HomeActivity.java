@@ -31,7 +31,7 @@ import vn.edu.activestudy.activestudy.adapter.PageAdapter;
 public class HomeActivity extends FragmentActivity implements android.app.ActionBar.TabListener {
     Context context;
     // Tab titles
-
+    public static boolean checkIsTeacher;
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onCreate(Bundle savedInstanceState) {

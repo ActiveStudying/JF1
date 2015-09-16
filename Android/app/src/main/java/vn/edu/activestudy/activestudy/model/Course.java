@@ -7,6 +7,23 @@ public class Course {
 
     private int picture;
     private String nameCourse;
+
+    public String getNumberLessons() {
+        return numberLessons;
+    }
+
+    public Course(int picture, String nameCourse, String numberLessons, String description) {
+        this.picture = picture;
+        this.nameCourse = nameCourse;
+        this.numberLessons = numberLessons;
+        this.description = description;
+    }
+
+    public void setNumberLessons(String numberLessons) {
+        this.numberLessons = numberLessons;
+    }
+
+    private String numberLessons;
     private String description;
 
     public Course(int picture, String nameCourse, String description) {

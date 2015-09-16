@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="15dp">
+
+        <TableRow>
+
+            <TextView android:text="Thực tập:" />
+
+            <CheckBox
+                android:id="@+id/cbThucTap"
+                android:layout_marginLeft="10dp" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView android:text="Thử việc:" />
+
+            <CheckBox
+                android:id="@+id/cbThuViec"
+                android:layout_marginLeft="10dp" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView android:text="Tìm việc:" />
+
+            <CheckBox
+                android:id="@+id/cbTimViec"
+                android:layout_marginLeft="10dp" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView android:text="Tự do:" />
+
+            <CheckBox
+                android:id="@+id/cbTuDo"
+                android:layout_marginLeft="10dp" />
+        </TableRow>
+    </TableLayout>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnCancelDesire"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/background_app"
+            android:text="Hủy" />
+
+        <Button
+            android:id="@+id/btnOkDesire"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/background_app"
+            android:text="OK" />
+    </LinearLayout>
+</LinearLayout>
