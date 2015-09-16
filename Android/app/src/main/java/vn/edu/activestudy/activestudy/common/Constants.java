@@ -24,5 +24,6 @@ public class Constants {
     public static String PREFERENCE_DEVICE_ID = "preference_device_id";
     public static String PREFERENCE_AUTHEN_ID = "preference_authen_id";
 
+    public static String INTENT_KEY = "INTENT_KEY";
 
 }

@@ -46,7 +46,8 @@
         </activity>
         <activity
             android:name=".view.activity.InputCodeActivity"
-            android:label="@string/title_activity_input_code" />
+            android:label="@string/title_activity_input_code"
+            android:theme="@style/NoActionBarTheme" />
         <activity
             android:name=".view.activity.HomeActivity"
             android:label="@string/title_activity_home"
@@ -92,17 +93,35 @@
         <intent-filter>
             <action android:name="android.intent.action.SEARCH" />
         </intent-filter>
+
         <activity
             android:name=".view.activity.SearchResultsActivity"
             android:label="@string/title_activity_search_results">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
+        </activity>
+
+        <!-- DetailClassActivity -->
+        <activity
+            android:name=".view.activity.DetailClassActivity"
+            android:label="@string/title_activity_detail_class">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.activity.HomeActivity" />
+        </activity>
+        <activity
+            android:name=".view.activity.ListStudenOfClassActivity"
+            android:label="@string/title_activity_list_studen_of_class">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.activity.DetailClassActivity" />
         </activity>
     </application>
 

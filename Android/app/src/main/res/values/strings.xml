@@ -1,5 +1,13 @@
 <resources>
     <string name="app_name">ActiveStudy</string>
+
+    <!--Name of activity-->
+    <string name="title_activity_profile">ProfileActivity</string>
+    <string name="title_activity_introduction">Introduction</string>
+    <string name="title_activity_teacher">TeacherActivity</string>
+    <string name="title_activity_search_results">SearchResultsActivity</string>
+    <string name="title_activity_detail_class">Chi tiết lớp học</string>
+    <string name="title_activity_list_studen_of_class">Danh sách học viên của lớp</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_input_code">InputCodeActivity</string>
     <string name="title_activity_home">HomeActivity</string>
@@ -13,16 +21,16 @@
 
     <!--text button-->
     <string name="text_button_continue">Continue</string>
+    <string name="text_button_resend">Gửi lại mã</string>
     <string name="register">Đăng Ký Khóa Học</string>
 
     <!--toast alert-->
     <string name="toast_input_email">Yêu cầu nhập Email</string>
     <string name="toast_wrong_email">Email không đúng</string>
-    <string name="text_button_resend">Gửi lại mã</string>
-    <string name="title_activity_profile">ProfileActivity</string>
-    <string name="title_activity_introduction">Introduction</string>
-    <string name="title_activity_teacher">TeacherActivity</string>
-    <string name="title_activity_search_results">SearchResultsActivity</string>
 
+    <!-- Detail class -->
+    <string name="label_class_name">Tên lớp:</string>
+    <string name="label_course_name">Khóa học</string>
+    <string name="label_start_date">Ngày khai giảng</string>
 
 </resources>

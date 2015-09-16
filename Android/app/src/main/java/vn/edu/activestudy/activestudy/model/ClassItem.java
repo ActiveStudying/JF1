@@ -3,13 +3,13 @@ package vn.edu.activestudy.activestudy.model;
 /**
  * Created by dell123 on 8/31/2015.
  */
-public class Class {
+public class ClassItem {
 
     private int picture;
     private String nameCourse;
     private String description;
 
-    public Class(int picture, String nameCourse, String description) {
+    public ClassItem(int picture, String nameCourse, String description) {
         this.picture = picture;
         this.nameCourse = nameCourse;
         this.description = description;

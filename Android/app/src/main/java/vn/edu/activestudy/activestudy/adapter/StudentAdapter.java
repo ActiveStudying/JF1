@@ -11,18 +11,18 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import vn.edu.activestudy.activestudy.R;
-import vn.edu.activestudy.activestudy.model.ClassItem;
+import vn.edu.activestudy.activestudy.model.StudentItem;
 
 /**
  * Created by dell123 on 9/13/2015.
  */
-public class ClassAdapter extends ArrayAdapter<ClassItem> {
+public class StudentAdapter extends ArrayAdapter<StudentItem> {
 
     private Activity context;
     private int resource;
-    private ArrayList<ClassItem> objects;
+    private ArrayList<StudentItem> objects;
 
-    public ClassAdapter(Activity context, int resource, ArrayList<ClassItem> objects) {
+    public StudentAdapter(Activity context, int resource, ArrayList<StudentItem> objects) {
         super(context, resource, objects);
 
         this.context = context;
@@ -35,14 +35,12 @@ public class ClassAdapter extends ArrayAdapter<ClassItem> {
         LayoutInflater layoutInflater = context.getLayoutInflater();
         convertView = layoutInflater.inflate(resource, null);
 
-        ImageView imageView = (ImageView) convertView.findViewById(R.id.imgClass);
-        TextView tvName = (TextView) convertView.findViewById(R.id.tvNameClass);
-        TextView tvDes = (TextView) convertView.findViewById(R.id.tvDescriptionClass);
+        ImageView imageView = (ImageView) convertView.findViewById(R.id.imgStudent);
+        TextView tvName = (TextView) convertView.findViewById(R.id.tvNameStudent);
 
-        ClassItem c = objects.get(position);
-        imageView.setImageResource(c.getPicture());
-        tvName.setText(c.getNameCourse());
-        tvDes.setText(c.getDescription());
+        StudentItem s = objects.get(position);
+        imageView.setImageResource(s.getPicture());
+        tvName.setText(s.getNameStudent());
 
         return convertView;
     }
