@@ -64,6 +64,9 @@ public class DetailClassActivity extends AppCompatActivity {
             actionShowStudent_click();
             return true;
         }
+        if(id== android.R.id.home){
+            finish();
+        }
 
         return super.onOptionsItemSelected(item);
     }

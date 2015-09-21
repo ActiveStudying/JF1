@@ -9,10 +9,10 @@ import vn.edu.activestudy.activestudy.model.Result;
  */
 public class ResponseActivate {
 
-    @SerializedName("Result")
+    @SerializedName("result")
     private Result result;
 
-    @SerializedName("ResultData")
+    @SerializedName("resultData")
     private ResultDataActivate resultData;
 
     public Result getResult() {

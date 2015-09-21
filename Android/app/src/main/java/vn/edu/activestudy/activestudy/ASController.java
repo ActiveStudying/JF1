@@ -15,11 +15,12 @@ import org.json.JSONException;
 import vn.edu.activestudy.activestudy.callback.TaskListener;
 import vn.edu.activestudy.activestudy.common.Constants;
 import vn.edu.activestudy.activestudy.common.ResponseCode;
-import vn.edu.activestudy.activestudy.model.entity.DeviceInfo;
 import vn.edu.activestudy.activestudy.model.Result;
+import vn.edu.activestudy.activestudy.model.entity.DeviceInfo;
 import vn.edu.activestudy.activestudy.task.activate.ActivateCMD;
 import vn.edu.activestudy.activestudy.task.activate.ResponseActivate;
 import vn.edu.activestudy.activestudy.task.activate.ResultDataActivate;
+import vn.edu.activestudy.activestudy.util.ToastUtil;
 import vn.edu.activestudy.activestudy.util.network.LruBitmapCache;
 
 /**
@@ -90,9 +91,9 @@ public class ASController {
         }
     }
 
-    public void activate(String accountId, DeviceInfo deviceInfo) {
+    public void activate(final String accountId, DeviceInfo deviceInfo) {
         try {
-            ActivateCMD.execute(accountId,deviceInfo, new TaskListener() {
+            ActivateCMD.execute(accountId, deviceInfo, new TaskListener() {
                 @Override
                 public void onResult(Object resp) {
                     ResponseActivate response = (ResponseActivate) resp;
@@ -100,6 +101,9 @@ public class ASController {
                     switch (result.getCode()) {
                         case ResponseCode.SUCCESS:
                             ResultDataActivate resultData = (ResultDataActivate) response.getResultData();
+
+                            String activationId = resultData.getActivationId();
+                            ToastUtil.makeLongToast(activationId);
                             //TODO: process continue response
 
                             break;

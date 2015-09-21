@@ -20,7 +20,7 @@ public class DeviceUtil {
         deviceInfo.setDeviceID(tm.getDeviceId());
         deviceInfo.setCloudKey(ASController.getInstance().getRegistrationID(context));
         deviceInfo.setDeviceName(Build.MODEL);
-        deviceInfo.setOsVersion(Build.VERSION.SDK_INT);
+        deviceInfo.setOsVersion(String.valueOf(Build.VERSION.SDK_INT));
         deviceInfo.setDevOther(Build.PRODUCT);
 
         return deviceInfo;

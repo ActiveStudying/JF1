@@ -3,7 +3,6 @@ package vn.edu.activestudy.activestudy.task.activate;
 import android.util.Log;
 
 import com.android.volley.Request;
-
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -16,8 +15,8 @@ import vn.edu.activestudy.activestudy.ASController;
 import vn.edu.activestudy.activestudy.callback.TaskListener;
 import vn.edu.activestudy.activestudy.common.Constants;
 import vn.edu.activestudy.activestudy.common.ResponseCode;
-import vn.edu.activestudy.activestudy.model.entity.DeviceInfo;
 import vn.edu.activestudy.activestudy.model.Result;
+import vn.edu.activestudy.activestudy.model.entity.DeviceInfo;
 
 /**
  * Created by dell123 on 8/24/2015.
@@ -57,6 +56,7 @@ public class ActivateCMD {
             }
         });
 
+        //LOG
         ASController.getInstance().addToRequestQueue(jsonObjReq, "activate_request");
     }
 
