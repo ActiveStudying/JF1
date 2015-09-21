@@ -17,7 +17,7 @@ public class ClassManager {
     public ClassManager() {
         mListClass = new ArrayList<>();
     }
-    
+
     public static ClassManager getInstance() {
         if (mInstance == null)
             mInstance = new ClassManager();
@@ -25,10 +25,13 @@ public class ClassManager {
     }
 
     public ArrayList<ClassItem> getListClass() {
-        if (mListClass.size() == 0) {
+        if (mListClass.size() != 0) {
             //TODO get from DB
+            return mListClass;
+        } else {
+            initTemplateData();
         }
-        initTemplateData();
+
         return mListClass;
     }
 
