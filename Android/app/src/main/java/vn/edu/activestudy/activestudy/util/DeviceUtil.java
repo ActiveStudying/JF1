@@ -12,6 +12,14 @@ import vn.edu.activestudy.activestudy.model.entity.DeviceInfo;
  */
 public class DeviceUtil {
     public static DeviceInfo getDeviceInfo(Context context) {
+        // DeviceInfo deviceInfo = new DeviceInfo();
+//        deviceInfo.setDeviceID("123456789");
+//        deviceInfo.setDeviceName("test");
+//        deviceInfo.setOsName("android");
+//        deviceInfo.setOsVersion("2.4");
+//        deviceInfo.setCloudKey("999999999999");
+//        deviceInfo.setDevOther("");
+
         DeviceInfo deviceInfo = new DeviceInfo();
 
         TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);

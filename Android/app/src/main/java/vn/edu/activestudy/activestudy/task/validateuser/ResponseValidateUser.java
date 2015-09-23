@@ -9,10 +9,10 @@ import vn.edu.activestudy.activestudy.task.updateaccountinfo.ResultDataUpdateAcc
  * Created by dell123 on 8/28/2015.
  */
 public class ResponseValidateUser {
-    @SerializedName("Result")
+    @SerializedName("result")
     private Result result;
 
-    @SerializedName("ResultData")
+    @SerializedName("resultData")
     private ResultDataValidateUser resultData;
 
     public Result getResult() {

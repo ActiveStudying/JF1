@@ -1,6 +1,9 @@
 package vn.edu.activestudy.activestudy.view.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -11,7 +14,10 @@ import android.widget.EditText;
 
 import vn.edu.activestudy.activestudy.ASController;
 import vn.edu.activestudy.activestudy.R;
+import vn.edu.activestudy.activestudy.common.Constants;
+import vn.edu.activestudy.activestudy.common.ResponseCode;
 import vn.edu.activestudy.activestudy.model.entity.DeviceInfo;
+import vn.edu.activestudy.activestudy.util.NetworkUtil;
 import vn.edu.activestudy.activestudy.util.ToastUtil;
 import vn.edu.activestudy.activestudy.util.Utils;
 
@@ -24,6 +30,8 @@ public class InputEmailActivity extends AppCompatActivity implements View.OnClic
     private String accountId = "";
     private DeviceInfo deviceInfo = new DeviceInfo();
 
+    private BroadcastReceiver mReceiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +40,9 @@ public class InputEmailActivity extends AppCompatActivity implements View.OnClic
         initUI();
         initData();
         initControl();
+        initReceiver();
     }
+
 
     private void initUI() {
         edtEmail = (EditText) findViewById(R.id.edtInputEmail);
@@ -71,6 +81,40 @@ public class InputEmailActivity extends AppCompatActivity implements View.OnClic
     }
 
 
+    private void initReceiver() {
+        mReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (intent.getAction().equals(Constants.INTENT_ACTIVATE_COMPLETE)) {
+                    int code = intent.getExtras().getInt(Constants.INTENT_KEY);
+                    switch (code) {
+                        case ResponseCode.ERROR:
+                            ToastUtil.makeToast(getResources().getString(R.string.toast_error));
+                            break;
+                        case ResponseCode.SYSTEM_ERROR:
+                            ToastUtil.makeToast(getResources().getString(R.string.toast_system_error));
+                            break;
+                        case ResponseCode.SUCCESS:
+                            openInputCodeScreen();
+                            break;
+                        case ResponseCode.MAUTHEN_ACCOUNTID_INVALIDFORMAT:
+                            ToastUtil.makeToast(getResources().getString(R.string.toast_mauthen_accountid_invalidformat));
+                            break;
+                        case ResponseCode.MAUTHEN_ACCOUNTID_UNEXIST:
+                            ToastUtil.makeToast(getResources().getString(R.string.toast_mauthen_accountid_unexist));
+                            break;
+                        case ResponseCode.MAUTHEN_DEVICEID_EMPTY:
+                            ToastUtil.makeToast(getResources().getString(R.string.toast_mauthen_deviceid_empty));
+                            break;
+                    }
+
+                }
+            }
+        };
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Constants.INTENT_ACTIVATE_COMPLETE);
+        registerReceiver(mReceiver, filter);
+    }
 //    private void executeTask() {
 //        AsyncTask<Void, Integer, Integer> task = new AsyncTask<Void, Integer, Integer>() {
 //            @Override
@@ -124,38 +168,27 @@ public class InputEmailActivity extends AppCompatActivity implements View.OnClic
         } else if (!Utils.checkEmailValidator(email)) {
             ToastUtil.makeToast(getResources().getString(R.string.toast_wrong_email));
         } else {
-            active();
+            active(email);
         }
     }
 
-    private void active() {
-//        PreferenceUtil.setString(this, Constants.PREFERENCE_EMAIL, edtEmail.getText().toString());
-//        ASController.getInstance().activate(this);
+    private void active(String email) {
 
-//        List<ClassInfo> result = ClassInfo.find(ClassInfo.class, "Name=? and teacher=?", new String[]{"C#", "VIET NAM"});
-//        if (result == null) {
-//            Log.d("TEST", "NULL");
-//        } else {
-//            Log.d("TEST", "NOT NULL: " + result.size());
-//        }
-
-        String accountId = "haitanitt@gmail.com";
-
-        DeviceInfo deviceInfo = new DeviceInfo();
-        deviceInfo.setDeviceID("123456789");
-        deviceInfo.setDeviceName("test");
-        deviceInfo.setOsName("android");
-        deviceInfo.setOsVersion("2.4");
-        deviceInfo.setCloudKey("999999999999");
-        deviceInfo.setDevOther("");
-
-        ASController.getInstance().activate(accountId, deviceInfo);
-
-//        openInputCodeScreen();
+        if (NetworkUtil.isNetworkAvailable(this)) {
+            ASController.getInstance().activate(email);
+        } else {
+            ToastUtil.makeToast(getResources().getString(R.string.toast_network_not_available));
+        }
     }
 
     private void openInputCodeScreen() {
         Intent myIntent = new Intent(this, InputCodeActivity.class);
         startActivity(myIntent);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(mReceiver);
     }
 }

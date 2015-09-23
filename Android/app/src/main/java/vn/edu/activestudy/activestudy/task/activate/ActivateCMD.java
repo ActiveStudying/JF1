@@ -11,12 +11,15 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import vn.edu.activestudy.activestudy.ASApplication;
 import vn.edu.activestudy.activestudy.ASController;
 import vn.edu.activestudy.activestudy.callback.TaskListener;
 import vn.edu.activestudy.activestudy.common.Constants;
 import vn.edu.activestudy.activestudy.common.ResponseCode;
 import vn.edu.activestudy.activestudy.model.Result;
 import vn.edu.activestudy.activestudy.model.entity.DeviceInfo;
+import vn.edu.activestudy.activestudy.util.DeviceUtil;
+import vn.edu.activestudy.activestudy.util.PreferenceUtil;
 
 /**
  * Created by dell123 on 8/24/2015.
@@ -26,7 +29,11 @@ public class ActivateCMD {
     private static final String TAG = ActivateCMD.class.getSimpleName();
     private static String url = Constants.URL_SERVER + Constants.URL_ACTIVE;
 
-    public static void execute(String accountId, DeviceInfo deviceInfo, final TaskListener listener) throws JSONException {
+    public static void execute(String accountId, final TaskListener listener) throws JSONException {
+        DeviceInfo deviceInfo = DeviceUtil.getDeviceInfo(ASApplication.getContext());
+
+        PreferenceUtil.setString(ASApplication.getContext(), Constants.PREFERENCE_DEVICE_ID, deviceInfo.getDeviceID());
+
         RequestActivate request = new RequestActivate();
         request.setAccountId(accountId);
         request.setDeviceInfo(deviceInfo);

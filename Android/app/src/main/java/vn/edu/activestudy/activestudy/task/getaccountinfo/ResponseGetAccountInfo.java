@@ -9,10 +9,10 @@ import vn.edu.activestudy.activestudy.task.activateOTP.ResultDataActivateOtp;
  * Created by dell123 on 8/28/2015.
  */
 public class ResponseGetAccountInfo {
-    @SerializedName("Result")
+    @SerializedName("result")
     private Result result;
 
-    @SerializedName("ResultData")
+    @SerializedName("resultData")
     private ResultDataGetAccountInfo resultData;
 
     public Result getResult() {

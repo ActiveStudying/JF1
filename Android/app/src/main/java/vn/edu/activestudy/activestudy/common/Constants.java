@@ -15,15 +15,16 @@ public class Constants {
     public static String URL_GET_SERVICE_ADDRESS = "/getServiceAddress";
     public static String URL_GET_ACCOUNT_INFO = "/getAccountInfo";
     public static String URL_ACTIVE = "/mauthen/mapp/activate";
-    public static String URL_ACTIVE_CODE = "/activeCode";
+    public static String URL_ACTIVE_CODE = "/mauthen/mapp/activeCode";
 
-    public static String PREFERENCE_EMAIL = "preference_email";
     public static String PREFERENCE_ACTIVATION_ID = "preference_activation_id";
     public static String PREFERENCE_ACCOUNT_ID = "preference_account_id";
     public static String PREFERENCE_SESSION_ID = "preference_session_id";
     public static String PREFERENCE_DEVICE_ID = "preference_device_id";
     public static String PREFERENCE_AUTHEN_ID = "preference_authen_id";
 
-    public static String INTENT_KEY = "INTENT_KEY";
+    public static String INTENT_KEY = "intent_key";
+    public static String INTENT_ACTIVATE_COMPLETE = "intent_activate_complete";
+    public static String INTENT_ACTIVATE_WITH_OTP_COMPLETE = "intent_activate_with_otp_complete";
 
 }

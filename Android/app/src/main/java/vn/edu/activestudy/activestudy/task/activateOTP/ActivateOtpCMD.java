@@ -8,17 +8,16 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
-import com.google.gson.annotations.SerializedName;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import vn.edu.activestudy.activestudy.ASApplication;
 import vn.edu.activestudy.activestudy.ASController;
 import vn.edu.activestudy.activestudy.callback.TaskListener;
 import vn.edu.activestudy.activestudy.common.Constants;
 import vn.edu.activestudy.activestudy.common.ResponseCode;
 import vn.edu.activestudy.activestudy.model.Result;
-import vn.edu.activestudy.activestudy.task.activate.ResponseActivate;
 import vn.edu.activestudy.activestudy.util.PreferenceUtil;
 
 /**
@@ -37,6 +36,7 @@ public class ActivateOtpCMD {
         request.setAccountId(accountId);
         request.setActivationId(activationId);
         request.setOtpCode(otpCode);
+        request.setDeviceId(PreferenceUtil.getString(ASApplication.getContext(), Constants.PREFERENCE_DEVICE_ID, ""));
 
         String json = new Gson().toJson(request);
         Log.d(TAG, json);

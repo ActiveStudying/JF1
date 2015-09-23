@@ -1,6 +1,8 @@
 package vn.edu.activestudy.activestudy;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -16,11 +18,13 @@ import vn.edu.activestudy.activestudy.callback.TaskListener;
 import vn.edu.activestudy.activestudy.common.Constants;
 import vn.edu.activestudy.activestudy.common.ResponseCode;
 import vn.edu.activestudy.activestudy.model.Result;
-import vn.edu.activestudy.activestudy.model.entity.DeviceInfo;
 import vn.edu.activestudy.activestudy.task.activate.ActivateCMD;
 import vn.edu.activestudy.activestudy.task.activate.ResponseActivate;
 import vn.edu.activestudy.activestudy.task.activate.ResultDataActivate;
-import vn.edu.activestudy.activestudy.util.ToastUtil;
+import vn.edu.activestudy.activestudy.task.activateOTP.ActivateOtpCMD;
+import vn.edu.activestudy.activestudy.task.activateOTP.ResponseActivateOTP;
+import vn.edu.activestudy.activestudy.task.activateOTP.ResultDataActivateOtp;
+import vn.edu.activestudy.activestudy.util.PreferenceUtil;
 import vn.edu.activestudy.activestudy.util.network.LruBitmapCache;
 
 /**
@@ -91,32 +95,117 @@ public class ASController {
         }
     }
 
-    public void activate(final String accountId, DeviceInfo deviceInfo) {
+    public void activate(final String accountId) {
+        Log.d(TAG, "start activate");
         try {
-            ActivateCMD.execute(accountId, deviceInfo, new TaskListener() {
+            ActivateCMD.execute(accountId, new TaskListener() {
                 @Override
                 public void onResult(Object resp) {
                     ResponseActivate response = (ResponseActivate) resp;
                     Result result = response.getResult();
+                    Log.d(TAG, "RESPONSE ACTIVATE: " + result.getCode());
+                    Intent intent = new Intent(Constants.INTENT_ACTIVATE_COMPLETE);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(Constants.INTENT_KEY, result.getCode());
                     switch (result.getCode()) {
-                        case ResponseCode.SUCCESS:
-                            ResultDataActivate resultData = (ResultDataActivate) response.getResultData();
-
-                            String activationId = resultData.getActivationId();
-                            ToastUtil.makeLongToast(activationId);
-                            //TODO: process continue response
-
-                            break;
                         case ResponseCode.ERROR:
+                            Log.d(TAG, "RESPONSE ACTIVATE: ERROR");
                             break;
                         case ResponseCode.SYSTEM_ERROR:
-                            break;
+                            Log.d(TAG, "RESPONSE ACTIVATE: SYSTEM ERROR");
 
+                            break;
+                        case ResponseCode.SUCCESS:
+                            Log.d(TAG, "RESPONSE ACTIVATE: SUCCESS");
+
+                            ResultDataActivate resultData = response.getResultData();
+
+                            String activationId = resultData.getActivationId();
+
+                            PreferenceUtil.setString(mContext, Constants.PREFERENCE_ACCOUNT_ID, accountId);
+                            PreferenceUtil.setString(mContext, Constants.PREFERENCE_ACTIVATION_ID, activationId);
+
+                            break;
+                        case ResponseCode.MAUTHEN_ACCOUNTID_INVALIDFORMAT:
+                            Log.d(TAG, "RESPONSE ACTIVATE: MAUTHEN ACCOUNTID INVALIDFORMAT");
+
+                            break;
+                        case ResponseCode.MAUTHEN_ACCOUNTID_UNEXIST:
+                            Log.d(TAG, "RESPONSE ACTIVATE: MAUTHEN ACCOUNTID UNEXIST");
+
+                            break;
+                        case ResponseCode.MAUTHEN_DEVICEID_EMPTY:
+                            Log.d(TAG, "RESPONSE ACTIVATE: MAUTHEN DEVICEID EMPTY");
+
+                            break;
                     }
+                    intent.putExtras(bundle);
+                    mContext.sendBroadcast(intent);
+
                 }
             });
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
+
+    public void activeWithOTP(String otp) {
+        Log.d(TAG, "start activate wih otp");
+        try {
+            ActivateOtpCMD.execute(mContext, otp, new TaskListener() {
+                @Override
+                public void onResult(Object resp) {
+                    ResponseActivateOTP response = (ResponseActivateOTP) resp;
+                    Result result = response.getResult();
+                    Log.d(TAG, "RESPONSE ACTIVATE: " + result.getCode());
+
+                    Intent intent = new Intent(Constants.INTENT_ACTIVATE_WITH_OTP_COMPLETE);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(Constants.INTENT_KEY, result.getCode());
+
+                    switch (result.getCode()) {
+                        case ResponseCode.ERROR:
+                            Log.d(TAG, "RESPONSE ACTIVATE: ERROR");
+                            break;
+                        case ResponseCode.SYSTEM_ERROR:
+                            Log.d(TAG, "RESPONSE ACTIVATE: SYSTEM ERROR");
+
+                            break;
+                        case ResponseCode.SUCCESS:
+                            Log.d(TAG, "RESPONSE ACTIVATE: SUCCESS");
+
+                            ResultDataActivateOtp resultData = response.getResultData();
+
+                            String authenId = resultData.getAuthenId();
+
+                            PreferenceUtil.setString(mContext, Constants.PREFERENCE_AUTHEN_ID, authenId);
+
+                            break;
+                        case ResponseCode.MAUTHEN_ACCOUNTID_INVALIDFORMAT:
+                            Log.d(TAG, "RESPONSE ACTIVATE: MAUTHEN ACCOUNTID INVALIDFORMAT");
+
+                            break;
+                        case ResponseCode.MAUTHEN_ACCOUNTID_UNEXIST:
+                            Log.d(TAG, "RESPONSE ACTIVATE: MAUTHEN ACCOUNTID UNEXIST");
+
+                            break;
+                        case ResponseCode.MAUTHEN_OTPCODE_INVALIDFORMAT:
+                            Log.d(TAG, "RESPONSE ACTIVATE: MAUTHEN OTPCODE INVALIDFORMAT");
+
+                            break;
+                        case ResponseCode.OVER_NUMBERRETRY_OTPCODE:
+                            Log.d(TAG, "RESPONSE ACTIVATE: OVER NUMBERRETRY OTPCODE");
+
+                            break;
+                    }
+                    intent.putExtras(bundle);
+                    mContext.sendBroadcast(intent);
+                }
+            });
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+
 }
