@@ -5,11 +5,15 @@
  */
 package com.activestudy.asmobile.mauthen.command;
 
+
+import com.activestudy.Utility.Define.AbsDefine;
 import com.activestudy.Utility.MCommonUtils;
 import com.activestudy.Utitity.db.DBException;
 import com.activestudy.asmobile.entity.AccountInfoEntity;
 import com.activestudy.asmobile.entity.DeviceInfoEntity;
 import com.activestudy.asmobile.entity.ResultNumber;
+
+import com.activestudy.asmobile.mauthen.CoreConfig;
 import com.activestudy.asmobile.mauthen.Processor;
 import com.activestudy.asmobile.mauthen.dbcontroller.cmd.dbLogin;
 import java.util.logging.Level;
@@ -23,76 +27,81 @@ import org.codehaus.jettison.json.JSONException;
  * @author PC
  */
 public class LogInCmd extends ASBaseCommand {
-    
-    
-    
+
+
     String authenId;
     String cloudKey;
     String sessionId;
-    AccountInfoEntity accountInfo;
-    DeviceInfoEntity deviceInfo;
-    int expireTime ;
     
-    private Log logger = null;
+    String password;
+    int maxTime = 1800;
+    Log logger;
+
     public LogInCmd(String authenId, AccountInfoEntity accountInfo, Log logger) {
         this.authenId = authenId;
         this.accountInfo = accountInfo;
         this.logger = logger;
     }
 
-    public LogInCmd() {
+
+    public LogInCmd(Log logger) {
+        this.logger = logger;
+
     }
 
     @Override
     public void execute() {
         // kiem tra mail 
         if (false == MCommonUtils.is_Email(accountInfo.getEmail())) {
-            ((ResultNumber) result).setErrorCode(ResultNumber.MAUTHEN_ACCOUNTID_INVALIDFORMAT);
+
+            result.setErrorCode(ResultNumber.MAUTHEN_ACCOUNTID_INVALIDFORMAT);
             return;
         }
         // kiem tra deviceID
-        if (deviceInfo.getDeviceId().isEmpty()) {
-            ((ResultNumber) result).setErrorCode(ResultNumber.MAUTHEN_DEVICEID_EMPTY);
+        if (deviceId.isEmpty()) {
+            result.setErrorCode(ResultNumber.MAUTHEN_DEVICEID_EMPTY);
             return;
         }
-         dbLogin dbLoginCmd = new dbLogin();
+        // kiem tra authen // viet ham kiem tra authen
+//        if (false == MCommonUtils.) {
+//            
+//        }
+
+        dbLogin dbLoginCmd = new dbLogin();
         try {
             sessionId = RandomStringUtils.randomAlphanumeric(20);
-            dbLoginCmd.setAccountId(accountInfo.getAccountId());
-            dbLoginCmd.setDeviceId(deviceInfo.getDeviceId());
+            dbLoginCmd.setAccountInfo(accountInfo);
+            dbLoginCmd.setDeviceId(deviceId);
             dbLoginCmd.setAuthenId(authenId);
             dbLoginCmd.setCloudKey(cloudKey);
             dbLoginCmd.setSessionId(sessionId);
-
+            dbLoginCmd.setMaxTime(CoreConfig.getInstance().getSessionTimeOut());
             Processor.getInstance().getDbCtrl().execute(dbLoginCmd);
-            // set result 
-             switch (dbLoginCmd.getResult()){
-                case -1:
-                    result.setErrorCode(ResultNumber.SYSTEM_ERROR);
-                    break;
-                case 0:
-                    result.setErrorCode(ResultNumber.SUCCESS);
-                     break;
-                case 2:
-                    result.setErrorCode(ResultNumber.MAUTHEN_AUTHENID_INVALIDFORMAT);
-                     break;
-                case 3:
-                    result.setErrorCode(ResultNumber.MAUTHEN_ACCOUNTID_NOTEXIST);
-                     break;
+            // set result             
+            if (dbLoginCmd.getResult() == AbsDefine.KEY_SUCCESS) {
+                result.setErrorCode(ResultNumber.SUCCESS);
+            } else if (dbLoginCmd.getResult() == 1) {// Acc chua dang ky
+                result.setErrorCode(ResultNumber.MAUTHEN_ACCOUNTID_NOTEXIST);
+            } else if (dbLoginCmd.getResult() == 2) {// Sai authentication id
+                result.setErrorCode(ResultNumber.MAUTHEN_AUTHENID_INVALIDFORMAT);
+            } else {
+                result.setErrorCode(ResultNumber.SYSTEM_ERROR);
             }
 
         } catch (DBException ex) {
-         logger.error("DBException: " + ex.getMessage());
+            Logger.getLogger(LogInCmd.class.getName()).log(Level.SEVERE, null, ex);
+
         }
 
     }
 
     @Override
     public String getResponse() {
-        super.getRequest();
+
+        super.getResponse();
         try {
             jsonResultData.put("sessionID", sessionId);
-            jsonResultData.put("expireTime",expireTime);
+
             jsonResponse.put("resultData", jsonResultData);
         } catch (JSONException ex) {
             Logger.getLogger(LogInCmd.class.getName()).log(Level.SEVERE, null, ex);
@@ -124,7 +133,16 @@ public class LogInCmd extends ASBaseCommand {
         this.sessionId = sessionId;
     }
 
-    
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setMaxTime(int maxTime) {
+        this.maxTime = maxTime;
+    }
 
  
+
+
 }

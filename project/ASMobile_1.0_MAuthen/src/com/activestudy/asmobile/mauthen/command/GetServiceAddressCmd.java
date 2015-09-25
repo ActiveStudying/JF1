@@ -8,6 +8,7 @@ public class GetServiceAddressCmd extends ASBaseCommand {
 
     String sessionId;
     int serviceId ;
+    String ser
 
     public GetServiceAddressCmd(String sessionId, String email, String deviceId,int serviceId ) {
         super(email, deviceId);
@@ -32,13 +33,7 @@ public class GetServiceAddressCmd extends ASBaseCommand {
         this.sessionId = sessionId;
     }
 
-    public String getEmail() {
-        return email;
-    }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public String getDeviceId() {
         return deviceId;
