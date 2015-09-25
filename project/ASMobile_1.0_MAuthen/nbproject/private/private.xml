@@ -3,15 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/PC/Documents/GitHub/JF1/project/ASMobile_1.0_MAuthen/src/com/activestudy/asmobile/mauthen/command/ASBaseCommand.java</file>
-            <file>file:/C:/Users/PC/Documents/GitHub/JF1/project/ASMobile_1.0_MAuthen/src/com/activestudy/asmobile/mauthen/command/GetServiceAddressCmd.java</file>
-            <file>file:/C:/Users/PC/Documents/GitHub/JF1/project/ASMobile_1.0_MAuthen/src/com/activestudy/asmobile/mauthen/command/ActiveCodeCmd.java</file>
-            <file>file:/C:/Users/PC/Documents/GitHub/JF1/project/ASMobile_1.0_MAuthen/src/com/activestudy/asmobile/mauthen/command/ActiveCmd.java</file>
-            <file>file:/C:/Users/PC/Documents/GitHub/JF1/project/ASMobile_1.0_MAuthen/src/com/activestudy/asmobile/mauthen/dbcontroller/OracleConnection.java</file>
-            <file>file:/C:/Users/PC/Documents/GitHub/JF1/project/ASMobile_1.0_MAuthen/src/com/activestudy/asmobile/mauthen/dbcontroller/cmd/DbActive.java</file>
-            <file>file:/C:/Users/PC/Documents/GitHub/JF1/project/ASMobile_1.0_MAuthen/src/com/activestudy/asmobile/mauthen/command/LogInCmd.java</file>
-            <file>file:/C:/Users/PC/Documents/GitHub/JF1/project/ASMobile_1.0_MAuthen/src/com/activestudy/asmobile/mauthen/command/CheckUserCmd.java</file>
-            <file>file:/C:/Users/PC/Documents/GitHub/JF1/project/ASMobile_1.0_MAuthen/src/com/activestudy/asmobile/mauthen/MappWSAPI.java</file>
+            <file>file:/D:/AllProject/GitHub/JF1_Service/ASMobile_1.0_MAuthen/src/com/activestudy/asmobile/mauthen/command/LogInCmd.java</file>
         </group>
     </open-files>
 </project-private>
