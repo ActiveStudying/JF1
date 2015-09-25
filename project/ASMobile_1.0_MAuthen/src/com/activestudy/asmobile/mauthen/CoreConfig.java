@@ -14,9 +14,9 @@ import com.activestudy.Utility.AbsConfig;
 public class CoreConfig extends AbsConfig {
 
     private static CoreConfig instance;
-    public static String CONFIG_PATH = "../../config/mhss/";
+    public static String CONFIG_PATH = "../../config/mauthen/";
     private static final String CORE_CONFIG = CONFIG_PATH + "core.properties";
-
+    private int sessionTimeOut = 1800;
     public CoreConfig() {
         super();
         loadConfig();
@@ -35,5 +35,14 @@ public class CoreConfig extends AbsConfig {
         }
         return instance;
     }
+
+    public int getSessionTimeOut() {
+        return sessionTimeOut;
+    }
+
+    public void setSessionTimeOut(int sessionTimeOut) {
+        this.sessionTimeOut = sessionTimeOut;
+    }
+    
 
 }

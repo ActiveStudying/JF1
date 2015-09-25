@@ -28,8 +28,11 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
+import javax.ws.rs.QueryParam;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.xml.DOMConfigurator;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
@@ -38,7 +41,8 @@ import org.codehaus.jettison.json.JSONObject;
  * @author tanhai
  */
 @Produces("application/json")
-@Path("mapp")
+
+@Path("/mapp")
 @Singleton
 public class MappWSAPI {
 
@@ -46,8 +50,9 @@ public class MappWSAPI {
 
     public MappWSAPI() {
         System.out.print("MappWSAPI INIT \n");
-        logger = LogFactory.getLog(this.getClass());
-        logger.info("Started Web Service for Mapp !!!!");
+
+        Processor.getInstance();
+       logger = LogFactory.getLog("mauthen");
 
     }
 
@@ -67,14 +72,16 @@ public class MappWSAPI {
 
         try {
             JSONObject inJsonObj = new JSONObject(content);
-            email = inJsonObj.getString("accountId");
+
+            email = inJsonObj.getString("accountId");            
             accountInfo = new AccountInfoEntity(email, email, "");
             deviceInfo = new DeviceInfoEntity(deviceID, deviceName, osName, osVersion, cloudKey, devOther);
             JSONUtility.GetJSONData(inJsonObj.getString("deviceInfo"), deviceInfo);
         } catch (JSONException ex) {
             logger.error("Error Parse Json: " + ex.getMessage());
         }
-        ActiveCmd activeCmdObj = new ActiveCmd(accountInfo, deviceInfo);
+
+        ActiveCmd activeCmdObj = new ActiveCmd(accountInfo, deviceInfo,logger);
         activeCmdObj.execute();
 
         logger.debug("[" + email + "," + deviceID
@@ -90,21 +97,27 @@ public class MappWSAPI {
         String accountId = "";
         String otpCode = "";
         String activationId = "";
+
+        String deviceId = "";
         try {
+            logger.debug("JSON content: " + content);
             JSONObject jsonOBj = new JSONObject(content);
             accountId = jsonOBj.getString("accountId");
             otpCode = jsonOBj.getString("otpCode");
             activationId = jsonOBj.getString("activationId");
+
+            deviceId =  jsonOBj.getString("deviceId");
         } catch (JSONException ex) {
             Logger.getLogger(MappWSAPI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        ActiveCodeCmd activeCodeCmdObj = new ActiveCodeCmd();
+        ActiveCodeCmd activeCodeCmdObj = new ActiveCodeCmd(logger);
         activeCodeCmdObj.setOtpCode(otpCode);
 
         activeCodeCmdObj.setActivationId(activationId);
         AccountInfoEntity accountInfo = new AccountInfoEntity(accountId, accountId, "");
         activeCodeCmdObj.setAccountInfo(accountInfo);
 
+        activeCodeCmdObj.setDeviceId(deviceId);
         activeCodeCmdObj.execute();
         logger.debug("[" + accountId + "," + activationId + "," + otpCode
                 + "] - Activate response = " + activeCodeCmdObj.getResponse());
@@ -113,7 +126,8 @@ public class MappWSAPI {
     }
 
     @PUT
-    @Path("Login")
+
+    @Path("/login")
     public String login(String contents) {
         String authenId = "";
         String accountId = "";
@@ -131,7 +145,8 @@ public class MappWSAPI {
         } catch (JSONException ex) {
             Logger.getLogger(MappWSAPI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        LogInCmd loginOBj = new LogInCmd();
+
+        LogInCmd loginOBj = new LogInCmd(logger);
         loginOBj.setAuthenId(authenId);
         accountInfo = new AccountInfoEntity(accountId, accountId, "");
         loginOBj.setAccountInfo(accountInfo);
@@ -165,7 +180,8 @@ public class MappWSAPI {
 
         LogOutCmd logoutOBj = new LogOutCmd();
         logoutOBj.setSessionId(sessionId);
-        logoutOBj.setEmail(accountId);
+
+        logoutOBj.setAccountId(accountId);        
 
         logoutOBj.execute();
         logger.debug("[" + sessionId + "," + accountId + ","
@@ -174,15 +190,16 @@ public class MappWSAPI {
     }
 
     @GET
-    @Path("get-account-info")
-    public String getAccountInfo(String Contents) {
-        String accountId = "";
+    @Path("/get-account-info")
+    public String getAccountInfo(String Contents, @QueryParam("accountId") String accountId) {
+        
         String deviceId = "";
         String sessionId = "";
         try {
             JSONObject jsonObj = new JSONObject(Contents);
             sessionId = jsonObj.getString("sessionId");
-            accountId = jsonObj.getString("accountId");
+
+            //accountId = jsonObj.getString("accountId");
             deviceId = jsonObj.getString("deviceId");
         } catch (JSONException ex) {
             Logger.getLogger(MappWSAPI.class.getName()).log(Level.SEVERE, null, ex);
@@ -206,7 +223,8 @@ public class MappWSAPI {
         String password = "";
         String msisdn = "";
         String fullname = "";
-        Date birthday = null ;
+
+        Date birthday = null;
         String job = "";
         String gender = "";
 
@@ -232,7 +250,8 @@ public class MappWSAPI {
     }
 
     @GET
-    @Path("get-service-address")
+
+    @Path("/get-service-address")
     public String getServiceAddress(String contents) {
         String sessionId = "";
         String accountId = "";
@@ -276,8 +295,9 @@ public class MappWSAPI {
                     .getName()).log(Level.SEVERE, null, ex);
         }
         CheckUserCmd checkUserObj = new CheckUserCmd();
-        checkUserObj.setEmail("accountId");
-        checkUserObj.setSessionId("sessionId");
+
+        checkUserObj.setAccountId(accountId);
+        checkUserObj.setSessionId(sessionId);
 
         checkUserObj.execute();
         logger.debug("[" + accountId + "," + sessionId + ","

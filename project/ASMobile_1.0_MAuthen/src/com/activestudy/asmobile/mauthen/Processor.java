@@ -7,6 +7,9 @@ package com.activestudy.asmobile.mauthen;
 
 import com.activestudy.Utitity.db.IDBModule;
 import com.activestudy.asmobile.mauthen.dbcontroller.DbModuleImpl;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.xml.DOMConfigurator;
 
 /**
  *
@@ -21,19 +24,27 @@ public class Processor {
         if (instance == null) {
             instance = new Processor();
         }
+        String xmlfile = "../../config/mauthen/log4j.mauthen.xml";
+        DOMConfigurator.configure(xmlfile);
 
         return instance;
     }
 
     public Processor() {
+        Log logger = LogFactory.getLog("mauthen");
+        logger.info("Started Mauthen!");
 
-        dbCtrl = DbModuleImpl.getInstance();
         try {
+            logger.info("dbCtrl start get instance");
+            dbCtrl = DbModuleImpl.getInstance();
+            logger.info("dbCtrl get instance success");
+
             dbCtrl.initialize();
-        } catch (ClassNotFoundException ex) {
-            //logger.error("", ex);
+            logger.info("dbCtrl initialize");
+        } catch (Exception ex) {
+            logger.error("dbCtrl initial error: " + ex.getMessage(), ex);
             return;
-        }
+        } 
     }
 
     public IDBModule getDbCtrl() {

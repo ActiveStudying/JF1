@@ -23,7 +23,9 @@ import java.sql.Types;
 public class DbActiveCode extends DbProcess {
 
     AccountInfoEntity accountInfo;
-    DeviceInfoEntity deviceInfo;
+
+    String deviceId = "";
+
     String activationId;
     String otpCode;
     String authenId;
@@ -43,16 +45,21 @@ public class DbActiveCode extends DbProcess {
 //        RETURN INTEGER;
 
         try {
+
+            logger.debug("DbActiveCode start execute account: " + accountInfo.getAccountId());
+
             cSmtActiveCode = ((OracleConnection) dce).getStmActivateWithCode();
             // set parameter dau vao
             //cSmtActiveCode.setString(result, autheId); xem duoi db
             cSmtActiveCode.setString(2, accountInfo.getAccountId()); //xem duoi db vi tri cua accountId la dau vao thu may
-            cSmtActiveCode.setString(3, deviceInfo.getDeviceId());
+
+            cSmtActiveCode.setString(3, deviceId);
             cSmtActiveCode.setString(4, activationId);
             cSmtActiveCode.setString(5, otpCode);
             cSmtActiveCode.setString(6, authenId);
-            cSmtActiveCode.setInt(maxTimeOut, 7);
-            cSmtActiveCode.setInt(maxRetry, 8);
+            cSmtActiveCode.setInt(7,maxTimeOut);
+            cSmtActiveCode.setInt(8,maxRetry);
+
             
             // lay dau ra
             cSmtActiveCode.registerOutParameter(1, Types.INTEGER);
@@ -61,13 +68,53 @@ public class DbActiveCode extends DbProcess {
             if (re!= null) {
                result  = AbsDefine.KEY_SUCCESS; 
             }else{
-                 logger.error("LoadCategory UnSuccess, ResultSet is Null");
+
+                 logger.error("DbActiveCode UnSuccess, ResultSet is Null");
             }
         } catch (SQLException ex) {
-            logger.error("LoadCategory ErrorCode: "+ ex.getErrorCode() + "Error" + ex.getMessage() + " STACK" + ex);
+            result = AbsDefine.KEY_UNSUCCESS;
+            logger.error("DbActiveCode ErrorCode: "+ ex.getErrorCode() + "Error" + ex.getMessage() + " STACK" + ex);
+
         }
 
     }
+
+
+    public void setActivationId(String activationId) {
+        this.activationId = activationId;
+    }
+
+    public String getActivationId() {
+        return activationId;
+    }
+    
+
+    public void setOtpCode(String otpCode) {
+        this.otpCode = otpCode;
+    }
+
+    public void setAuthenId(String authenId) {
+        this.authenId = authenId;
+    }
+    
+
+    public int getMaxTimeOut() {
+        return maxTimeOut;
+    }
+
+    public void setMaxTimeOut(int maxTimeOut) {
+        this.maxTimeOut = maxTimeOut;
+    }
+
+    public int getMaxRetry() {
+        return maxRetry;
+    }
+
+    public void setMaxRetry(int maxRetry) {
+        this.maxRetry = maxRetry;
+    }
+
+    
 
     public String getAutheId() {
         return authenId;
@@ -85,12 +132,12 @@ public class DbActiveCode extends DbProcess {
         this.accountInfo = accountInfo;
     }
 
-    public DeviceInfoEntity getDeviceInfo() {
-        return deviceInfo;
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
     }
 
-    public void setDeviceInfo(DeviceInfoEntity deviceInfo) {
-        this.deviceInfo = deviceInfo;
-    }
+    
+
 
 }
