@@ -12,21 +12,25 @@ package com.activestudy.pattern.entity.result;
  */
 public abstract class AbsResult implements IResult{
     private int errorCode = -1;
-    private int errorDesc;
+    private String errorDesc;
 
+    @Override
     public int getErrorCode() {
         return errorCode;
     }
 
+    @Override
     public void setErrorCode(int errorCode) {
         this.errorCode = errorCode;
     }
 
-    public int getErrorDesc() {
+    @Override
+    public String getErrorDesc() {
         return errorDesc;
     }
 
-    public void setErrorDesc(int errorDesc) {
+    @Override
+    public void setErrorDesc(String errorDesc) {
         this.errorDesc = errorDesc;
     }
     @Override

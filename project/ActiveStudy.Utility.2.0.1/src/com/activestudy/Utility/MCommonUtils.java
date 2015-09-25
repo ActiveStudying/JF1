@@ -22,11 +22,15 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.sql.Timestamp;
+import java.text.NumberFormat;
 import java.text.ParseException;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Hashtable;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MCommonUtils {
 
@@ -808,4 +812,38 @@ public class MCommonUtils {
 
         return "jvMem=" + use + "/" + free + "/" + max;
     }
+
+    public static boolean createFolderOfFile(String fileName) {
+        if ((fileName == null) || (fileName.isEmpty())) {
+            return true;
+        }
+        File file = new File(fileName);
+        if (file.exists()) {
+            return true;
+        } else {
+            if (createFolderOfFile(file.getParent()) == true) {
+                return file.mkdir();
+            }
+            return false;
+        }
+
+    }
+
+    public static boolean isNumeric(String str) {
+        NumberFormat formatter = NumberFormat.getInstance();
+        ParsePosition pos = new ParsePosition(0);
+        formatter.parse(str, pos);
+        return str.length() == pos.getIndex();
+    }
+    private static final String EMAIL_PATTERN
+            = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+            + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+    public static boolean is_Email(String email) {
+
+        Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
 }

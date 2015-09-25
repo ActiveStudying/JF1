@@ -6,6 +6,7 @@
 
 package com.activestudy.pattern.behavioral.command;
 
+import com.activestudy.pattern.entity.request.IRequest;
 import com.activestudy.pattern.entity.result.IResult;
 
 /**
@@ -17,7 +18,7 @@ public abstract class AbsCommand implements ICommand{
     private String commandName = "";    
     
     protected IResult result;
-    private IResult request;
+    protected IRequest request;
     
         
     public AbsCommand(){        
@@ -54,11 +55,11 @@ public abstract class AbsCommand implements ICommand{
         this.result = result;
     }
 
-    public IResult getRequest() {
+    public IRequest getRequest() {
         return request;
     }
 
-    public void setRequest(IResult request) {
+    public void setRequest(IRequest request) {
         this.request = request;
     }
     

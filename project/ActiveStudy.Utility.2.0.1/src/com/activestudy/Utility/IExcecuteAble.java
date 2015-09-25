@@ -12,4 +12,6 @@ package com.activestudy.Utility;
  */
 public interface IExcecuteAble {
     public void execute();
+
+    
 }
