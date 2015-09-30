@@ -39,7 +39,7 @@ public class LogoutCMD {
         Log.d(TAG, json);
         JSONObject obj = new JSONObject(json);
 
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.PUT, url, obj, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.DELETE, url, obj, new Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject response) {

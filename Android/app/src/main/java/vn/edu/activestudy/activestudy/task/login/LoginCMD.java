@@ -17,7 +17,6 @@ import vn.edu.activestudy.activestudy.callback.TaskListener;
 import vn.edu.activestudy.activestudy.common.Constants;
 import vn.edu.activestudy.activestudy.common.ResponseCode;
 import vn.edu.activestudy.activestudy.model.Result;
-import vn.edu.activestudy.activestudy.task.getserviceaddress.ResponseGetServiceAddress;
 import vn.edu.activestudy.activestudy.util.PreferenceUtil;
 
 /**
@@ -30,14 +29,19 @@ public class LoginCMD {
 
     public static void execute(Context context, final TaskListener listener) throws JSONException {
 
-        String deviceId = PreferenceUtil.getString(context, Constants.PREFERENCE_DEVICE_ID, "");
-        String accountId = PreferenceUtil.getString(context, Constants.PREFERENCE_ACCOUNT_ID, "");
+
         String authenId = PreferenceUtil.getString(context, Constants.PREFERENCE_AUTHEN_ID, "");
+        String accountId = PreferenceUtil.getString(context, Constants.PREFERENCE_ACCOUNT_ID, "");
+        String deviceId = PreferenceUtil.getString(context, Constants.PREFERENCE_DEVICE_ID, "");
+        String cloudKey = PreferenceUtil.getString(context, Constants.PREFERENCE_CLOUD_KEY, "");
+
 
         RequestLogin request = new RequestLogin();
+        request.setAuthenId(authenId);
         request.setAccountId(accountId);
         request.setDeviceId(deviceId);
-        request.setAccountId(authenId);
+        request.setCloudKey(cloudKey);
+
 
         String json = new Gson().toJson(request);
         Log.d(TAG, json);

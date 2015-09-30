@@ -12,12 +12,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import vn.edu.activestudy.activestudy.ASApplication;
 import vn.edu.activestudy.activestudy.ASController;
 import vn.edu.activestudy.activestudy.R;
 import vn.edu.activestudy.activestudy.common.Constants;
 import vn.edu.activestudy.activestudy.common.ResponseCode;
-import vn.edu.activestudy.activestudy.model.entity.DeviceInfo;
 import vn.edu.activestudy.activestudy.util.NetworkUtil;
+import vn.edu.activestudy.activestudy.util.PreferenceUtil;
 import vn.edu.activestudy.activestudy.util.ToastUtil;
 import vn.edu.activestudy.activestudy.util.Utils;
 
@@ -26,9 +27,7 @@ public class InputEmailActivity extends AppCompatActivity implements View.OnClic
 
     private EditText edtEmail;
     private Button btnContinue;
-
-    private String accountId = "";
-    private DeviceInfo deviceInfo = new DeviceInfo();
+    private Button btnLogout;
 
     private BroadcastReceiver mReceiver;
 
@@ -47,6 +46,7 @@ public class InputEmailActivity extends AppCompatActivity implements View.OnClic
     private void initUI() {
         edtEmail = (EditText) findViewById(R.id.edtInputEmail);
         btnContinue = (Button) findViewById(R.id.btnInputEmailContinue);
+        btnLogout = (Button) findViewById(R.id.btnLogout);
 
         //for test
         edtEmail.setText("vuthanhtrung90@gmail.com");
@@ -78,6 +78,7 @@ public class InputEmailActivity extends AppCompatActivity implements View.OnClic
         });
 
         btnContinue.setOnClickListener(this);
+        btnLogout.setOnClickListener(this);
     }
 
 
@@ -85,36 +86,75 @@ public class InputEmailActivity extends AppCompatActivity implements View.OnClic
         mReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                if (intent.getAction().equals(Constants.INTENT_ACTIVATE_COMPLETE)) {
+                String action = intent.getAction();
+                if (action.equals(Constants.INTENT_ACTIVATE_COMPLETE)) {
                     int code = intent.getExtras().getInt(Constants.INTENT_KEY);
                     switch (code) {
-                        case ResponseCode.ERROR:
+                        case ResponseCode.ERROR: //-2
                             ToastUtil.makeToast(getResources().getString(R.string.toast_error));
                             break;
-                        case ResponseCode.SYSTEM_ERROR:
+                        case ResponseCode.SYSTEM_ERROR: //-1
                             ToastUtil.makeToast(getResources().getString(R.string.toast_system_error));
                             break;
-                        case ResponseCode.SUCCESS:
+                        case ResponseCode.SUCCESS: //0
                             openInputCodeScreen();
                             break;
-                        case ResponseCode.MAUTHEN_ACCOUNTID_INVALIDFORMAT:
+                        case ResponseCode.MAUTHEN_ACCOUNTID_INVALIDFORMAT: //2
                             ToastUtil.makeToast(getResources().getString(R.string.toast_mauthen_accountid_invalidformat));
                             break;
-                        case ResponseCode.MAUTHEN_ACCOUNTID_UNEXIST:
+                        case ResponseCode.MAUTHEN_ACCOUNTID_UNEXIST: //3
                             ToastUtil.makeToast(getResources().getString(R.string.toast_mauthen_accountid_unexist));
                             break;
-                        case ResponseCode.MAUTHEN_DEVICEID_EMPTY:
+                        case ResponseCode.MAUTHEN_DEVICEID_EMPTY: //8
                             ToastUtil.makeToast(getResources().getString(R.string.toast_mauthen_deviceid_empty));
                             break;
                     }
+                } else if (action.equals(Constants.INTENT_LOGOUT_COMPLETE)) {
+                    int code = intent.getExtras().getInt(Constants.INTENT_KEY);
+                    switch (code) {
+                        case ResponseCode.ERROR: //-2
+                            ToastUtil.makeToast(code + " " + getResources().getString(R.string.toast_error));
+                            break;
+                        case ResponseCode.SYSTEM_ERROR:  //-1
+                            ToastUtil.makeToast(code + " " + getResources().getString(R.string.toast_system_error));
 
+                            break;
+                        case ResponseCode.SUCCESS: //0
+                            PreferenceUtil.resetPref(ASApplication.getContext());
+                            ToastUtil.makeToast("Logout!");
+                            break;
+                        case ResponseCode.MAUTHEN_SESSIONID_INVALIDFORMAT: //1
+                            ToastUtil.makeToast(code + " " + getResources().getString(R.string.toast_mauthen_sessionid_invalidformat));
+
+                            break;
+                        case ResponseCode.MAUTHEN_ACCOUNTID_INVALIDFORMAT: //2
+                            ToastUtil.makeToast(code + " " + getResources().getString(R.string.toast_mauthen_accountid_invalidformat));
+
+                            break;
+                        case ResponseCode.MAUTHEN_ACCOUNTID_UNEXIST: //3
+                            ToastUtil.makeToast(code + " " + getResources().getString(R.string.toast_mauthen_accountid_unexist));
+
+                            break;
+                    }
                 }
             }
         };
         IntentFilter filter = new IntentFilter();
         filter.addAction(Constants.INTENT_ACTIVATE_COMPLETE);
+        filter.addAction(Constants.INTENT_LOGOUT_COMPLETE);
         registerReceiver(mReceiver, filter);
     }
+
+    private void openInputCodeScreen() {
+        Intent myIntent = new Intent(this, InputCodeActivity.class);
+        startActivity(myIntent);
+    }
+
+    private void openHomeScreen() {
+        Intent myIntent = new Intent(this, HomeActivity.class);
+        startActivity(myIntent);
+    }
+
 //    private void executeTask() {
 //        AsyncTask<Void, Integer, Integer> task = new AsyncTask<Void, Integer, Integer>() {
 //            @Override
@@ -157,18 +197,30 @@ public class InputEmailActivity extends AppCompatActivity implements View.OnClic
             case R.id.btnInputEmailContinue:
                 btnInputEmailContinue_click(v);
                 break;
+            case R.id.btnLogout:
+                btnLogout_click(v);
+                break;
         }
     }
 
-    private void btnInputEmailContinue_click(View v) {
-        String email = edtEmail.getText().toString();
+    private void btnLogout_click(View v) {
+        ASController.getInstance().logout();
+    }
 
-        if (email.length() == 0) {
-            ToastUtil.makeToast(getResources().getString(R.string.toast_input_email));
-        } else if (!Utils.checkEmailValidator(email)) {
-            ToastUtil.makeToast(getResources().getString(R.string.toast_wrong_email));
+    private void btnInputEmailContinue_click(View v) {
+        if (Utils.checkSessionId()) {
+            openHomeScreen();
+
         } else {
-            active(email);
+            String email = edtEmail.getText().toString();
+
+            if (email.length() == 0) {
+                ToastUtil.makeToast(getResources().getString(R.string.toast_input_email));
+            } else if (!Utils.checkEmailValidator(email)) {
+                ToastUtil.makeToast(getResources().getString(R.string.toast_wrong_email));
+            } else {
+                active(email);
+            }
         }
     }
 
@@ -179,11 +231,6 @@ public class InputEmailActivity extends AppCompatActivity implements View.OnClic
         } else {
             ToastUtil.makeToast(getResources().getString(R.string.toast_network_not_available));
         }
-    }
-
-    private void openInputCodeScreen() {
-        Intent myIntent = new Intent(this, InputCodeActivity.class);
-        startActivity(myIntent);
     }
 
     @Override

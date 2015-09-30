@@ -1,9 +1,0 @@
-diff a/Android/app/src/main/java/vn/edu/activestudy/activestudy/view/fragment/CourseFragment.java b/Android/app/src/main/java/vn/edu/activestudy/activestudy/view/fragment/CourseFragment.java	(rejected hunks)
-@@ -24,6 +24,7 @@
- import vn.edu.activestudy.activestudy.util.ToastUtil;
- =======
- import vn.edu.activestudy.activestudy.model.CourseItem;
-+>>>>>>> a6c19c0a8e49a93beb8153c234c343f5f1ec9f4b
- import vn.edu.activestudy.activestudy.view.activity.CreateCourseActivity;
- import vn.edu.activestudy.activestudy.view.activity.DetailCourseActivity;
- import vn.edu.activestudy.activestudy.view.activity.EditCourseActivity;

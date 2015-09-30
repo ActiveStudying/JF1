@@ -39,7 +39,7 @@ public class ActivateCMD {
         request.setDeviceInfo(deviceInfo);
 
         String json = new Gson().toJson(request);
-        Log.d(TAG, json);
+        Log.d(TAG, url + " " + json);
         JSONObject obj = new JSONObject(json);
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST, url, obj, new Response.Listener<JSONObject>() {

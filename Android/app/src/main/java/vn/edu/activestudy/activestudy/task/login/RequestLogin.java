@@ -15,6 +15,17 @@ public class RequestLogin {
     @SerializedName("deviceId")
     private String deviceId;
 
+    @SerializedName("cloudKey")
+    private String cloudKey;
+
+    public String getCloudKey() {
+        return cloudKey;
+    }
+
+    public void setCloudKey(String cloudKey) {
+        this.cloudKey = cloudKey;
+    }
+
     public void setAuthenId(String authenId) {
         this.authenId = authenId;
     }
