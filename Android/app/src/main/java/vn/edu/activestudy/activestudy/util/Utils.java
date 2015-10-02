@@ -26,4 +26,29 @@ public class Utils {
         //TODO:
         return true;
     }
+
+    public static String getSessionID() {
+        String sessionId = PreferenceUtil.getString(ASApplication.getContext(), Constants.PREFERENCE_SESSION_ID, "");
+        return sessionId;
+    }
+
+    public static String getAccountID() {
+        String accountId = PreferenceUtil.getString(ASApplication.getContext(), Constants.PREFERENCE_ACCOUNT_ID, "");
+        return accountId;
+    }
+
+    public static String getDeviceID() {
+        String deviceId = PreferenceUtil.getString(ASApplication.getContext(), Constants.PREFERENCE_DEVICE_ID, "");
+        return deviceId;
+    }
+
+    public static String getAuthenId() {
+        String authenId = PreferenceUtil.getString(ASApplication.getContext(), Constants.PREFERENCE_AUTHEN_ID, "");
+        return authenId;
+    }
+
+    public static String getCloudKey() {
+        String cloudKey = PreferenceUtil.getString(ASApplication.getContext(), Constants.PREFERENCE_CLOUD_KEY, "");
+        return cloudKey;
+    }
 }

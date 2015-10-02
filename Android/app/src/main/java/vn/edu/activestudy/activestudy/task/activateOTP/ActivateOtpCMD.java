@@ -56,10 +56,13 @@ public class ActivateOtpCMD {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                ResponseActivateOTP resp = new ResponseActivateOTP();
+
                 Result result = new Result();
                 result.setCode(ResponseCode.ERROR);
+
+                ResponseActivateOTP resp = new ResponseActivateOTP();
                 resp.setResult(result);
+
                 listener.onResult(resp);
             }
         });

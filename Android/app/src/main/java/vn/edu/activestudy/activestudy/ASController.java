@@ -215,7 +215,7 @@ public class ASController {
     public void login() {
         Log.d(TAG, "start login");
         try {
-            LoginCMD.execute(mContext, new TaskListener() {
+            LoginCMD.execute(new TaskListener() {
                 @Override
                 public void onResult(Object resp) {
                     ResponseLogin response = (ResponseLogin) resp;

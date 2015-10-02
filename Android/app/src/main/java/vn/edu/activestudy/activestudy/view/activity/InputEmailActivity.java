@@ -120,8 +120,7 @@ public class InputEmailActivity extends AppCompatActivity implements View.OnClic
 
                             break;
                         case ResponseCode.SUCCESS: //0
-                            PreferenceUtil.resetPref(ASApplication.getContext());
-                            ToastUtil.makeToast("Logout!");
+
                             break;
                         case ResponseCode.MAUTHEN_SESSIONID_INVALIDFORMAT: //1
                             ToastUtil.makeToast(code + " " + getResources().getString(R.string.toast_mauthen_sessionid_invalidformat));
@@ -205,6 +204,9 @@ public class InputEmailActivity extends AppCompatActivity implements View.OnClic
 
     private void btnLogout_click(View v) {
         ASController.getInstance().logout();
+
+        PreferenceUtil.resetPref(ASApplication.getContext());
+        ToastUtil.makeToast("Logout!");
     }
 
     private void btnInputEmailContinue_click(View v) {

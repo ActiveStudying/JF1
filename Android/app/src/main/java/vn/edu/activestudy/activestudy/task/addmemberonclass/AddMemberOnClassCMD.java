@@ -1,4 +1,4 @@
-package vn.edu.activestudy.activestudy.task.login;
+package vn.edu.activestudy.activestudy.task.addmemberonclass;
 
 import android.util.Log;
 
@@ -19,44 +19,34 @@ import vn.edu.activestudy.activestudy.model.Result;
 import vn.edu.activestudy.activestudy.util.Utils;
 
 /**
- * Created by dell123 on 8/28/2015.
+ * Created by dell123 on 30/09/2015.
  */
-public class LoginCMD {
+public class AddMemberOnClassCMD {
 
-    private static final String TAG = LoginCMD.class.getSimpleName();
-    private static String url = Constants.URL_SERVER + Constants.URL_LOGIN;
+    private static final String TAG = AddMemberOnClassCMD.class.getSimpleName();
+    private static String url = Constants.URL_SERVER + Constants.URL_ADD_MEMBER_ON_CLASS;
 
-    public static void execute(final TaskListener listener) throws JSONException {
+    public void execute(int classId, final TaskListener listener) throws JSONException {
 
-
-        String authenId = Utils.getAuthenId();
-        String accountId = Utils.getAccountID();
-        String deviceId = Utils.getDeviceID();
-        String cloudKey = Utils.getCloudKey();
-
-
-        RequestLogin request = new RequestLogin();
-        request.setAuthenId(authenId);
-        request.setAccountId(accountId);
-        request.setDeviceId(deviceId);
-        request.setCloudKey(cloudKey);
-
+        RequestAddMemberOnClass request = new RequestAddMemberOnClass();
+        request.setDeviceId(Utils.getDeviceID());
+        request.setAccountId(Utils.getAccountID());
+        request.setSessionId(Utils.getSessionID());
+        request.setClassId(classId);
 
         String json = new Gson().toJson(request);
         Log.d(TAG, json);
         JSONObject obj = new JSONObject(json);
 
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.PUT, url, obj, new Response.Listener<JSONObject>() {
-
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, obj, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 Log.d(TAG, response.toString());
-                ResponseLogin resp = new Gson().fromJson(response.toString(), ResponseLogin.class);
 
+                ResponseAddMemberOnClass resp = new Gson().fromJson(response.toString(), ResponseAddMemberOnClass.class);
                 listener.onResult(resp);
             }
         }, new Response.ErrorListener() {
-
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
@@ -64,13 +54,12 @@ public class LoginCMD {
                 Result result = new Result();
                 result.setCode(ResponseCode.ERROR);
 
-                ResponseLogin resp = new ResponseLogin();
+                ResponseAddMemberOnClass resp = new ResponseAddMemberOnClass();
                 resp.setResult(result);
 
                 listener.onResult(resp);
             }
         });
-
-        ASController.getInstance().addToRequestQueue(jsonObjReq, "login_request");
+        ASController.getInstance().addToRequestQueue(jsonObjectRequest, "AddMemberOnClassCMD");
     }
 }
