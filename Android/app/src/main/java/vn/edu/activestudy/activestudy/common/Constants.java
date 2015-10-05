@@ -27,6 +27,17 @@ public class Constants {
     public static String URL_CREATE_COURSE = "";
     public static String URL_ADD_MEMBER_ON_GROUP = "";
     public static String URL_ADD_TASK_TEAM = "";
+    public static String URL_GET_LIST_CLASS = "";
+    public static String URL_SENT_CONFESTION_MESSAGE  = "";
+    public static String URL_SENT_MESSAGE  = "";
+    public static String URL_REQUEST_JOIN_CLASS  = "";
+    public static String URL_REQUEST_CREATE_COURSE  = "";
+    public static String URL_REGISTER_COURSE  = "";
+    public static String URL_GET_USER_GROUP  = "";
+    public static String URL_GET_LIST_MEMBER_ON_GROUP  = "";
+    public static String URL_GET_HISTORY_MESSAGE  = "";
+    public static String URL_GET_GROUP_CONTACT  = "";
+    public static String URL_GET_HISTORY_CONFESTION  = "";
 
     //PREFERENCE
     public static String PREFERENCE_ACTIVATION_ID = "preference_activation_id";

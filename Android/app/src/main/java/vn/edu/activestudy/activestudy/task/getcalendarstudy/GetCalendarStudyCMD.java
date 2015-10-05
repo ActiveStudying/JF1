@@ -1,4 +1,4 @@
-package vn.edu.activestudy.activestudy.task.getserviceaddress;
+package vn.edu.activestudy.activestudy.task.getcalendarstudy;
 
 import android.util.Log;
 
@@ -21,13 +21,14 @@ import vn.edu.activestudy.activestudy.util.Utils;
 /**
  * Created by dell123 on 8/28/2015.
  */
-public class GetServiceAddressCMD {
-    private static final String TAG = GetServiceAddressCMD.class.getSimpleName();
-    private static String url = Constants.URL_SERVER + Constants.URL_GET_SERVICE_ADDRESS;
+public class GetCalendarStudyCMD {
+
+    private static final String TAG = GetCalendarStudyCMD.class.getSimpleName();
+    private static String url = Constants.URL_SERVER + Constants.URL_GET_ACCOUNT_INFO;
 
     public static void execute(final TaskListener listener) throws JSONException {
 
-        RequestGetServiceAddress request = new RequestGetServiceAddress();
+        RequestGetCalendarStudy request = new RequestGetCalendarStudy();
         request.setAccountId(Utils.getAccountID());
         request.setDeviceId(Utils.getDeviceID());
         request.setSessionId(Utils.getSessionID());
@@ -36,12 +37,13 @@ public class GetServiceAddressCMD {
         Log.d(TAG, json);
         JSONObject obj = new JSONObject(json);
 
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.PUT, url, obj, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET, url, obj, new Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject response) {
                 Log.d(TAG, response.toString());
-                ResponseGetServiceAddress resp = new Gson().fromJson(response.toString(), ResponseGetServiceAddress.class);
+
+                ResponseGetCalendarStudy resp = new Gson().fromJson(response.toString(), ResponseGetCalendarStudy.class);
 
                 listener.onResult(resp);
             }
@@ -50,14 +52,17 @@ public class GetServiceAddressCMD {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                ResponseGetServiceAddress resp = new ResponseGetServiceAddress();
+
                 Result result = new Result();
                 result.setCode(ResponseCode.ERROR);
+
+                ResponseGetCalendarStudy resp = new ResponseGetCalendarStudy();
                 resp.setResult(result);
+                
                 listener.onResult(resp);
             }
         });
 
-        ASController.getInstance().addToRequestQueue(jsonObjReq, "getServiceAddress");
+        ASController.getInstance().addToRequestQueue(jsonObjReq, "get_account_info_request");
     }
 }

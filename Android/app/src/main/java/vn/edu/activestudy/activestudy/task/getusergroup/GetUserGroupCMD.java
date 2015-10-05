@@ -1,4 +1,4 @@
-package vn.edu.activestudy.activestudy.task.getserviceaddress;
+package vn.edu.activestudy.activestudy.task.getusergroup;
 
 import android.util.Log;
 
@@ -21,13 +21,13 @@ import vn.edu.activestudy.activestudy.util.Utils;
 /**
  * Created by dell123 on 8/28/2015.
  */
-public class GetServiceAddressCMD {
-    private static final String TAG = GetServiceAddressCMD.class.getSimpleName();
-    private static String url = Constants.URL_SERVER + Constants.URL_GET_SERVICE_ADDRESS;
+public class GetUserGroupCMD {
+    private static final String TAG = GetUserGroupCMD.class.getSimpleName();
+    private static String url = Constants.URL_SERVER + Constants.URL_GET_USER_GROUP;
 
     public static void execute(final TaskListener listener) throws JSONException {
 
-        RequestGetServiceAddress request = new RequestGetServiceAddress();
+        RequestGetUserGroup request = new RequestGetUserGroup();
         request.setAccountId(Utils.getAccountID());
         request.setDeviceId(Utils.getDeviceID());
         request.setSessionId(Utils.getSessionID());
@@ -41,7 +41,7 @@ public class GetServiceAddressCMD {
             @Override
             public void onResponse(JSONObject response) {
                 Log.d(TAG, response.toString());
-                ResponseGetServiceAddress resp = new Gson().fromJson(response.toString(), ResponseGetServiceAddress.class);
+                ResponseGetUserGroup resp = new Gson().fromJson(response.toString(), ResponseGetUserGroup.class);
 
                 listener.onResult(resp);
             }
@@ -50,14 +50,17 @@ public class GetServiceAddressCMD {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                ResponseGetServiceAddress resp = new ResponseGetServiceAddress();
+
                 Result result = new Result();
                 result.setCode(ResponseCode.ERROR);
+
+                ResponseGetUserGroup resp = new ResponseGetUserGroup();
                 resp.setResult(result);
+
                 listener.onResult(resp);
             }
         });
 
-        ASController.getInstance().addToRequestQueue(jsonObjReq, "getServiceAddress");
+        ASController.getInstance().addToRequestQueue(jsonObjReq, "GetUserGroupCMD");
     }
 }

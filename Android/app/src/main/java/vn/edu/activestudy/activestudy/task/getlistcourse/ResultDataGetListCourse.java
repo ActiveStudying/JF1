@@ -9,7 +9,7 @@ import vn.edu.activestudy.activestudy.model.entity.CourseEntity;
  */
 public class ResultDataGetListCourse {
 
-    @SerializedName("")
+    @SerializedName("courseList")
     private CourseEntity courseList;
 
 
