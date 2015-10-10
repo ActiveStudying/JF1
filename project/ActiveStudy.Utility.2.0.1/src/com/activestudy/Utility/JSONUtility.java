@@ -8,6 +8,7 @@ package com.activestudy.Utility;
 import java.lang.reflect.Field;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
@@ -115,6 +116,16 @@ public class JSONUtility {
                         lVal = inData.getLong(field.getName().toUpperCase());
                     }
                     field.set(Out, lVal);
+                } else if (field.getType() == java.util.ArrayList.class) {
+                    JSONArray jsonArrData = inData.getJSONArray(field.getName());
+                    if(jsonArrData != null){
+                        for(int i = 0; i < jsonArrData.length(); i++){
+                            ((java.util.ArrayList)field.get(Out)).add(jsonArrData.get(i));
+                        }
+                    }
+                } else {
+                    JSONObject jsonSubData = inData.getJSONObject(field.getName());
+                    field.set(Out,GetJSONData(jsonSubData,field));
                 }
             } catch (JSONException ex) {
                 Logger.getLogger(JSONUtility.class.getName()).log(Level.SEVERE, null, ex);

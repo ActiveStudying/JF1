@@ -1,10 +1,9 @@
 package vn.edu.activestudy.activestudy.manager;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import vn.edu.activestudy.activestudy.R;
-import vn.edu.activestudy.activestudy.model.*;
+import vn.edu.activestudy.activestudy.model.ClassItem;
 
 /**
  * Created by dell123 on 9/14/2015.
@@ -25,10 +24,9 @@ public class ClassManager {
     }
 
     public ArrayList<ClassItem> getListClass() {
-        if (mListClass.size() != 0) {
-            //TODO get from DB
-            return mListClass;
-        } else {
+        //TODO get from DB
+
+        if (mListClass.size() == 0) {
             initTemplateData();
         }
 

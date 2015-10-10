@@ -28,18 +28,18 @@ public class LogoutCMD {
 
     public static void execute(Context context, final TaskListener listener) throws JSONException {
 
-        String sessionId = PreferenceUtil.getString(context, Constants.PREFERENCE_SESSION_ID, "");
         String accountId = PreferenceUtil.getString(context, Constants.PREFERENCE_ACCOUNT_ID, "");
+        String sessionId = PreferenceUtil.getString(context, Constants.PREFERENCE_SESSION_ID, "");
 
-        RequestLogout request=new RequestLogout();
+        RequestLogout request = new RequestLogout();
         request.setAccountId(accountId);
         request.setSessionId(sessionId);
 
         String json = new Gson().toJson(request);
-        Log.d(TAG, json);
+        Log.d(TAG, url + " " + json);
         JSONObject obj = new JSONObject(json);
 
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.PUT, url, obj, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.DELETE, url, obj, new Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject response) {

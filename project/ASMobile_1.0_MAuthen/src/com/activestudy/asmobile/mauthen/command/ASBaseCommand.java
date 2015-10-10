@@ -21,8 +21,10 @@ import org.codehaus.jettison.json.JSONObject;
  */
 public abstract class ASBaseCommand extends AbsCommand {
 
-    String email;
+
+    
     String deviceId;
+    String accountId;
     AccountInfoEntity accountInfo;
     DeviceInfoEntity deviceInfo;
 
@@ -42,10 +44,20 @@ public abstract class ASBaseCommand extends AbsCommand {
         this.accountInfo = accountInfo;
     }
     // constructor email and device id
-    public ASBaseCommand(String email, String deviceId) {
-        this.email = email;
+
+    public ASBaseCommand(String accountId, String deviceId) {
+        this.accountId = accountId;
         this.deviceId = deviceId;
     }
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
+    }
+    
 
     public IDBModule getDbCtrl() {
         return dbCtrl;
@@ -55,13 +67,7 @@ public abstract class ASBaseCommand extends AbsCommand {
         this.dbCtrl = dbCtrl;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
+  
 
     public String getDeviceId() {
         return deviceId;

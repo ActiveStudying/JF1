@@ -5,19 +5,19 @@ package vn.edu.activestudy.activestudy.model.entity;
  */
 public class DeviceInfo {
 
-    private String deviceID;
+    private String deviceId;
     private String deviceName;
     private String osName;
-    private int osVersion;
+    private String osVersion;
     private String cloudKey;
     private String devOther;
 
     public String getDeviceID() {
-        return deviceID;
+        return deviceId;
     }
 
     public void setDeviceID(String deviceID) {
-        this.deviceID = deviceID;
+        this.deviceId = deviceID;
     }
 
     public String getDeviceName() {
@@ -36,11 +36,11 @@ public class DeviceInfo {
         this.osName = osName;
     }
 
-    public int getOsVersion() {
+    public String getOsVersion() {
         return osVersion;
     }
 
-    public void setOsVersion(int osVersion) {
+    public void setOsVersion(String osVersion) {
         this.osVersion = osVersion;
     }
 

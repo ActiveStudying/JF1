@@ -27,8 +27,7 @@ public abstract class AbsConfig {
 
     public AbsConfig(String configPath) {
         this.configPath = configPath;
-        load();
-        
+        load();        
     }
 
     public abstract boolean loadConfig();
@@ -38,6 +37,7 @@ public abstract class AbsConfig {
             properties = new Properties();
             FileInputStream pin = new FileInputStream(configPath);
             properties.load(pin);
+            
         } catch (Exception e) {
             //setDefault();
             //store();

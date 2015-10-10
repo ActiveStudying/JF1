@@ -9,10 +9,10 @@ import vn.edu.activestudy.activestudy.task.login.ResultDataLogin;
  * Created by dell123 on 8/28/2015.
  */
 public class ResponseLogout {
-    @SerializedName("Result")
+    @SerializedName("result")
     private Result result;
 
-    @SerializedName("ResultData")
+    @SerializedName("resultData")
     private ResultDataLogin resultData;
 
     public Result getResult() {

@@ -11,6 +11,13 @@ package com.activestudy.pattern.entity.result;
  * @author tanhai
  */
 public interface IResult {
+    public int getErrorCode() ;
+
+    public void setErrorCode(int errorCode) ;
+
+    public String getErrorDesc() ;
+
+    public void setErrorDesc(String errorDesc);
     
-    
+    public String toString();
 }

@@ -7,14 +7,20 @@ import com.google.gson.annotations.SerializedName;
  */
 public class RequestActivateOTP {
 
-    @SerializedName("OTPCode")
+    @SerializedName("otpCode")
     private String otpCode;
 
-    @SerializedName("activationid")
+    @SerializedName("activationId")
     private String activationId;
 
-    @SerializedName("accountid")
+    @SerializedName("accountId")
     private String accountId;
+
+    @SerializedName("deviceId")
+    private String deviceId;
+
+    public RequestActivateOTP() {
+    }
 
     public String getOtpCode() {
         return otpCode;
@@ -38,5 +44,13 @@ public class RequestActivateOTP {
 
     public void setAccountId(String accountId) {
         this.accountId = accountId;
+    }
+
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
     }
 }

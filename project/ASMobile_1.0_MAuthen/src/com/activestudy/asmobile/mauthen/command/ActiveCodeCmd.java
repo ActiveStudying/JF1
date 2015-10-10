@@ -10,6 +10,9 @@ import com.activestudy.Utitity.db.DBException;
 import com.activestudy.asmobile.entity.AccountInfoEntity;
 import com.activestudy.asmobile.entity.DeviceInfoEntity;
 import com.activestudy.asmobile.entity.ResultNumber;
+
+import com.activestudy.asmobile.mauthen.CoreConfig;
+
 import com.activestudy.asmobile.mauthen.Processor;
 import com.activestudy.asmobile.mauthen.dbcontroller.cmd.DbActiveCode;
 import java.util.logging.Level;
@@ -29,36 +32,45 @@ public class ActiveCodeCmd extends ASBaseCommand {
     String authenId;
 
     private Log logger = null;
-
-    public ActiveCodeCmd(AccountInfoEntity accountInfo, DeviceInfoEntity deviceInfo, Log loger) {
+    public ActiveCodeCmd(AccountInfoEntity accountInfo, DeviceInfoEntity deviceInfo,Log logger) {
         this.deviceInfo = deviceInfo;
         this.accountInfo = accountInfo;
-        this.logger = loger;
+        this.logger = logger;
     }
 
-    public ActiveCodeCmd() {
-
+    public ActiveCodeCmd(Log logger) {
+        this.logger = logger;
     }
 
     @Override
     public void execute() {
         // check mail 
-        if (false == MCommonUtils.is_Email(accountInfo.getEmail())) {
-            ((ResultNumber) result).setErrorCode(ResultNumber.MAUTHEN_ACCOUNTID_INVALIDFORMAT);
+
+        if (false == MCommonUtils.is_Email(accountInfo.getAccountId())) {
+            result.setErrorCode(ResultNumber.MAUTHEN_ACCOUNTID_INVALIDFORMAT);
             return;
         }
         DbActiveCode dbActiveCodeCmd = new DbActiveCode();
         try {
             authenId = RandomStringUtils.randomAlphanumeric(20);
             dbActiveCodeCmd.setAutheId(authenId);
+
+            dbActiveCodeCmd.setActivationId(activationId);
             dbActiveCodeCmd.setAccountInfo(accountInfo);
+            dbActiveCodeCmd.setOtpCode(otpCode);
+            dbActiveCodeCmd.setDeviceId(deviceId);
+            dbActiveCodeCmd.setMaxRetry(5);
+            dbActiveCodeCmd.setMaxTimeOut(50000);
+            logger.debug("Initial dbActiveCodeCmd success");
             Processor.getInstance().getDbCtrl().execute(dbActiveCodeCmd);
             //set result 
+            logger.debug("dbActiveCodeCmd result: " + dbActiveCodeCmd.getResult() );
             if (dbActiveCodeCmd.getResult() == ResultNumber.SUCCESS) {
                 result.setErrorCode(ResultNumber.SUCCESS);
             } else {
                 result.setErrorCode(ResultNumber.SYSTEM_ERROR);
             }
+
 
         } catch (DBException ex) {
             Logger.getLogger(ActiveCodeCmd.class.getName()).log(Level.SEVERE, null, ex);
@@ -102,13 +114,16 @@ public class ActiveCodeCmd extends ASBaseCommand {
         this.activationId = activationId;
     }
 
-    public String getEmail() {
-        return email;
+
+    public String getAuthenId() {
+        return authenId;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setAuthenId(String authenId) {
+        this.authenId = authenId;
     }
+
+  
 
     public String getDeviceId() {
         return deviceId;

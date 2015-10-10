@@ -1,6 +1,5 @@
 package vn.edu.activestudy.activestudy.task.getserviceaddress;
 
-import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -17,8 +16,7 @@ import vn.edu.activestudy.activestudy.callback.TaskListener;
 import vn.edu.activestudy.activestudy.common.Constants;
 import vn.edu.activestudy.activestudy.common.ResponseCode;
 import vn.edu.activestudy.activestudy.model.Result;
-import vn.edu.activestudy.activestudy.task.getaccountinfo.RequestGetAccountInfo;
-import vn.edu.activestudy.activestudy.util.PreferenceUtil;
+import vn.edu.activestudy.activestudy.util.Utils;
 
 /**
  * Created by dell123 on 8/28/2015.
@@ -27,16 +25,12 @@ public class GetServiceAddressCMD {
     private static final String TAG = GetServiceAddressCMD.class.getSimpleName();
     private static String url = Constants.URL_SERVER + Constants.URL_GET_SERVICE_ADDRESS;
 
-    public static void execute(Context context, final TaskListener listener) throws JSONException {
-
-        String sessionId = PreferenceUtil.getString(context, Constants.PREFERENCE_SESSION_ID, "");
-        String accountId = PreferenceUtil.getString(context, Constants.PREFERENCE_ACCOUNT_ID, "");
-        String deviceId = PreferenceUtil.getString(context, Constants.PREFERENCE_DEVICE_ID, "");
+    public static void execute(final TaskListener listener) throws JSONException {
 
         RequestGetServiceAddress request = new RequestGetServiceAddress();
-        request.setAccountId(accountId);
-        request.setDeviceId(deviceId);
-        request.setSessionId(sessionId);
+        request.setAccountId(Utils.getAccountID());
+        request.setDeviceId(Utils.getDeviceID());
+        request.setSessionId(Utils.getSessionID());
 
         String json = new Gson().toJson(request);
         Log.d(TAG, json);

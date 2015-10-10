@@ -9,10 +9,10 @@ import vn.edu.activestudy.activestudy.task.getserviceaddress.ResultDataGetServic
  * Created by dell123 on 8/28/2015.
  */
 public class ResponseLogin {
-    @SerializedName("Result")
+    @SerializedName("result")
     private Result result;
 
-    @SerializedName("ResultData")
+    @SerializedName("resultData")
     private ResultDataLogin resultData;
 
     public Result getResult() {

@@ -1,6 +1,5 @@
 package vn.edu.activestudy.activestudy.task.login;
 
-import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -17,8 +16,7 @@ import vn.edu.activestudy.activestudy.callback.TaskListener;
 import vn.edu.activestudy.activestudy.common.Constants;
 import vn.edu.activestudy.activestudy.common.ResponseCode;
 import vn.edu.activestudy.activestudy.model.Result;
-import vn.edu.activestudy.activestudy.task.getserviceaddress.ResponseGetServiceAddress;
-import vn.edu.activestudy.activestudy.util.PreferenceUtil;
+import vn.edu.activestudy.activestudy.util.Utils;
 
 /**
  * Created by dell123 on 8/28/2015.
@@ -28,16 +26,21 @@ public class LoginCMD {
     private static final String TAG = LoginCMD.class.getSimpleName();
     private static String url = Constants.URL_SERVER + Constants.URL_LOGIN;
 
-    public static void execute(Context context, final TaskListener listener) throws JSONException {
+    public static void execute(final TaskListener listener) throws JSONException {
 
-        String deviceId = PreferenceUtil.getString(context, Constants.PREFERENCE_DEVICE_ID, "");
-        String accountId = PreferenceUtil.getString(context, Constants.PREFERENCE_ACCOUNT_ID, "");
-        String authenId = PreferenceUtil.getString(context, Constants.PREFERENCE_AUTHEN_ID, "");
+
+        String authenId = Utils.getAuthenId();
+        String accountId = Utils.getAccountID();
+        String deviceId = Utils.getDeviceID();
+        String cloudKey = Utils.getCloudKey();
+
 
         RequestLogin request = new RequestLogin();
+        request.setAuthenId(authenId);
         request.setAccountId(accountId);
         request.setDeviceId(deviceId);
-        request.setAccountId(authenId);
+        request.setCloudKey(cloudKey);
+
 
         String json = new Gson().toJson(request);
         Log.d(TAG, json);

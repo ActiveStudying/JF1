@@ -124,12 +124,11 @@
         <activity
             android:name=".view.activity.DetailClassActivity"
             android:label="@string/title_activity_detail_class">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".view.activity.HomeActivity" />
+
         </activity>
         <activity
             android:name=".view.activity.ListStudenOfClassActivity"
+<<<<<<< HEAD
             android:label="@string/title_activity_list_studen_of_class">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -138,6 +137,9 @@
         <activity
             android:name=".view.activity.ChatGroupActivity"
             android:label="@string/title_activity_chat_group"></activity>
+=======
+            android:label="@string/title_activity_list_studen_of_class"></activity>
+>>>>>>> 7b3ccc95bb58fad8fe27b676661cfd8c18d9035e
     </application>
 
 </manifest>

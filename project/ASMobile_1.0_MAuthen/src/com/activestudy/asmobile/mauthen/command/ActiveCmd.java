@@ -6,10 +6,18 @@ import com.activestudy.asmobile.entity.AccountInfoEntity;
 import com.activestudy.asmobile.entity.DeviceInfoEntity;
 import com.activestudy.asmobile.entity.ResultNumber;
 import com.activestudy.asmobile.mauthen.Processor;
+
+import com.activestudy.asmobile.mauthen.common.Constants;
 import com.activestudy.asmobile.mauthen.dbcontroller.cmd.DbActive;
+import com.activestudy.asmobile.mauthen.dbcontroller.cmd.DbCheckAcountDevice;
+import com.activestudy.asmobile.mauthen.dbcontroller.cmd.DbCreateAccountDevice;
+import com.activestudy.asmobile.mauthen.dbcontroller.cmd.DbDisableAcountDevice;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.logging.Log;
+
 import org.codehaus.jettison.json.JSONException;
 
 /**
@@ -19,13 +27,15 @@ import org.codehaus.jettison.json.JSONException;
 public class ActiveCmd extends ASBaseCommand {
 
     String otpCode;
-    DeviceInfoEntity deviceInfo;
-    AccountInfoEntity accountId;
-    String activationId;
 
-    public ActiveCmd(AccountInfoEntity accountInfo, DeviceInfoEntity deviceInfo) {
+    DeviceInfoEntity deviceInfo;    
+    String activationId;
+    Log logger = null;
+
+    public ActiveCmd(AccountInfoEntity accountInfo, DeviceInfoEntity deviceInfo, Log logger) {
         this.deviceInfo = deviceInfo;
         this.accountInfo = accountInfo;
+        this.logger = logger;
         result = new ResultNumber();
     }
 
@@ -33,46 +43,101 @@ public class ActiveCmd extends ASBaseCommand {
     public void execute() {
         // kiem tra mail 
         if (false == MCommonUtils.is_Email(accountInfo.getEmail())) {
-            ((ResultNumber) result).setErrorCode(ResultNumber.MAUTHEN_ACCOUNTID_INVALIDFORMAT);
+
+            result.setErrorCode(ResultNumber.MAUTHEN_ACCOUNTID_INVALIDFORMAT);
             return;
         }
         // kiem tra deviceID
         if (deviceInfo.getDeviceId().isEmpty()) {
-            ((ResultNumber) result).setErrorCode(ResultNumber.MAUTHEN_DEVICEID_EMPTY);
+
+            result.setErrorCode(ResultNumber.MAUTHEN_DEVICEID_EMPTY);
             return;
         }
-
-        DbActive dbActiveCmd = new DbActive(); // tao ket noi duoi db..
+        //-------------------------------------------------------------------------------------------
+        boolean isOK = false;
         try {
-            activationId = RandomStringUtils.randomAlphanumeric(20);
-            otpCode = RandomStringUtils.randomNumeric(5);
-            dbActiveCmd.setActivationId(activationId); // 
-            dbActiveCmd.setAccountInfo(accountInfo);
-            dbActiveCmd.setDeviceInfo(deviceInfo);
-            dbActiveCmd.setOtpCode(otpCode);
+            DbCheckAcountDevice dbCheckAccDev = new DbCheckAcountDevice(
+                    this.accountInfo.getAccountId(), this.deviceInfo.getDeviceId());
+            Processor.getInstance().getDbCtrl().execute(dbCheckAccDev);
+            int checkAccountResult = dbCheckAccDev.getResult();
 
-            Processor.getInstance().getDbCtrl().execute(dbActiveCmd);
-            // set result
-            if (dbActiveCmd.getResult() == ResultNumber.SUCCESS) {
-                result.setErrorCode(ResultNumber.SUCCESS);
-            } else {
-                // nghi them cac ma loi khac thi implement o day
-                result.setErrorCode(ResultNumber.SYSTEM_ERROR);
+            switch (checkAccountResult) {
+                case Constants.ACCCOUNT_STATUS.DEACTIVATED:
+                    isOK = true;
+                    break;
+                case Constants.ACCCOUNT_STATUS.ACTIVATED:
+                    // Neu da ton tai
+                    // - Disable thiet bi nay
+                    DbDisableAcountDevice dbDisAccDev = new DbDisableAcountDevice(
+                            this.accountInfo.getAccountId(),
+                            this.deviceInfo.getDeviceId());
+                    Processor.getInstance().getDbCtrl().execute(dbDisAccDev);
+
+                    isOK = true;
+                    break;
+                case Constants.ACCCOUNT_STATUS.ACC_NOT_EXIST:
+                    // Neu chua ton tai
+                    // - Tao moi thong tin account, device se tao sau
+                    DbCreateAccountDevice dbCreateAccDev = new DbCreateAccountDevice(
+                            this.accountInfo.getAccountId(), "",
+                            this.accountInfo.getMsisdn(), this.deviceInfo.getDeviceId());
+                    Processor.getInstance().getDbCtrl().execute(dbCreateAccDev);
+
+                    isOK = true;
+                    break;
+                case Constants.ACCCOUNT_STATUS.DEV_NOT_ACTIVATE:
+                    // Neu chua ton tai
+                    // Tao moi thong tin device trong db o ham ActivateAccountDevice
+                    isOK = true;
+                    break;
+                case Constants.ACCCOUNT_STATUS.UNKNOW:
+                default:
+                    result.setErrorCode(ResultNumber.SYSTEM_ERROR);
+
+                    isOK = false;
+                    break;
             }
-            // gui mail
 
         } catch (DBException ex) {
-            Logger.getLogger(ActiveCmd.class.getName()).log(Level.SEVERE, null, ex);
+            logger.error("DbCheckAcountDevice error: " + ex.getMessage(), ex);
+        }
+        //-------------------------------------------------------------------------------------------
+        if (isOK) {
+            DbActive dbActiveCmd = new DbActive(); // tao ket noi duoi db..
+            try {
+                activationId = RandomStringUtils.randomAlphanumeric(20);
+                otpCode = RandomStringUtils.randomNumeric(5);
+                dbActiveCmd.setActivationId(activationId); // 
+                dbActiveCmd.setAccountInfo(accountInfo);
+                dbActiveCmd.setDeviceInfo(deviceInfo);
+                dbActiveCmd.setOtpCode(otpCode);
+
+                Processor.getInstance().getDbCtrl().execute(dbActiveCmd);
+                // set result
+                if (dbActiveCmd.getResult() == ResultNumber.SUCCESS) {
+                    result.setErrorCode(ResultNumber.SUCCESS);
+                } else {
+                    // nghi them cac ma loi khac thi implement o day
+                    result.setErrorCode(ResultNumber.SYSTEM_ERROR);
+                }
+                // gui mail
+
+            } catch (DBException ex) {
+                Logger.getLogger(ActiveCmd.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
     public String getResponse() {
         try {
             super.getResponse();
-            jsonResultData.put("activeId", activationId);
+            jsonResultData.put("activationId", activationId);
             jsonResponse.put("resultData", jsonResultData);
+
+
         } catch (JSONException ex) {
-            Logger.getLogger(ActiveCmd.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ActiveCmd.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
         return jsonResponse.toString();
     }

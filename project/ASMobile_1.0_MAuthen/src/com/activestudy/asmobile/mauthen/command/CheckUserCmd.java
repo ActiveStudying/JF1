@@ -23,13 +23,7 @@ public class CheckUserCmd extends ASBaseCommand {
         this.sessionId = sessionId;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
+   
 
 
 }
