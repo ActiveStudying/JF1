@@ -42,8 +42,9 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-                <category android:name="android.intent.category.LAUNCHER"/>
-                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER" />
+
+                <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity
@@ -128,18 +129,19 @@
         </activity>
         <activity
             android:name=".view.activity.ListStudenOfClassActivity"
-<<<<<<< HEAD
             android:label="@string/title_activity_list_studen_of_class">
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.activity.DetailClassActivity" />
         </activity>
+
         <activity
             android:name=".view.activity.ChatGroupActivity"
-            android:label="@string/title_activity_chat_group"></activity>
-=======
-            android:label="@string/title_activity_list_studen_of_class"></activity>
->>>>>>> 7b3ccc95bb58fad8fe27b676661cfd8c18d9035e
+            android:label="@string/title_activity_chat_group">
+            
+        </activity>
+
     </application>
 
 </manifest>
