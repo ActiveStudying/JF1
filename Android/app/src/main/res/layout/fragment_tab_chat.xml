@@ -1,16 +1,15 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tab3"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/tab3"
     tools:context="vn.edu.activestudy.activestudy.view.activity.HomeActivity">
 
-    <TextView android:id="@+id/section_label" android:layout_width="wrap_content"
+    <GridView
+        android:id="@+id/grvChatGroup"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="tab 3"
-        android:layout_gravity="center"
-        android:textSize="30dp"/>
+        android:numColumns="2"></GridView>
 
 </LinearLayout>

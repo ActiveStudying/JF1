@@ -36,5 +36,7 @@
     <string name="label_class_name">Tên lớp:</string>
     <string name="label_course_name">Khóa học</string>
     <string name="label_start_date">Ngày khai giảng</string>
+    <string name="title_activity_chat_group">ChatGroupActivity</string>
+    <string name="title_activity_test_chat">TestChatActivity</string>
 
 </resources>
